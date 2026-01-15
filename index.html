@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="ja">
 <head>
+ <link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f7fafc">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>ACT 価値観チェック（Russ Harris 60）</title>
@@ -254,6 +257,13 @@
     .examples li{margin:6px 0;color:var(--text);font-size:13px}
   </style>
 </head>
+  <script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(console.error);
+    });
+  }
+</script>
 <body>
 <header>
   <div class="wrap">
