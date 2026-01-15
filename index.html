@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ACT 価値観チェック（Russ Harris 60）</title>
+  <style>
+    :root{
+      --bg:#f7fafc;
+      --panel:#ffffff;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --accent:#16a34a;
+      --accent2:#2563eb;
+      --warn:#d97706;
+      --danger:#dc2626;
+      --border:rgba(15,23,42,.10);
+      --shadow:0 10px 30px rgba(15,23,42,.08);
+      --shadow2:0 4px 16px rgba(15,23,42,.06);
+      --radius:16px;
+
+      /* Mobile-friendly sizing */
+      --tap:44px;              /* iOS推奨タップサイズ */
+      --fs-base:16px;          /* iOSの勝手ズームを抑えやすい */
+      --fs-small:13px;
+      --fs-title:18px;
+    }
+    *{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+      background:radial-gradient(1200px 800px at 20% 0%,rgba(22,163,74,.10),transparent 55%),
+                 radial-gradient(1000px 700px at 80% 10%,rgba(37,99,235,.10),transparent 55%),
+                 var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      font-size:var(--fs-base);
+      /* iPhone notch safe area */
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* improve tap behavior */
+    button, select, input, textarea { touch-action: manipulation; }
+    button { -webkit-tap-highlight-color: transparent; }
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:rgba(247,250,252,.86);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .wrap{max-width:1120px;margin:0 auto;padding:14px 14px}
+    .titlebar{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    h1{font-size:var(--fs-title);margin:0;letter-spacing:.2px}
+    .subtitle{color:var(--muted);font-size:var(--fs-small);margin-top:4px}
+
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,255,255,.75)
+    }
+    .pill small{color:var(--muted)}
+
+    .btn{
+      appearance:none;border:1px solid var(--border);
+      background:#ffffff;color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:transform .04s ease,box-shadow .12s ease,background .12s ease,border-color .12s ease;
+      user-select:none;
+      box-shadow:var(--shadow2);
+      min-height: var(--tap); /* tap size */
+    }
+    .btn:hover{border-color:rgba(15,23,42,.18);box-shadow:0 10px 22px rgba(15,23,42,.10)}
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{border-color:rgba(22,163,74,.25);background:rgba(22,163,74,.10)}
+    .btn.primary:hover{background:rgba(22,163,74,.14)}
+    .btn.secondary{border-color:rgba(37,99,235,.22);background:rgba(37,99,235,.10)}
+    .btn.secondary:hover{background:rgba(37,99,235,.14)}
+    .btn.danger{border-color:rgba(220,38,38,.22);background:rgba(220,38,38,.08)}
+    .btn.danger:hover{background:rgba(220,38,38,.12)}
+    .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+    @media (min-width:880px){.grid{grid-template-columns:320px 1fr}}
+
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .panel .hd{padding:14px 14px 10px;border-bottom:1px solid var(--border)}
+    .panel .bd{padding:14px}
+
+    .label{display:block;color:var(--muted);font-size:12px;margin:0 0 6px}
+
+    input[type=text],select,textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#ffffff;color:var(--text);
+      outline:none;
+      font-size:16px; /* iOSズーム回避 */
+      min-height: var(--tap);
+    }
+    textarea{min-height:96px;resize:vertical}
+
+    .row{display:grid;grid-template-columns:1fr;gap:10px}
+    @media (min-width:520px){.row.two{grid-template-columns:1fr 1fr}}
+
+    .stepper{
+      display:flex;align-items:center;gap:8px;
+      flex-wrap:wrap;margin-top:10px
+    }
+    .step{
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);font-size:12px;
+      background:rgba(255,255,255,.65)
+    }
+    .step.on{color:var(--text);border-color:rgba(22,163,74,.30);background:rgba(22,163,74,.10)}
+
+    .content{max-width:1120px;margin:0 auto;padding:14px 14px 40px}
+    .toolbar{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:10px;flex-wrap:wrap;margin:12px 0 0
+    }
+    .toolbar .left,.toolbar .right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+    /* Mobile header toolbar: stack nicely */
+    @media (max-width:520px){
+      .wrap{padding:12px 12px}
+      .content{padding:12px 12px 40px}
+      .titlebar{gap:10px}
+      header .toolbar{width:100%}
+      header .toolbar .left{width:100%}
+      header .toolbar .right{width:100%; justify-content:flex-end}
+      .pill{padding:7px 9px}
+    }
+
+    .notice{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.75);
+      border-left:4px solid rgba(37,99,235,.55);
+      padding:12px;border-radius:12px;margin-top:10px;
+      box-shadow:var(--shadow2)
+    }
+    .notice.warn{border-left-color:rgba(217,119,6,.70)}
+    .notice.danger{border-left-color:rgba(220,38,38,.70)}
+    .notice small{color:var(--muted)}
+
+    /* Cards: better on mobile */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:10px;margin-top:12px
+    }
+    @media (max-width:420px){
+      .cards{grid-template-columns:1fr}
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:14px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+      display:grid;gap:10px
+    }
+    .card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .card h3{font-size:14px;margin:0;letter-spacing:.2px}
+    .card p{margin:0;color:var(--muted);font-size:12px}
+    .tag{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,.75)}
+    .actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .mini{padding:10px 12px;border-radius:999px;font-size:13px;min-height: var(--tap)}
+
+    .ranklist{display:grid;gap:10px;margin-top:12px}
+    .rankitem{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:14px;
+      padding:12px;
+      display:grid;
+      grid-template-columns:110px 1fr;
+      align-items:start;
+      gap:10px;
+      box-shadow:var(--shadow2)
+    }
+    .rankleft{display:grid;gap:8px}
+    .rankleft .rankselect{display:flex;align-items:center;gap:8px}
+    .rankleft select{padding:10px 10px}
+    .rankbadge{
+      display:inline-flex;align-items:center;justify-content:center;
+      height:34px;min-width:34px;padding:0 10px;
+      border-radius:999px;border:1px solid var(--border);
+      background:rgba(22,163,74,.08);font-weight:700
+    }
+    .ranktitle{display:grid;gap:2px}
+    .ranktitle strong{font-size:14px;font-weight:650}
+    .ranktitle span{font-size:12px;color:var(--muted)}
+
+    /* Step3 rank layout: stack on mobile */
+    @media (max-width:560px){
+      .rankitem{grid-template-columns:1fr}
+      .rankleft{grid-template-columns:1fr; justify-items:start}
+      .rankbadge{height:36px}
+      .rankleft .rankselect{width:100%}
+      .rankleft select{width:100%}
+    }
+
+    .hr{height:1px;background:var(--border);margin:10px 0}
+    .footer{margin-top:18px;color:var(--muted);font-size:12px}
+
+    .hide{display:none!important}
+    .print-only{display:none}
+    @media print{
+      header,.panel .bd > :is(.toolbar,.footer,.notice,.btn){display:none!important}
+      body{background:#fff;color:#111827}
+      .content{padding:0;max-width:none}
+      .card,.rankitem{background:#fff;border-color:#e5e7eb;box-shadow:none}
+      .print-only{display:block}
+    }
+
+    /* Intro */
+    .hero{padding:18px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,.75);box-shadow:var(--shadow2)}
+    .hero h2{margin:0 0 6px;font-size:20px}
+    .hero ul{margin:10px 0 0;padding-left:18px;color:var(--text)}
+    .hero li{margin:6px 0;color:var(--text)}
+    .hero .muted{color:var(--muted);font-size:13px}
+    .bigbtn{padding:12px 14px;border-radius:14px;font-weight:650;min-height: var(--tap)}
+
+    /* Tiny test badge */
+    .testbadge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(255,255,255,.75);color:var(--muted);font-size:12px
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background:rgba(100,116,139,.8)}
+    .dot.ok{background:rgba(22,163,74,.9)}
+    .dot.bad{background:rgba(220,38,38,.9)}
+
+    .examples{margin-top:8px;border:1px dashed rgba(15,23,42,.14);border-radius:12px;padding:10px;background:rgba(255,255,255,.75)}
+    .examples strong{font-size:12px}
+    .examples ul{margin:8px 0 0;padding-left:18px;color:var(--text)}
+    .examples li{margin:6px 0;color:var(--text);font-size:13px}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="titlebar">
+      <div>
+        <h1>ACT 価値観チェック（Russ Harris 60）</h1>
+        <div class="subtitle">HTMLで開くだけ。ブラウザが同じなら自動で記憶して継続利用できます（localStorage）。</div>
+      </div>
+      <div class="toolbar">
+        <div class="left">
+          <span class="pill"><small>ステップ</small> <strong id="stepLabel">0</strong>/4</span>
+          <span class="pill"><small>⭐</small> <strong id="starCount">0</strong></span>
+          <span class="pill"><small>◯</small> <strong id="topCount">0</strong>/10</span>
+          <span class="testbadge" title="基本テスト">
+            <span id="testDot" class="dot"></span>
+            <span id="testText">tests: pending</span>
+          </span>
+        </div>
+        <div class="right">
+          <button class="btn" id="btnSave">保存（自動記憶）</button>
+          <button class="btn danger" id="btnReset">リセット</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stepper" aria-label="ステップ">
+      <div class="step on" id="s0">0 はじめに</div>
+      <div class="step" id="s1">1 ⭐ 候補を広げる</div>
+      <div class="step" id="s2">2 ◯ TOP10に絞る</div>
+      <div class="step" id="s3">3 1〜10位に順位付け</div>
+      <div class="step" id="s4">4 まとめ</div>
+    </div>
+  </div>
+</header>
+
+<div class="content">
+  <div class="grid">
+    <aside class="panel" id="sidePanel">
+      <div class="hd">
+        <strong>設定</strong>
+        <div class="subtitle">領域を指定して、結果を臨床・教育に使いやすくします。</div>
+      </div>
+      <div class="bd">
+        <label class="label">このワークの対象領域（任意）</label>
+        <select id="domainSelect">
+          <option value="">（指定しない）</option>
+          <option>仕事/学び</option>
+          <option>人間関係</option>
+          <option>健康/自己成長</option>
+          <option>余暇/楽しみ</option>
+          <option>臨床（患者ケア/チーム）</option>
+          <option>その他（自由記述）</option>
+        </select>
+        <div id="domainOtherWrap" class="hide" style="margin-top:10px;">
+          <label class="label">領域（自由記述）</label>
+          <input id="domainOther" type="text" placeholder="例：家族介護、研究、管理職 など" />
+        </div>
+
+        <div class="hr"></div>
+
+        <strong>カスタム価値観（その他）</strong>
+        <div class="subtitle">リストに無い価値観を追加できます（無制限）。</div>
+
+        <div style="margin-top:10px;" class="row">
+          <div>
+            <label class="label">価値観名（日本語）</label>
+            <input id="customJa" type="text" placeholder="例：誠実なケア、探究心、家族 など" />
+          </div>
+          <div class="row two">
+            <div>
+              <label class="label">英語（任意）</label>
+              <input id="customEn" type="text" placeholder="Optional" />
+            </div>
+            <div>
+              <label class="label">短い説明（任意）</label>
+              <input id="customDesc" type="text" placeholder="例：〜の姿勢で関わる" />
+            </div>
+          </div>
+          <button class="btn" id="btnAddCustom">追加</button>
+          <div class="subtitle">※追加した項目は、⭐/◯/順位付けの対象に自動で含まれます。</div>
+        </div>
+
+        <div class="footer">
+          <div>※データ入出力は行いません。ブラウザ（このPC）内に自動保存されます。</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="panel" id="mainPanel">
+      <div class="hd">
+        <strong id="mainTitle">はじめに：全体像</strong>
+        <div class="subtitle" id="mainSub">このワークは「いま大事にしたい価値観」を明確にするための4ステップです。</div>
+      </div>
+      <div class="bd">
+
+        <!-- Step 0: Intro -->
+        <section id="step0">
+          <div class="hero">
+            <h2>このアプリでやること</h2>
+            <div class="muted">短時間で「価値観の棚卸し → 優先順位づけ → 行動への翻訳」まで行えます。</div>
+            <ul>
+              <li><strong>Step1</strong>：気になる価値観に ⭐ を付ける（最低10、推奨20）</li>
+              <li><strong>Step2</strong>：⭐候補から、特に重要な10個だけに ◯</li>
+              <li><strong>Step3</strong>：TOP10を <strong>プルダウンで1〜10位</strong>に割り当てる（重複は自動で入れ替え）</li>
+              <li><strong>Step4</strong>：まとめ（Top3は行動例が自動表示）</li>
+            </ul>
+            <div class="notice" style="margin-top:14px;">
+              <strong>コツ</strong><br/>
+              <small>迷う時は「この価値観がゼロになる人生を想像して、どれだけ後悔するか？」で選ぶとブレにくいです。</small>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+              <button type="button" class="btn primary bigbtn" id="btnStart">開始する（Step1へ）</button>
+              <button type="button" class="btn secondary bigbtn" id="btnJump1">まずは一覧だけ見る</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 1 -->
+        <section id="step1" class="hide">
+          <div class="notice" id="stepNotice">
+            <div><strong>進め方のコツ</strong></div>
+            <small>「正解の価値観」はありません。直感で⭐を付け、あとで絞り込みます（最低10個）。</small>
+          </div>
+
+          <div class="toolbar">
+            <div class="left">
+              <span class="pill"><small>全項目</small> <strong id="totalCount">0</strong></span>
+            </div>
+            <div class="right">
+              <button class="btn primary" id="btnToStep2">次へ（◯TOP10へ）</button>
+            </div>
+          </div>
+          <div id="warnStar" class="notice warn hide" style="margin-top:12px;">
+            <strong>⭐が少なめです</strong><br/>
+            <small>最低10個は必要です。推奨は20個以上（あとで絞るので、多めでOK）。</small>
+          </div>
+          <div id="cards1" class="cards" aria-label="価値観カード一覧"></div>
+        </section>
+
+        <!-- Step 2 -->
+        <section id="step2" class="hide">
+          <div class="toolbar">
+            <div class="left">
+              <span class="pill"><small>⭐候補</small> <strong id="starredCount2">0</strong></span>
+              <span class="pill"><small>◯選択</small> <strong id="topCount2">0</strong>/10</span>
+            </div>
+            <div class="right">
+              <button class="btn" id="btnBack1">戻る</button>
+              <button class="btn primary" id="btnToStep3">次へ（順位付け）</button>
+            </div>
+          </div>
+          <div id="warnTop" class="notice warn hide" style="margin-top:12px;">
+            <strong>◯はちょうど10個にしてください</strong><br/>
+            <small>10個に絞る過程で「優先順位」が浮き彫りになります。</small>
+          </div>
+          <div id="cards2" class="cards" aria-label="⭐候補からTOP10を選ぶ"></div>
+        </section>
+
+        <!-- Step 3 -->
+        <section id="step3" class="hide">
+          <div class="toolbar">
+            <div class="left">
+              <span class="pill"><small>TOP10</small> <strong id="topCount3">0</strong>/10</span>
+              <span class="pill"><small>操作</small> <strong>プルダウンで1〜10位</strong></span>
+            </div>
+            <div class="right">
+              <button class="btn" id="btnBack2">戻る</button>
+              <button class="btn primary" id="btnToStep4">次へ（まとめ）</button>
+            </div>
+          </div>
+
+          <div class="notice" style="margin-top:12px;">
+            <strong>順位付けのヒント</strong><br/>
+            <small>価値観同士がぶつかる状況（例：患者の希望 vs 安全、家族 vs 仕事）を想像し、「どちらを優先したいか？」で1位から決めると早いです。</small>
+          </div>
+
+          <div id="rankList" class="ranklist" aria-label="順位付けリスト"></div>
+        </section>
+
+        <!-- Step 4 -->
+        <section id="step4" class="hide">
+          <div class="toolbar">
+            <div class="left">
+              <span class="pill"><small>作成日</small> <strong id="createdAt">-</strong></span>
+              <span class="pill"><small>領域</small> <strong id="domainLabel">-</strong></span>
+            </div>
+            <div class="right">
+              <button class="btn" id="btnBack3">戻る</button>
+              <button class="btn primary" id="btnPrint">印刷（PDF保存）</button>
+            </div>
+          </div>
+
+          <div class="notice" style="margin-top:12px;">
+            <strong>「価値」→「行動」への橋渡し</strong><br/>
+            <small>Top3は行動例を3つ自動表示します。必要なら例を編集して、あなたの臨床文脈に合わせてください。</small>
+          </div>
+
+          <div id="summary" style="margin-top:12px;"></div>
+
+          <div class="footer">⚠️ このアプリは診断・治療を行うものではありません。ワークの結果は、臨床推論や倫理判断と併用してください。</div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // 60項目に相当するリスト（Russ Harris 2010 を基に、日英+短い説明で整理）
+  const DEFAULT_VALUES = [
+    {id:"acceptance",en:"Acceptance",ja:"受容",desc:"自分・他者・人生に対して、開かれた姿勢で受けとめる"},
+    {id:"adventure",en:"Adventure",ja:"冒険",desc:"新しい/刺激的な経験を求め、探究する"},
+    {id:"assertiveness",en:"Assertiveness",ja:"適切な自己主張",desc:"相手を尊重しつつ、権利を守り望みを伝える"},
+    {id:"authenticity",en:"Authenticity",ja:"真正さ（自分らしさ）",desc:"本音に忠実に、偽りなく生きる"},
+    {id:"beauty",en:"Beauty",ja:"美",desc:"美しさを味わい、育み、創る"},
+    {id:"caring",en:"Caring",ja:"ケア/配慮",desc:"自分・他者・環境を大切にし、いたわる"},
+    {id:"challenge",en:"Challenge",ja:"挑戦",desc:"成長のために挑み、学び、改善する"},
+    {id:"compassion",en:"Compassion",ja:"コンパッション",desc:"苦しむ人（自分を含む）にやさしさで関わる"},
+    {id:"connection",en:"Connection",ja:"つながり/関与",desc:"今していること・相手に十分に関わり、存在する"},
+    {id:"contribution",en:"Contribution",ja:"貢献",desc:"役に立ち、良い影響を残す"},
+    {id:"conformity",en:"Conformity",ja:"規範順守",desc:"ルールや義務を尊重し、守る"},
+    {id:"cooperation",en:"Cooperation",ja:"協働",desc:"協力し、共同で進める"},
+    {id:"courage",en:"Courage",ja:"勇気",desc:"怖さがあっても、大事な方向へ進む"},
+    {id:"creativity",en:"Creativity",ja:"創造性",desc:"工夫し、新しいものを生み出す"},
+    {id:"curiosity",en:"Curiosity",ja:"好奇心",desc:"開かれた姿勢で探究し、学ぶ"},
+    {id:"encouragement",en:"Encouragement",ja:"励まし",desc:"望ましい行動を支え、称え、促進する"},
+    {id:"equality",en:"Equality",ja:"平等",desc:"自分と同じように相手を対等に扱う"},
+    {id:"excitement",en:"Excitement",ja:"刺激/ワクワク",desc:"活気や高揚感のある活動を作り、関わる"},
+    {id:"fairness",en:"Fairness",ja:"公正",desc:"自分にも他者にも公平に接する"},
+    {id:"fitness",en:"Fitness",ja:"健康・体力",desc:"心身の健康とウェルビーイングを整える"},
+    {id:"flexibility",en:"Flexibility",ja:"柔軟性",desc:"状況の変化に適応し、しなやかに対応する"},
+    {id:"freedom",en:"Freedom",ja:"自由",desc:"自分で選んで生き、他者の自由も尊重する"},
+    {id:"friendliness",en:"Friendliness",ja:"親しみやすさ",desc:"友好的で、感じよく関わる"},
+    {id:"forgiveness",en:"Forgiveness",ja:"許し",desc:"自分や他者を許し、やり直しの余地を持つ"},
+    {id:"fun",en:"Fun",ja:"楽しさ",desc:"遊び心を持ち、楽しい活動に関わる"},
+    {id:"generosity",en:"Generosity",ja:"寛大さ",desc:"分かち合い、与える"},
+    {id:"gratitude",en:"Gratitude",ja:"感謝",desc:"良い側面に気づき、ありがたく思う"},
+    {id:"honesty",en:"Honesty",ja:"正直",desc:"真実で誠実にふるまう"},
+    {id:"humour",en:"Humour",ja:"ユーモア",desc:"人生の面白さを見出し、味わう"},
+    {id:"humility",en:"Humility",ja:"謙虚",desc:"控えめで、成果を誇示しない"},
+    {id:"industry",en:"Industry",ja:"勤勉",desc:"真面目に努力し、やり抜く"},
+    {id:"independence",en:"Independence",ja:"自立",desc:"自分で支え、自分のやり方を選ぶ"},
+    {id:"intimacy",en:"Intimacy",ja:"親密さ",desc:"親しい関係で、感情や身体を開き共有する"},
+    {id:"justice",en:"Justice",ja:"正義",desc:"正しさや公平を守る"},
+    {id:"kindness",en:"Kindness",ja:"優しさ",desc:"思いやり深く、あたたかく接する"},
+    {id:"love",en:"Love",ja:"愛",desc:"愛情深く、慈しみをもって関わる"},
+    {id:"mindfulness",en:"Mindfulness",ja:"マインドフルネス",desc:"今この瞬間の体験に気づき、開いている"},
+    {id:"order",en:"Order",ja:"秩序/整理",desc:"整え、計画し、筋道を立てる"},
+    {id:"open_mindedness",en:"Open-mindedness",ja:"開放性（オープンマインド）",desc:"多様な視点を検討し、根拠を公平に扱う"},
+    {id:"patience",en:"Patience",ja:"忍耐",desc:"落ち着いて待ち、急がない"},
+    {id:"persistence",en:"Persistence",ja:"粘り強さ",desc:"困難があっても続ける"},
+    {id:"pleasure",en:"Pleasure",ja:"喜び",desc:"喜びを作り、与え、受け取る"},
+    {id:"power",en:"Power",ja:"影響力",desc:"方向づけ、先導し、物事を動かす"},
+    {id:"reciprocity",en:"Reciprocity",ja:"相互性",desc:"与える/受け取るのバランスある関係を作る"},
+    {id:"respect",en:"Respect",ja:"尊重",desc:"礼儀と敬意をもって接する"},
+    {id:"responsibility",en:"Responsibility",ja:"責任",desc:"自分の行動に責任を持ち、説明できる"},
+    {id:"romance",en:"Romance",ja:"ロマンス",desc:"恋愛的な愛情を表現する"},
+    {id:"safety",en:"Safety",ja:"安全",desc:"自分や他者の安全を確保し守る"},
+    {id:"self_awareness",en:"Self-awareness",ja:"自己理解",desc:"自分の思考・感情・行動に気づく"},
+    {id:"self_care",en:"Self-care",ja:"セルフケア",desc:"ニーズを満たし、心身を整える"},
+    {id:"self_development",en:"Self-development",ja:"自己成長",desc:"知識・技能・人格・経験を伸ばす"},
+    {id:"self_control",en:"Self-control",ja:"自己統制",desc:"衝動ではなく、理想に沿って行動する"},
+    {id:"sensuality",en:"Sensuality",ja:"五感を味わう",desc:"五感を刺激する体験を探索し味わう"},
+    {id:"sexuality",en:"Sexuality",ja:"セクシュアリティ",desc:"性を探索/表現する（自分に合う形で）"},
+    {id:"spirituality",en:"Spirituality",ja:"スピリチュアリティ",desc:"自分を超えたもの（自然/宗教/共同体など）とつながる"},
+    {id:"skilfulness",en:"Skilfulness",ja:"熟達（技能）",desc:"技能を磨き、使う時は十分に没頭する"},
+    {id:"supportiveness",en:"Supportiveness",ja:"支援",desc:"支え、助け、励まし、利用可能でいる"},
+    {id:"trust",en:"Trust",ja:"信頼",desc:"誠実で頼りになり、忠実である"},
+  ];
+
+  // Top3の「行動例」テンプレ（臨床にも転用しやすい）
+  const ACTION_EXAMPLES = {
+    respect: [
+      "患者/家族の言葉を遮らず、要点を復唱して『理解の一致』を作る",
+      "選択肢提示の前に『何を大事にしたいか』を1つ質問してから提案する",
+      "価値観が違っても評価せず『そう感じる理由』を好奇心で聞く"
+    ],
+    compassion: [
+      "苦痛のサインに気づいたら、まず『つらさ』を言語化して受け止める（例：それはしんどいですね）",
+      "自分にも同じ優しさを向ける：当直明けは10分だけ回復行動を確保する",
+      "失敗や葛藤を責めず、次の一手を小さく決める（何が1%良くなる？）"
+    ],
+    honesty: [
+      "不確実性は不確実性として伝える（分かっている点/分からない点を分ける）",
+      "都合の悪い情報でも、タイミングと配慮を選んで誠実に共有する",
+      "記録は『事実・解釈・方針』を分けて書き、誤解を減らす"
+    ],
+    safety: [
+      "リスクが高い場面では、先に安全確認（転倒/誤嚥/せん妄）をチェックしてから介入する",
+      "重要決定は“1人で抱えない”：ダブルチェック/相談先を必ず確保する",
+      "薬剤・手技は『目的→副作用→観察点』をセットで共有する"
+    ],
+    mindfulness: [
+      "次の患者に入る前に、10秒だけ呼吸に注意を向けてリセットする",
+      "感情が強い時は『いま怒り/不安が来ている』とラベリングして行動を選ぶ",
+      "会話中は“次の返答”よりも『相手の言葉の最後まで』に注意を置く"
+    ],
+    responsibility: [
+      "約束したことは『いつ/どこで/誰が』まで具体化して実行する",
+      "問題が起きたら、言い訳より先に『次の対策』を1つ提示する",
+      "チームに影響する判断は、根拠と限界を添えて共有する"
+    ],
+    kindness: [
+      "忙しい時ほど、最初の一言を丁寧に（名前を呼ぶ/挨拶/短い共感）",
+      "相手の努力に具体的フィードバックを返す（何が良かったか）",
+      "自分への優しさ：睡眠・食事・休憩の最低ラインを守る"
+    ],
+    courage: [
+      "言いにくいことほど、目的（患者利益/チーム安全）を言葉にしてから伝える",
+      "対立が起きたら“勝つ”より“合意可能点”を探す質問を置く",
+      "避けている課題を10分だけ着手する（小さく始める）"
+    ],
+  };
+
+  function examplesFor(valueId, jaLabel){
+    if (ACTION_EXAMPLES[valueId]) return ACTION_EXAMPLES[valueId];
+    return [
+      `『${jaLabel}』を意識して、今週1回“いつもより丁寧にやる行動”を1つ決める`,
+      `『${jaLabel}』を邪魔している要因を1つ特定し、対策を小さく1つ試す`,
+      `『${jaLabel}』を体現している人を観察し、真似できる行動を1つ取り入れる`,
+    ];
+  }
+
+  function nowIso(){return new Date().toISOString();}
+  function safeId(prefix="id"){return (crypto?.randomUUID?prefix+"_"+crypto.randomUUID():prefix+"_"+Math.random().toString(16).slice(2)+"_"+Date.now());}
+
+  const STORAGE_KEY = "actValuesApp.v2.current";
+
+  const State = {
+    step: 0,
+    createdAt: nowIso(),
+    domain: "",
+    domainOther: "",
+    values: JSON.parse(JSON.stringify(DEFAULT_VALUES)),
+    customValues: [],
+    starred: {},
+    top10: {},
+    ranking: [],
+    rankAssign: {},
+    notes: {},
+  };
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      const obj = JSON.parse(raw);
+      if(!obj || typeof obj!=="object") return;
+      Object.assign(State,obj);
+      if(typeof State.step !== "number") State.step = 0;
+      if(!Array.isArray(State.values) || State.values.length < 40) State.values = JSON.parse(JSON.stringify(DEFAULT_VALUES));
+      if(!Array.isArray(State.customValues)) State.customValues = [];
+      if(!State.starred) State.starred = {};
+      if(!State.top10) State.top10 = {};
+      if(!Array.isArray(State.ranking)) State.ranking = [];
+      if(!State.rankAssign || typeof State.rankAssign !== "object") State.rankAssign = {};
+      if(!State.notes || typeof State.notes !== "object") State.notes = {};
+    }catch(e){console.warn(e);}
+  }
+
+  function persistState(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(State)); }catch(e){ console.warn(e); }
+  }
+
+  function allValues(){ return [...State.values, ...State.customValues]; }
+  function isStarred(id){ return !!State.starred[id]; }
+  function isTop(id){ return !!State.top10[id]; }
+  function starCount(){ return Object.keys(State.starred).filter(k=>State.starred[k]).length; }
+  function topCount(){ return Object.keys(State.top10).filter(k=>State.top10[k]).length; }
+
+  function topIds(){
+    return allValues().filter(v=>isTop(v.id)).map(v=>v.id);
+  }
+
+  function normalizeRankAssign(){
+    const ids = topIds();
+    Object.keys(State.rankAssign).forEach(id=>{ if(!ids.includes(id)) delete State.rankAssign[id]; });
+
+    const used = new Map();
+    const free = [];
+    for(let r=1;r<=10;r++) free.push(r);
+
+    ids.forEach(id=>{
+      const r = Number(State.rankAssign[id]);
+      if(!r || r<1 || r>10) return;
+      if(used.has(r)){
+        delete State.rankAssign[id];
+      } else {
+        used.set(r,id);
+        const idx = free.indexOf(r);
+        if(idx>=0) free.splice(idx,1);
+      }
+    });
+
+    ids.forEach(id=>{
+      if(State.rankAssign[id]) return;
+      const r = free.shift();
+      if(r) State.rankAssign[id] = r;
+    });
+
+    State.ranking = ids
+      .map(id=>({id, r:Number(State.rankAssign[id])}))
+      .sort((a,b)=>a.r-b.r)
+      .map(x=>x.id);
+  }
+
+  function setRank(id, newRank){
+    const ids = topIds();
+    if(!ids.includes(id)) return;
+    const r = Number(newRank);
+    if(!r || r<1 || r>10) return;
+
+    const otherId = Object.keys(State.rankAssign).find(k => k!==id && Number(State.rankAssign[k])===r);
+    const prev = Number(State.rankAssign[id]);
+    if(otherId){
+      State.rankAssign[otherId] = prev;
+    }
+    State.rankAssign[id] = r;
+    normalizeRankAssign();
+    persistState();
+    renderStep3();
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function updateHeaderCounters(){
+    document.getElementById("stepLabel").textContent = String(State.step);
+    document.getElementById("starCount").textContent = String(starCount());
+    document.getElementById("topCount").textContent = String(topCount());
+
+    const s0 = document.getElementById("s0");
+    const s1 = document.getElementById("s1");
+    const s2 = document.getElementById("s2");
+    const s3 = document.getElementById("s3");
+    const s4 = document.getElementById("s4");
+    [s0,s1,s2,s3,s4].forEach(el=>el.classList.remove("on"));
+    if(State.step===0) s0.classList.add("on");
+    if(State.step===1) s1.classList.add("on");
+    if(State.step===2) s2.classList.add("on");
+    if(State.step===3) s3.classList.add("on");
+    if(State.step===4) s4.classList.add("on");
+  }
+
+  function setStep(step){
+    State.step = step;
+    persistState();
+    render();
+  }
+
+  function cardTemplate(v, mode){
+    const starred = isStarred(v.id);
+    const topped = isTop(v.id);
+
+    const el = document.createElement("div");
+    el.className = "card";
+
+    const top = document.createElement("div");
+    top.className = "top";
+
+    const title = document.createElement("div");
+    const h3 = document.createElement("h3");
+    h3.textContent = v.ja + (v.en ? " / "+v.en : "");
+    const p = document.createElement("p");
+    p.textContent = v.desc || "";
+    title.appendChild(h3);
+    title.appendChild(p);
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = v.custom ? "カスタム" : "Russ Harris";
+
+    top.appendChild(title);
+    top.appendChild(tag);
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const starBtn = document.createElement("button");
+    starBtn.type = "button";
+    starBtn.className = "btn mini " + (starred ? "primary" : "");
+    starBtn.textContent = starred ? "⭐ 済み" : "⭐ 付ける";
+    starBtn.addEventListener("click", ()=>{
+      State.starred[v.id] = !isStarred(v.id);
+      if(!State.starred[v.id]){
+        State.top10[v.id] = false;
+        delete State.rankAssign[v.id];
+      }
+      persistState();
+      render();
+    });
+    actions.appendChild(starBtn);
+
+    if(mode === "step2"){
+      const topBtn = document.createElement("button");
+      topBtn.type = "button";
+      topBtn.className = "btn mini " + (topped ? "primary" : "");
+      topBtn.textContent = topped ? "◯ TOP10" : "◯ 選ぶ";
+      topBtn.addEventListener("click", ()=>{
+        if(isTop(v.id)){
+          State.top10[v.id] = false;
+          delete State.rankAssign[v.id];
+        } else {
+          if(topCount() >= 10){
+            alert("◯は10個までです。別の項目の◯を外してから選んでください。");
+            return;
+          }
+          State.top10[v.id] = true;
+        }
+        persistState();
+        render();
+      });
+      actions.appendChild(topBtn);
+    }
+
+    if(v.custom){
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "btn mini danger";
+      del.textContent = "削除";
+      del.addEventListener("click", ()=>{
+        if(!confirm("このカスタム価値観を削除しますか？")) return;
+        State.customValues = State.customValues.filter(x=>x.id!==v.id);
+        delete State.starred[v.id];
+        delete State.top10[v.id];
+        delete State.rankAssign[v.id];
+        persistState();
+        render();
+      });
+      actions.appendChild(del);
+    }
+
+    el.appendChild(top);
+    el.appendChild(actions);
+    return el;
+  }
+
+  function renderStep1(){
+    const total = allValues().length;
+    document.getElementById("totalCount").textContent = String(total);
+
+    const cards = document.getElementById("cards1");
+    cards.innerHTML = "";
+    allValues().forEach(v=>cards.appendChild(cardTemplate(v, "step1")));
+
+    const sc = starCount();
+    document.getElementById("warnStar").classList.toggle("hide", sc>=10);
+    document.getElementById("btnToStep2").disabled = sc<10;
+  }
+
+  function renderStep2(){
+    const starredValues = allValues().filter(v=>isStarred(v.id));
+    document.getElementById("starredCount2").textContent = String(starredValues.length);
+    document.getElementById("topCount2").textContent = String(topCount());
+
+    const cards = document.getElementById("cards2");
+    cards.innerHTML = "";
+    if(starredValues.length===0){
+      const div = document.createElement("div");
+      div.className = "notice danger";
+      div.innerHTML = "<strong>⭐が1つもありません</strong><br/><small>ステップ1に進んで、まずは候補に⭐を付けてください。</small>";
+      cards.appendChild(div);
+    } else {
+      starredValues.forEach(v=>cards.appendChild(cardTemplate(v, "step2")));
+    }
+
+    const tc = topCount();
+    document.getElementById("warnTop").classList.toggle("hide", tc===10);
+    document.getElementById("btnToStep3").disabled = tc!==10;
+  }
+
+  function renderStep3(){
+    const ids = topIds();
+    normalizeRankAssign();
+    document.getElementById("topCount3").textContent = String(State.ranking.length);
+
+    const list = document.getElementById("rankList");
+    list.innerHTML = "";
+
+    if(ids.length !== 10){
+      const div = document.createElement("div");
+      div.className = "notice danger";
+      div.innerHTML = "<strong>TOP10が揃っていません</strong><br/><small>ステップ2で◯をちょうど10個にしてください。</small>";
+      list.appendChild(div);
+      document.getElementById("btnToStep4").disabled = true;
+      return;
+    }
+
+    const ranksUsed = new Set(ids.map(id=>Number(State.rankAssign[id])));
+    const ok = ranksUsed.size === 10 && Math.min(...ranksUsed)===1 && Math.max(...ranksUsed)===10;
+    document.getElementById("btnToStep4").disabled = !ok;
+
+    const map = new Map(allValues().map(v=>[v.id,v]));
+    const items = ids
+      .map(id=>({id, r:Number(State.rankAssign[id])||999}))
+      .sort((a,b)=>a.r-b.r);
+
+    items.forEach(({id, r})=>{
+      const v = map.get(id);
+      const item = document.createElement("div");
+      item.className = "rankitem";
+
+      const left = document.createElement("div");
+      left.className = "rankleft";
+
+      const badge = document.createElement("div");
+      badge.className = "rankbadge";
+      badge.textContent = (r>=1 && r<=10) ? `${r}位` : "—";
+
+      const selWrap = document.createElement("div");
+      selWrap.className = "rankselect";
+      const sel = document.createElement("select");
+      for(let i=1;i<=10;i++){
+        const opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = `${i}位`;
+        sel.appendChild(opt);
+      }
+      sel.value = String(r);
+      sel.addEventListener("change", ()=>setRank(id, sel.value));
+      selWrap.appendChild(sel);
+
+      left.appendChild(badge);
+      left.appendChild(selWrap);
+
+      const title = document.createElement("div");
+      title.className = "ranktitle";
+      const strong = document.createElement("strong");
+      strong.textContent = (v?.ja||id) + (v?.en ? " / "+v.en : "");
+      const span = document.createElement("span");
+      span.textContent = v?.desc || "";
+      title.appendChild(strong);
+      title.appendChild(span);
+
+      item.appendChild(left);
+      item.appendChild(title);
+      list.appendChild(item);
+    });
+  }
+
+  function renderStep4(){
+    normalizeRankAssign();
+    document.getElementById("createdAt").textContent = new Date(State.createdAt).toLocaleString();
+    document.getElementById("domainLabel").textContent = (State.domain === "その他（自由記述）" ? (State.domainOther?.trim()||"その他") : (State.domain||"（指定なし）"));
+
+    const map = new Map(allValues().map(v=>[v.id,v]));
+    const top = State.ranking.map((id, idx)=>{
+      const v = map.get(id);
+      return {rank: idx+1, ja: v?.ja||id, en: v?.en||"", desc: v?.desc||"", id};
+    });
+
+    const summary = document.getElementById("summary");
+    summary.innerHTML = `
+      <div class="panel" style="background:rgba(255,255,255,.85);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow2);">
+        <strong>TOP10（順位付き）</strong>
+        <div class="subtitle">このリストは「現時点（${new Date(State.createdAt).toLocaleDateString()}）」の優先順位です。定期的に見直す前提でOKです。</div>
+        <div class="hr"></div>
+        <div style="display:grid;gap:10px;">
+          ${top.map(t=>{
+            const examples = (t.rank<=3) ? examplesFor(t.id, t.ja) : null;
+            const exHtml = examples ? `
+              <div class="examples">
+                <strong>Top${t.rank}：優先する行動の例（そのまま使える/編集OK）</strong>
+                <ul>
+                  <li>${escapeHtml(examples[0])}</li>
+                  <li>${escapeHtml(examples[1])}</li>
+                  <li>${escapeHtml(examples[2])}</li>
+                </ul>
+              </div>
+            ` : "";
+
+            const placeholder = (t.rank<=3)
+              ? `例：${t.ja} → ${examplesFor(t.id, t.ja)[0]}`
+              : `例：${t.ja} → 今週1回、価値に沿った行動を具体化する`;
+
+            return `
+              <div class="rankitem" style="grid-template-columns:110px 1fr;">
+                <div class="rankleft">
+                  <div class="rankbadge">${t.rank}位</div>
+                </div>
+                <div class="ranktitle">
+                  <strong>${escapeHtml(t.ja)}${t.en?" / "+escapeHtml(t.en):""}</strong>
+                  <span>${escapeHtml(t.desc)}</span>
+                  ${exHtml}
+                  <div style="margin-top:10px;">
+                    <label class="label">今週の「10分行動」案（任意）</label>
+                    <textarea data-actionfor="${t.id}" placeholder="${escapeHtml(placeholder)}"></textarea>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </div>
+    `;
+
+    setTimeout(()=>{
+      document.querySelectorAll('textarea[data-actionfor]').forEach(t=>{
+        const id = t.dataset.actionfor;
+        t.value = State.notes?.[id] || "";
+        t.addEventListener('input', ()=>{
+          State.notes = State.notes || {};
+          State.notes[id] = t.value;
+          persistState();
+        });
+      });
+    }, 0);
+  }
+
+  function render(){
+    updateHeaderCounters();
+
+    document.getElementById("step0").classList.toggle("hide", State.step!==0);
+    document.getElementById("step1").classList.toggle("hide", State.step!==1);
+    document.getElementById("step2").classList.toggle("hide", State.step!==2);
+    document.getElementById("step3").classList.toggle("hide", State.step!==3);
+    document.getElementById("step4").classList.toggle("hide", State.step!==4);
+
+    if(State.step===0){
+      document.getElementById("mainTitle").textContent = "はじめに：全体像";
+      document.getElementById("mainSub").textContent = "このワークは『いま大事にしたい価値観』を明確にする4ステップです。";
+    }
+    if(State.step===1){
+      document.getElementById("mainTitle").textContent = "ステップ1：⭐ 候補を広げる";
+      document.getElementById("mainSub").textContent = "心に響くものに⭐を付けます。まずは『広く集める』のが目的です（最低10、推奨20）。";
+      renderStep1();
+    }
+    if(State.step===2){
+      document.getElementById("mainTitle").textContent = "ステップ2：◯ TOP10に絞る";
+      document.getElementById("mainSub").textContent = "⭐を付けた候補から、今のあなたにとって特に重要な10個だけに◯を付けます。";
+      renderStep2();
+    }
+    if(State.step===3){
+      document.getElementById("mainTitle").textContent = "ステップ3：1〜10位に順位付け";
+      document.getElementById("mainSub").textContent = "◯を付けた10個に、プルダウンで1〜10位を割り当てます（重複は自動で入れ替え）。";
+      renderStep3();
+    }
+    if(State.step===4){
+      document.getElementById("mainTitle").textContent = "ステップ4：まとめ";
+      document.getElementById("mainSub").textContent = "Top3の行動例を参考に、今週の10分行動を言語化します。";
+      renderStep4();
+    }
+  }
+
+  function runTests(){
+    const failures = [];
+    const assert = (cond, msg)=>{ if(!cond) failures.push(msg); };
+
+    assert(Array.isArray(DEFAULT_VALUES), "DEFAULT_VALUES should be an array");
+    assert(DEFAULT_VALUES.length >= 50, "DEFAULT_VALUES should have enough items");
+    const ids = DEFAULT_VALUES.map(v=>v.id);
+    assert(new Set(ids).size === ids.length, "DEFAULT_VALUES ids should be unique");
+    assert(typeof State.step === "number" && State.step >= 0 && State.step <= 4, "State.step must be 0..4");
+
+    const dot = document.getElementById("testDot");
+    const text = document.getElementById("testText");
+
+    if(failures.length === 0){
+      dot.classList.add("ok");
+      text.textContent = "tests: ok";
+      return true;
+    }
+    dot.classList.add("bad");
+    text.textContent = "tests: failed";
+    console.error("Tests failed:", failures);
+    return false;
+  }
+
+  window.addEventListener("DOMContentLoaded", ()=>{
+    loadState();
+
+    const domainSelect = document.getElementById("domainSelect");
+    const domainOtherWrap = document.getElementById("domainOtherWrap");
+    const domainOther = document.getElementById("domainOther");
+
+    domainSelect.value = State.domain || "";
+    domainOther.value = State.domainOther || "";
+    domainOtherWrap.classList.toggle('hide', domainSelect.value !== 'その他（自由記述）');
+
+    domainSelect.addEventListener('change', ()=>{
+      State.domain = domainSelect.value;
+      domainOtherWrap.classList.toggle('hide', State.domain !== 'その他（自由記述）');
+      persistState();
+      render();
+    });
+
+    domainOther.addEventListener('input', ()=>{
+      State.domainOther = domainOther.value;
+      persistState();
+    });
+
+    document.getElementById("btnAddCustom").addEventListener('click', ()=>{
+      const ja = document.getElementById("customJa").value.trim();
+      if(!ja){ alert('価値観名（日本語）を入力してください。'); return; }
+      const en = document.getElementById("customEn").value.trim();
+      const desc = document.getElementById("customDesc").value.trim();
+      const id = safeId('custom');
+      State.customValues.push({id, ja, en, desc, custom:true});
+      document.getElementById("customJa").value = "";
+      document.getElementById("customEn").value = "";
+      document.getElementById("customDesc").value = "";
+      persistState();
+      render();
+    });
+
+    document.getElementById("btnSave").addEventListener('click', ()=>{
+      persistState();
+      alert('保存しました（このPCのブラウザに記憶されています）。');
+    });
+
+    document.getElementById("btnReset").addEventListener('click', ()=>{
+      if(!confirm('すべての選択をリセットしますか？（このPCの保存内容も上書きされます）')) return;
+      State.step = 0;
+      State.createdAt = nowIso();
+      State.starred = {};
+      State.top10 = {};
+      State.ranking = [];
+      State.rankAssign = {};
+      State.notes = {};
+      persistState();
+      render();
+    });
+
+    document.getElementById("btnStart").addEventListener('click', ()=>setStep(1));
+    document.getElementById("btnJump1").addEventListener('click', ()=>setStep(1));
+
+    document.getElementById("btnToStep2").addEventListener('click', ()=>setStep(2));
+    document.getElementById("btnBack1").addEventListener('click', ()=>setStep(1));
+    document.getElementById("btnToStep3").addEventListener('click', ()=>setStep(3));
+    document.getElementById("btnBack2").addEventListener('click', ()=>setStep(2));
+    document.getElementById("btnToStep4").addEventListener('click', ()=>setStep(4));
+    document.getElementById("btnBack3").addEventListener('click', ()=>setStep(3));
+    document.getElementById("btnPrint").addEventListener('click', ()=>window.print());
+
+    runTests();
+    render();
+  });
+</script>
+</body>
+</html>
