@@ -1,1112 +1,2057 @@
 <!doctype html>
 <html lang="ja">
 <head>
- <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#f7fafc">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>ACT 価値観チェック（Russ Harris 60）</title>
+  <title>Core Value レーダー｜勝利・調和・自己決定・信念</title>
   <style>
     :root{
-      --bg:#f7fafc;
-      --panel:#ffffff;
+      --bg:#f6f8ff;
+      --bg2:#eef6ff;
       --card:#ffffff;
       --text:#0f172a;
-      --muted:#64748b;
-      --accent:#16a34a;
-      --accent2:#2563eb;
-      --warn:#d97706;
-      --danger:#dc2626;
-      --border:rgba(15,23,42,.10);
-      --shadow:0 10px 30px rgba(15,23,42,.08);
-      --shadow2:0 4px 16px rgba(15,23,42,.06);
+      --muted:#475569;
+      --border:#e2e8f0;
+      --shadow: 0 12px 30px rgba(15,23,42,.08);
       --radius:16px;
 
-      /* Mobile-friendly sizing */
-      --tap:44px;              /* iOS推奨タップサイズ */
-      --fs-base:16px;          /* iOSの勝手ズームを抑えやすい */
-      --fs-small:13px;
-      --fs-title:18px;
+      --accent:#2563eb;
+      --accent2:#06b6d4;
+
+      --ok:#16a34a;
+      --warn:#d97706;
+      --danger:#dc2626;
+
+      /* axis colors */
+      --v:#f59e0b; /* 勝利 */
+      --h:#84cc16; /* 調和 */
+      --a:#10b981; /* 自己決定 */
+      --b:#0ea5e9; /* 信念 */
     }
+
     *{box-sizing:border-box}
-    html{-webkit-text-size-adjust:100%}
     body{
       margin:0;
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
-      background:radial-gradient(1200px 800px at 20% 0%,rgba(22,163,74,.10),transparent 55%),
-                 radial-gradient(1000px 700px at 80% 10%,rgba(37,99,235,.10),transparent 55%),
-                 var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                   "Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
       color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 0%, rgba(37,99,235,.10), transparent 55%),
+        radial-gradient(900px 600px at 80% 10%, rgba(6,182,212,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
       line-height:1.6;
-      font-size:var(--fs-base);
-      /* iPhone notch safe area */
-      padding-bottom: env(safe-area-inset-bottom);
+      font-size: 16px;
     }
-
-    /* improve tap behavior */
-    button, select, input, textarea { touch-action: manipulation; }
-    button { -webkit-tap-highlight-color: transparent; }
 
     header{
-      position:sticky;top:0;z-index:10;
-      background:rgba(247,250,252,.86);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--border);
+      position:sticky; top:0; z-index:20;
+      background: rgba(246,248,255,.88);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(226,232,240,.95);
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:14px 14px}
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .brand{display:flex; flex-direction:column; gap:2px; min-width: 240px}
+    .brand .title{font-weight:900; font-size:15px}
+    .brand .subtitle{color:var(--muted); font-size:12px}
+
+    .progress{flex:1; min-width: 240px; display:flex; flex-direction:column; align-items:flex-end; gap:6px}
+    .progress .meta{display:flex; gap:10px; align-items:center; justify-content:flex-end; color:var(--muted); font-size:12px}
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.75);
+      color: var(--muted);
+      user-select:none;
+    }
+    .bar{
+      width:min(560px, 100%);
+      height:10px;
+      border-radius:999px;
+      background: rgba(226,232,240,.95);
+      border:1px solid rgba(226,232,240,1);
+      overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(37,99,235,.9), rgba(6,182,212,.9));
+      border-radius:999px;
+      transition: width .2s ease;
     }
 
-    .wrap{max-width:1120px;margin:0 auto;padding:14px 14px}
-    .titlebar{
+    main{max-width:1100px;margin:0 auto;padding:14px 14px 110px}
+    .card{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    h1{font-size:22px;margin:0 0 8px}
+    h2{font-size:18px;margin:0 0 8px}
+    p{margin:0 0 10px}
+    .muted{color:var(--muted)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px; border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.8);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .pill strong{color:var(--text); font-weight:900}
+
+    .note{
+      border-left: 4px solid rgba(37,99,235,.65);
+      padding:10px 12px;
+      background: rgba(37,99,235,.06);
+      border-radius: 12px;
+      margin: 10px 0 14px;
+    }
+    .note.warn{border-left-color: rgba(217,119,6,.7); background: rgba(217,119,6,.08)}
+    .note.danger{border-left-color: rgba(220,38,38,.7); background: rgba(220,38,38,.06)}
+    .note.ok{border-left-color: rgba(22,163,74,.7); background: rgba(22,163,74,.06)}
+
+    .grid{display:grid; grid-template-columns: 1fr; gap:12px}
+    @media (min-width:900px){
+      .grid.two{grid-template-columns: 1fr 1fr;}
+    }
+
+    .actions{display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; margin-top:12px}
+    .btnrow{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    button{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:850;
+      font-size:15px;
+      transition: transform .05s ease, box-shadow .2s ease, border-color .2s ease;
+      user-select:none;
+    }
+    button:hover{border-color: rgba(37,99,235,.35); box-shadow: 0 10px 18px rgba(37,99,235,.08)}
+    button:active{transform: translateY(1px)}
+    button.primary{
+      background: linear-gradient(90deg, rgba(37,99,235,.14), rgba(6,182,212,.14));
+      border-color: rgba(37,99,235,.35);
+    }
+    button.ghost{background: transparent}
+    button.danger{
+      border-color: rgba(220,38,38,.35);
+      background: rgba(220,38,38,.06);
+    }
+    button.small{padding:10px 12px; font-size:13px; border-radius:12px}
+    button:disabled{opacity:.55; cursor:not-allowed; box-shadow:none}
+
+    .step{display:none}
+    .step.active{display:block}
+
+    input[type="text"], textarea, select{
+      width:100%;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      color:var(--text);
+      padding:12px 14px;
+      font-size:15px;
+      outline:none;
+    }
+    textarea{min-height:110px; resize:vertical}
+    label{display:block; font-size:13px; color:var(--muted); margin: 0 0 6px}
+    .field{display:flex; flex-direction:column; gap:6px}
+
+    /* Quiz */
+    .quizBox{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.92);
+      border-radius: 14px;
+      padding:12px;
+    }
+    .qTitle{font-weight:950; margin:0 0 10px}
+    .options{display:grid; grid-template-columns:1fr; gap:8px}
+    @media (min-width:900px){ .options{grid-template-columns:1fr 1fr;} }
+    .opt{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.98);
+      border-radius: 14px;
+      padding:12px 12px;
+      cursor:pointer;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      transition: border-color .2s ease, box-shadow .2s ease;
+      user-select:none;
+    }
+    .opt:hover{border-color: rgba(37,99,235,.25); box-shadow: 0 10px 18px rgba(2,6,23,.05)}
+    .dot{
+      width:18px; height:18px; border-radius:999px;
+      border:2px solid rgba(148,163,184,.9);
+      margin-top:2px;
+      flex:0 0 auto;
+      background: #fff;
+    }
+    .opt.sel .dot{
+      border-color: rgba(37,99,235,.85);
+      box-shadow: inset 0 0 0 5px rgba(37,99,235,.25);
+    }
+    .opt .txt{font-size:15px}
+
+    /* Values selection */
+    .valueGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    @media (min-width:520px){
+      .valueGrid{grid-template-columns: repeat(2, minmax(0,1fr));}
+    }
+    @media (min-width:900px){
+      .valueGrid{grid-template-columns: repeat(4, minmax(0,1fr));}
+    }
+
+    .valueCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding:12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      cursor:pointer;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .05s ease;
+      user-select:none;
+      min-height: 60px;
+    }
+    .valueCard:hover{border-color: rgba(37,99,235,.25); box-shadow: 0 10px 18px rgba(2,6,23,.05)}
+    .valueCard:active{transform: translateY(1px)}
+    .valueCard.topSel{
+      border-color: rgba(37,99,235,.50);
+      background: rgba(37,99,235,.05);
+      box-shadow: 0 10px 18px rgba(37,99,235,.10);
+    }
+
+    .valueName{font-weight:950;font-size:15px}
+    .valueSub{font-size:12px;color:var(--muted)}
+    .mark{display:flex;align-items:center;gap:8px;font-size:18px;line-height:1}
+    .star{color: rgba(245,158,11,.95)}
+    .mutemark{color: rgba(148,163,184,.9)}
+    .topTag{
+      font-size: 12px;
+      font-weight: 950;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(37,99,235,.35);
+      background: rgba(37,99,235,.12);
+      color: rgba(37,99,235,.95);
+      white-space: nowrap;
+    }
+
+    /* Ranking (dropdown) */
+    .rankWrap{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .rankRow{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding:12px;
+      display:grid;
+      grid-template-columns: 64px 1fr;
+      gap:10px;
+      align-items:center;
+    }
+    .rankBadge{
+      font-weight:950;
+      text-align:center;
+      border-radius: 12px;
+      padding:10px 0;
+      background: rgba(37,99,235,.10);
+      border:1px solid rgba(37,99,235,.22);
+    }
+
+    /* Axis pick */
+    .axisList{display:flex; flex-direction:column; gap:10px}
+    .axisCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .axisHead{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
       flex-wrap:wrap;
     }
-    h1{font-size:var(--fs-title);margin:0;letter-spacing:.2px}
-    .subtitle{color:var(--muted);font-size:var(--fs-small);margin-top:4px}
-
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background:rgba(255,255,255,.75)
-    }
-    .pill small{color:var(--muted)}
-
-    .btn{
-      appearance:none;border:1px solid var(--border);
-      background:#ffffff;color:var(--text);
-      padding:10px 12px;
-      border-radius:12px;
-      cursor:pointer;
-      transition:transform .04s ease,box-shadow .12s ease,background .12s ease,border-color .12s ease;
-      user-select:none;
-      box-shadow:var(--shadow2);
-      min-height: var(--tap); /* tap size */
-    }
-    .btn:hover{border-color:rgba(15,23,42,.18);box-shadow:0 10px 22px rgba(15,23,42,.10)}
-    .btn:active{transform:translateY(1px)}
-    .btn.primary{border-color:rgba(22,163,74,.25);background:rgba(22,163,74,.10)}
-    .btn.primary:hover{background:rgba(22,163,74,.14)}
-    .btn.secondary{border-color:rgba(37,99,235,.22);background:rgba(37,99,235,.10)}
-    .btn.secondary:hover{background:rgba(37,99,235,.14)}
-    .btn.danger{border-color:rgba(220,38,38,.22);background:rgba(220,38,38,.08)}
-    .btn.danger:hover{background:rgba(220,38,38,.12)}
-    .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
-
-    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
-    @media (min-width:880px){.grid{grid-template-columns:320px 1fr}}
-
-    .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .panel .hd{padding:14px 14px 10px;border-bottom:1px solid var(--border)}
-    .panel .bd{padding:14px}
-
-    .label{display:block;color:var(--muted);font-size:12px;margin:0 0 6px}
-
-    input[type=text],select,textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#ffffff;color:var(--text);
-      outline:none;
-      font-size:16px; /* iOSズーム回避 */
-      min-height: var(--tap);
-    }
-    textarea{min-height:96px;resize:vertical}
-
-    .row{display:grid;grid-template-columns:1fr;gap:10px}
-    @media (min-width:520px){.row.two{grid-template-columns:1fr 1fr}}
-
-    .stepper{
-      display:flex;align-items:center;gap:8px;
-      flex-wrap:wrap;margin-top:10px
-    }
-    .step{
-      padding:8px 10px;border-radius:999px;
-      border:1px solid var(--border);
-      color:var(--muted);font-size:12px;
-      background:rgba(255,255,255,.65)
-    }
-    .step.on{color:var(--text);border-color:rgba(22,163,74,.30);background:rgba(22,163,74,.10)}
-
-    .content{max-width:1120px;margin:0 auto;padding:14px 14px 40px}
-    .toolbar{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:10px;flex-wrap:wrap;margin:12px 0 0
-    }
-    .toolbar .left,.toolbar .right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-
-    /* Mobile header toolbar: stack nicely */
-    @media (max-width:520px){
-      .wrap{padding:12px 12px}
-      .content{padding:12px 12px 40px}
-      .titlebar{gap:10px}
-      header .toolbar{width:100%}
-      header .toolbar .left{width:100%}
-      header .toolbar .right{width:100%; justify-content:flex-end}
-      .pill{padding:7px 9px}
-    }
-
-    .notice{
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.75);
-      border-left:4px solid rgba(37,99,235,.55);
-      padding:12px;border-radius:12px;margin-top:10px;
-      box-shadow:var(--shadow2)
-    }
-    .notice.warn{border-left-color:rgba(217,119,6,.70)}
-    .notice.danger{border-left-color:rgba(220,38,38,.70)}
-    .notice small{color:var(--muted)}
-
-    /* Cards: better on mobile */
-    .cards{
+    .axisHead .name{font-weight:950}
+    .axisHead .sub{font-size:12px; color:var(--muted)}
+    .axisBtns{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-      gap:10px;margin-top:12px
-    }
-    @media (max-width:420px){
-      .cards{grid-template-columns:1fr}
-    }
-
-    .card{
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:14px;
-      padding:12px;
-      box-shadow:var(--shadow2);
-      display:grid;gap:10px
-    }
-    .card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .card h3{font-size:14px;margin:0;letter-spacing:.2px}
-    .card p{margin:0;color:var(--muted);font-size:12px}
-    .tag{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,.75)}
-    .actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-    .mini{padding:10px 12px;border-radius:999px;font-size:13px;min-height: var(--tap)}
-
-    .ranklist{display:grid;gap:10px;margin-top:12px}
-    .rankitem{
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:14px;
-      padding:12px;
-      display:grid;
-      grid-template-columns:110px 1fr;
-      align-items:start;
+      grid-template-columns: 1fr 1fr;
       gap:10px;
-      box-shadow:var(--shadow2)
     }
-    .rankleft{display:grid;gap:8px}
-    .rankleft .rankselect{display:flex;align-items:center;gap:8px}
-    .rankleft select{padding:10px 10px}
-    .rankbadge{
-      display:inline-flex;align-items:center;justify-content:center;
-      height:34px;min-width:34px;padding:0 10px;
-      border-radius:999px;border:1px solid var(--border);
-      background:rgba(22,163,74,.08);font-weight:700
+    .axisBtn{
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.98);
+      font-weight:950;
+      font-size:15px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      position: relative;
     }
-    .ranktitle{display:grid;gap:2px}
-    .ranktitle strong{font-size:14px;font-weight:650}
-    .ranktitle span{font-size:12px;color:var(--muted)}
+    .axisBtn.sel{
+      border-color: rgba(37,99,235,.45);
+      box-shadow: 0 10px 18px rgba(37,99,235,.10);
+      background: rgba(37,99,235,.06);
+    }
+    .axisBtn.reco::after{
+      content:"推奨";
+      position:absolute;
+      top:8px;
+      right:10px;
+      font-size:11px;
+      font-weight:950;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.85);
+      color: rgba(15,23,42,.70);
+    }
+    .dot2{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .dot2.v{background: var(--v)}
+    .dot2.h{background: var(--h)}
+    .dot2.a{background: var(--a)}
+    .dot2.b{background: var(--b)}
 
-    /* Step3 rank layout: stack on mobile */
-    @media (max-width:560px){
-      .rankitem{grid-template-columns:1fr}
-      .rankleft{grid-template-columns:1fr; justify-items:start}
-      .rankbadge{height:36px}
-      .rankleft .rankselect{width:100%}
-      .rankleft select{width:100%}
+    /* Action step */
+    .actionList{display:flex; flex-direction:column; gap:12px}
+    .actionCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .actionHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .actionHead .name{font-weight:950}
+    .hintSmall{font-size:12px; color:var(--muted)}
+    .axisMiniPill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.85);
+      color: rgba(15,23,42,.70);
+      font-size:12px;
+      white-space:nowrap;
     }
 
-    .hr{height:1px;background:var(--border);margin:10px 0}
-    .footer{margin-top:18px;color:var(--muted);font-size:12px}
-
-    .hide{display:none!important}
-    .print-only{display:none}
-    @media print{
-      header,.panel .bd > :is(.toolbar,.footer,.notice,.btn){display:none!important}
-      body{background:#fff;color:#111827}
-      .content{padding:0;max-width:none}
-      .card,.rankitem{background:#fff;border-color:#e5e7eb;box-shadow:none}
-      .print-only{display:block}
+    /* Radar */
+    .canvasWrap{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding:14px;
+      box-shadow: 0 10px 24px rgba(2,6,23,.06);
+    }
+    canvas{width:100%; height:360px;}
+    @media (min-width:900px){
+      canvas{height:460px;}
     }
 
-    /* Intro */
-    .hero{padding:18px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,.75);box-shadow:var(--shadow2)}
-    .hero h2{margin:0 0 6px;font-size:20px}
-    .hero ul{margin:10px 0 0;padding-left:18px;color:var(--text)}
-    .hero li{margin:6px 0;color:var(--text)}
-    .hero .muted{color:var(--muted);font-size:13px}
-    .bigbtn{padding:12px 14px;border-radius:14px;font-weight:650;min-height: var(--tap)}
-
-    /* Tiny test badge */
-    .testbadge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;border:1px solid var(--border);
-      background:rgba(255,255,255,.75);color:var(--muted);font-size:12px
+    /* Responsive table */
+    .tableWrap{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.95);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .dot{width:8px;height:8px;border-radius:999px;background:rgba(100,116,139,.8)}
-    .dot.ok{background:rgba(22,163,74,.9)}
-    .dot.bad{background:rgba(220,38,38,.9)}
+    table{
+      width:100%;
+      min-width: 520px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    th, td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(226,232,240,.95);
+      text-align:left;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    th{background: rgba(2,6,23,.03); font-weight:950}
+    tr:last-child td{border-bottom:none}
 
-    .examples{margin-top:8px;border:1px dashed rgba(15,23,42,.14);border-radius:12px;padding:10px;background:rgba(255,255,255,.75)}
-    .examples strong{font-size:12px}
-    .examples ul{margin:8px 0 0;padding-left:18px;color:var(--text)}
-    .examples li{margin:6px 0;color:var(--text);font-size:13px}
+    /* Footer nav */
+    .footerBar{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      background: rgba(246,248,255,.92);
+      backdrop-filter: blur(10px);
+      border-top:1px solid rgba(226,232,240,.98);
+      z-index:30;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .footerBar .wrap{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap
+    }
+    .tiny{font-size:12px;color:var(--muted)}
+    .footerBar .right{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      right: 14px;
+      bottom: calc(86px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.98);
+      border:1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow);
+      color: var(--text);
+      max-width: 360px;
+      display:none;
+      z-index: 60;
+    }
+    .toast.show{display:block; animation: pop .2s ease}
+    @keyframes pop{ from{ transform: translateY(8px); opacity: 0 } to{ transform: translateY(0px); opacity: 1 } }
   </style>
 </head>
-  <script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js").catch(console.error);
-    });
-  }
-</script>
+
 <body>
 <header>
   <div class="wrap">
-    <div class="titlebar">
-      <div>
-        <h1>ACT 価値観チェック（Russ Harris 60）</h1>
-        <div class="subtitle">HTMLで開くだけ。ブラウザが同じなら自動で記憶して継続利用できます（localStorage）。</div>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">Core Value レーダー</div>
+        <div class="subtitle">勝利・調和・自己決定・信念｜質問＋Top5で可視化</div>
       </div>
-      <div class="toolbar">
-        <div class="left">
-          <span class="pill"><small>ステップ</small> <strong id="stepLabel">0</strong>/4</span>
-          <span class="pill"><small>⭐</small> <strong id="starCount">0</strong></span>
-          <span class="pill"><small>◯</small> <strong id="topCount">0</strong>/10</span>
-          <span class="testbadge" title="基本テスト">
-            <span id="testDot" class="dot"></span>
-            <span id="testText">tests: pending</span>
-          </span>
+      <div class="progress">
+        <div class="meta">
+          <span id="stepLabel">Step 1/9</span>
+          <span class="kbd" id="autosaveLabel">自動保存</span>
         </div>
-        <div class="right">
-          <button class="btn" id="btnSave">保存（自動記憶）</button>
-          <button class="btn danger" id="btnReset">リセット</button>
-        </div>
+        <div class="bar"><div id="progressBar"></div></div>
       </div>
-    </div>
-
-    <div class="stepper" aria-label="ステップ">
-      <div class="step on" id="s0">0 はじめに</div>
-      <div class="step" id="s1">1 ⭐ 候補を広げる</div>
-      <div class="step" id="s2">2 ◯ TOP10に絞る</div>
-      <div class="step" id="s3">3 1〜10位に順位付け</div>
-      <div class="step" id="s4">4 まとめ</div>
     </div>
   </div>
 </header>
 
-<div class="content">
-  <div class="grid">
-    <aside class="panel" id="sidePanel">
-      <div class="hd">
-        <strong>設定</strong>
-        <div class="subtitle">領域を指定して、結果を臨床・教育に使いやすくします。</div>
-      </div>
-      <div class="bd">
-        <label class="label">このワークの対象領域（任意）</label>
-        <select id="domainSelect">
-          <option value="">（指定しない）</option>
-          <option>仕事/学び</option>
-          <option>人間関係</option>
-          <option>健康/自己成長</option>
-          <option>余暇/楽しみ</option>
-          <option>臨床（患者ケア/チーム）</option>
-          <option>その他（自由記述）</option>
-        </select>
-        <div id="domainOtherWrap" class="hide" style="margin-top:10px;">
-          <label class="label">領域（自由記述）</label>
-          <input id="domainOther" type="text" placeholder="例：家族介護、研究、管理職 など" />
-        </div>
+<main>
+  <!-- STEP 0 -->
+  <section class="step card active" data-step="0">
+    <h1>このアプリでやること</h1>
+    <p class="muted">
+      あなたの価値観を、4つの物差し（<b>勝利 / 調和 / 自己決定 / 信念</b>）でレーダー表示します。<br>
+      目標は「どれが優先か」を<b>自分で理解できる</b>ことです。
+    </p>
 
-        <div class="hr"></div>
+    <div class="note">
+      <b>流れ：</b>
+      質問 → ⭐ → Top5 → 順位 → 分類（推奨あり） → レーダー → TOP3の一歩 → 終了
+    </div>
 
-        <strong>カスタム価値観（その他）</strong>
-        <div class="subtitle">リストに無い価値観を追加できます（無制限）。</div>
-
-        <div style="margin-top:10px;" class="row">
-          <div>
-            <label class="label">価値観名（日本語）</label>
-            <input id="customJa" type="text" placeholder="例：誠実なケア、探究心、家族 など" />
-          </div>
-          <div class="row two">
-            <div>
-              <label class="label">英語（任意）</label>
-              <input id="customEn" type="text" placeholder="Optional" />
-            </div>
-            <div>
-              <label class="label">短い説明（任意）</label>
-              <input id="customDesc" type="text" placeholder="例：〜の姿勢で関わる" />
-            </div>
-          </div>
-          <button class="btn" id="btnAddCustom">追加</button>
-          <div class="subtitle">※追加した項目は、⭐/◯/順位付けの対象に自動で含まれます。</div>
-        </div>
-
-        <div class="footer">
-          <div>※データ入出力は行いません。ブラウザ（このPC）内に自動保存されます。</div>
+    <div class="grid two">
+      <div class="card" style="box-shadow:none">
+        <h2>4つの軸</h2>
+        <ul style="margin:8px 0 0 18px">
+          <li><b>勝利</b>：成功を達成し、挑戦して克服すること</li>
+          <li><b>調和</b>：バランスを保ち、平和な関係を維持すること</li>
+          <li><b>自己決定</b>：自律を行使し、自由に独立した選択をすること</li>
+          <li><b>信念</b>：困難があっても、筋を通し続けること</li>
+        </ul>
+        <div class="note warn" style="margin-top:12px">
+          <b>ポイント：</b>質問の選択肢は「固定シャッフル」なので、いつも同じ位置を押して偏るのを避けます。
         </div>
       </div>
-    </aside>
 
-    <main class="panel" id="mainPanel">
-      <div class="hd">
-        <strong id="mainTitle">はじめに：全体像</strong>
-        <div class="subtitle" id="mainSub">このワークは「いま大事にしたい価値観」を明確にするための4ステップです。</div>
+      <div class="card" style="box-shadow:none">
+        <h2>操作</h2>
+        <div class="actions">
+          <div class="btnrow">
+            <button class="danger" id="btnResetTop">すべて一括消去（初期化）</button>
+            <button class="ghost" id="btnImportTop">JSON読み込み</button>
+            <button class="ghost" id="btnExportTop">JSON書き出し</button>
+          </div>
+          <div class="btnrow">
+            <button class="primary" id="btnStart">はじめる ▶</button>
+          </div>
+        </div>
+        <div class="tiny" style="margin-top:10px">
+          ※入力は端末内保存（通信なし）。端末移動はJSONを書き出し。
+        </div>
       </div>
-      <div class="bd">
+    </div>
+  </section>
 
-        <!-- Step 0: Intro -->
-        <section id="step0">
-          <div class="hero">
-            <h2>このアプリでやること</h2>
-            <div class="muted">短時間で「価値観の棚卸し → 優先順位づけ → 行動への翻訳」まで行えます。</div>
-            <ul>
-              <li><strong>Step1</strong>：気になる価値観に ⭐ を付ける（最低10、推奨20）</li>
-              <li><strong>Step2</strong>：⭐候補から、特に重要な10個だけに ◯</li>
-              <li><strong>Step3</strong>：TOP10を <strong>プルダウンで1〜10位</strong>に割り当てる（重複は自動で入れ替え）</li>
-              <li><strong>Step4</strong>：まとめ（Top3は行動例が自動表示）</li>
-            </ul>
-            <div class="notice" style="margin-top:14px;">
-              <strong>コツ</strong><br/>
-              <small>迷う時は「この価値観がゼロになる人生を想像して、どれだけ後悔するか？」で選ぶとブレにくいです。</small>
-            </div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-              <button type="button" class="btn primary bigbtn" id="btnStart">開始する（Step1へ）</button>
-              <button type="button" class="btn secondary bigbtn" id="btnJump1">まずは一覧だけ見る</button>
-            </div>
-          </div>
-        </section>
+  <!-- STEP 1 -->
+  <section class="step card" data-step="1">
+    <h1>質問に答える（今の傾向）</h1>
+    <p class="muted">各質問に、今の自分に近い選択肢を1つ選んでください（全問回答で次へ）。</p>
 
-        <!-- Step 1 -->
-        <section id="step1" class="hide">
-          <div class="notice" id="stepNotice">
-            <div><strong>進め方のコツ</strong></div>
-            <small>「正解の価値観」はありません。直感で⭐を付け、あとで絞り込みます（最低10個）。</small>
-          </div>
+    <div class="pill">回答済み：<strong id="quizDone">0</strong>/<span id="quizTotal">0</span></div>
+    <div style="height:10px"></div>
 
-          <div class="toolbar">
-            <div class="left">
-              <span class="pill"><small>全項目</small> <strong id="totalCount">0</strong></span>
-            </div>
-            <div class="right">
-              <button class="btn primary" id="btnToStep2">次へ（◯TOP10へ）</button>
-            </div>
-          </div>
-          <div id="warnStar" class="notice warn hide" style="margin-top:12px;">
-            <strong>⭐が少なめです</strong><br/>
-            <small>最低10個は必要です。推奨は20個以上（あとで絞るので、多めでOK）。</small>
-          </div>
-          <div id="cards1" class="cards" aria-label="価値観カード一覧"></div>
-        </section>
+    <div id="quizContainer" class="grid"></div>
+  </section>
 
-        <!-- Step 2 -->
-        <section id="step2" class="hide">
-          <div class="toolbar">
-            <div class="left">
-              <span class="pill"><small>⭐候補</small> <strong id="starredCount2">0</strong></span>
-              <span class="pill"><small>◯選択</small> <strong id="topCount2">0</strong>/10</span>
-            </div>
-            <div class="right">
-              <button class="btn" id="btnBack1">戻る</button>
-              <button class="btn primary" id="btnToStep3">次へ（順位付け）</button>
-            </div>
-          </div>
-          <div id="warnTop" class="notice warn hide" style="margin-top:12px;">
-            <strong>◯はちょうど10個にしてください</strong><br/>
-            <small>10個に絞る過程で「優先順位」が浮き彫りになります。</small>
-          </div>
-          <div id="cards2" class="cards" aria-label="⭐候補からTOP10を選ぶ"></div>
-        </section>
+  <!-- STEP 2 -->
+  <section class="step card" data-step="2">
+    <h1>⭐ 価値語にスターを付ける（30項目以内）</h1>
+    <p class="muted">心に響くものに⭐。まずは広めに（<b>10個以上</b>推奨）。</p>
 
-        <!-- Step 3 -->
-        <section id="step3" class="hide">
-          <div class="toolbar">
-            <div class="left">
-              <span class="pill"><small>TOP10</small> <strong id="topCount3">0</strong>/10</span>
-              <span class="pill"><small>操作</small> <strong>プルダウンで1〜10位</strong></span>
-            </div>
-            <div class="right">
-              <button class="btn" id="btnBack2">戻る</button>
-              <button class="btn primary" id="btnToStep4">次へ（まとめ）</button>
-            </div>
-          </div>
-
-          <div class="notice" style="margin-top:12px;">
-            <strong>順位付けのヒント</strong><br/>
-            <small>価値観同士がぶつかる状況（例：患者の希望 vs 安全、家族 vs 仕事）を想像し、「どちらを優先したいか？」で1位から決めると早いです。</small>
-          </div>
-
-          <div id="rankList" class="ranklist" aria-label="順位付けリスト"></div>
-        </section>
-
-        <!-- Step 4 -->
-        <section id="step4" class="hide">
-          <div class="toolbar">
-            <div class="left">
-              <span class="pill"><small>作成日</small> <strong id="createdAt">-</strong></span>
-              <span class="pill"><small>領域</small> <strong id="domainLabel">-</strong></span>
-            </div>
-            <div class="right">
-              <button class="btn" id="btnBack3">戻る</button>
-              <button class="btn primary" id="btnPrint">印刷（PDF保存）</button>
-            </div>
-          </div>
-
-          <div class="notice" style="margin-top:12px;">
-            <strong>「価値」→「行動」への橋渡し</strong><br/>
-            <small>Top3は行動例を3つ自動表示します。必要なら例を編集して、あなたの臨床文脈に合わせてください。</small>
-          </div>
-
-          <div id="summary" style="margin-top:12px;"></div>
-
-          <div class="footer">⚠️ このアプリは診断・治療を行うものではありません。ワークの結果は、臨床推論や倫理判断と併用してください。</div>
-        </section>
-
+    <div class="grid two" style="align-items:end">
+      <div class="field">
+        <label>検索</label>
+        <input id="valueSearch" type="text" placeholder="例：自由、挑戦、家族…" />
       </div>
-    </main>
+      <div class="field">
+        <label>その他（追加：最大2つまで / 総数30以内）</label>
+        <div style="display:flex; gap:10px">
+          <input id="customValueInput" type="text" placeholder="例：ユーモア、職人魂…" />
+          <button id="btnAddCustom" class="primary" style="white-space:nowrap">追加</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:10px"></div>
+    <div class="pill">⭐ 選択数：<strong id="starCount">0</strong></div>
+
+    <div style="height:10px"></div>
+    <div id="valueGrid" class="valueGrid"></div>
+
+    <div class="note warn">
+      <b>迷ったら：</b>「この価値がゼロの人生なら、私は何を失う？」で⭐を付ける。
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step card" data-step="3">
+    <h1>Top5に絞る</h1>
+    <p class="muted">⭐を付けた中から、<b>譲れない5個</b>を選びます（ちょうど5個）。</p>
+
+    <div class="pill">Top5 選択数：<strong id="topCount">0</strong>/5</div>
+
+    <div id="topGrid" class="valueGrid" style="margin-top:10px"></div>
+
+    <div class="note warn">
+      <b>質問：</b>「これを捨てるとしたら、どれだけ後悔する？」 “非常に後悔する”が強いものほどコア。
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="step card" data-step="4">
+    <h1>順位付け（1位〜5位）</h1>
+    <p class="muted">Top5の5つに、順位を割り当てます（重複不可）。</p>
+
+    <div class="actions" style="margin-top:0">
+      <div class="btnrow">
+        <button id="btnFillMissing" class="small">未選択を自動で埋める</button>
+        <span class="pill">未割り当て：<strong id="rankMissing">0</strong></span>
+      </div>
+    </div>
+
+    <div style="height:10px"></div>
+    <div id="rankContainer" class="rankWrap"></div>
+
+    <div class="note warn">
+      次へ進むには <b>5個すべての順位が埋まり</b>、<b>重複がない</b>状態が必要です。
+    </div>
+  </section>
+
+  <!-- STEP 5 -->
+  <section class="step card" data-step="5">
+    <h1>Top5を4軸へ分類（推奨あり）</h1>
+    <p class="muted">各価値語が「最も満たされる軸」を1つ選びます（5個すべて選択で次へ）。</p>
+
+    <div class="pill">分類済み：<strong id="axisDone">0</strong>/5</div>
+    <div style="height:10px"></div>
+
+    <div id="axisPickContainer" class="axisList"></div>
+
+    <div class="note ok">
+      <b>考え方：</b>「その価値が満たされたとき、何が一番うれしい？」→ その軸を選ぶ。<br>
+      ※「推奨」はあくまで出発点。違うと思えば遠慮なく変更OKです。
+    </div>
+  </section>
+
+  <!-- STEP 6 -->
+  <section class="step card" data-step="6">
+    <div style="display:flex; gap:12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap">
+      <div>
+        <h1>まとめ：あなたの価値観レーダー</h1>
+        <p class="muted">質問（今の傾向）＋ Top5（順位＋分類）を統合して可視化します。</p>
+      </div>
+      <div class="btnrow">
+        <button id="btnCopySummary" class="primary">📋 まとめをコピー</button>
+        <button id="btnPrint" class="ghost">🖨️ 印刷</button>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="canvasWrap">
+        <canvas id="radar" aria-label="radar chart"></canvas>
+        <div class="tiny" id="resultNumbers" style="margin-top:8px"></div>
+      </div>
+
+      <div>
+        <div class="card" style="box-shadow:none">
+          <h2 id="resultHeadline">あなたへの読み取り</h2>
+          <p id="resultText" class="muted"></p>
+          <div id="resultTips"></div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="tableWrap" aria-label="scores table">
+          <table>
+            <thead>
+              <tr>
+                <th>軸</th>
+                <th>統合</th>
+                <th>質問</th>
+                <th>Top5</th>
+              </tr>
+            </thead>
+            <tbody id="scoreTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="note warn">
+      <b>注意：</b>これは「今の入力」からの推定です。状況が変われば結果が変わってOK。<br>
+      重要なのは、<b>意思決定のとき“どの軸を主役にするか”を言語化できる</b>ことです。
+    </div>
+  </section>
+
+  <!-- STEP 7 -->
+  <section class="step card" data-step="7">
+    <div style="display:flex; gap:12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap">
+      <div>
+        <h1>TOP3：すぐにできる一歩</h1>
+        <p class="muted">
+          上位3つの価値観に沿って、<b>今日〜今週でできる小さな行動（5〜15分）</b>を1つずつ書きます。
+        </p>
+      </div>
+      <div class="btnrow">
+        <button id="btnCopySummary2" class="primary">📋 まとめをコピー</button>
+        <button id="btnPrint2" class="ghost">🖨️ 印刷</button>
+      </div>
+    </div>
+
+    <div class="pill">入力済み：<strong id="actionDone">0</strong>/3</div>
+    <div style="height:10px"></div>
+
+    <div id="actionContainer" class="actionList"></div>
+
+    <div class="note ok">
+      <b>コツ：</b>「完璧な行動」ではなく、<b>“今すぐできる小ささ”</b>にします。
+    </div>
+
+    <div class="note warn">
+      次へ進むには、<b>TOP3それぞれに行動が1つずつ</b>書かれている必要があります。
+    </div>
+  </section>
+
+  <!-- STEP 8 -->
+  <section class="step card" data-step="8">
+    <h1>終了</h1>
+    <p class="muted">
+      保存は完了しています（この端末のブラウザ内）。タブを閉じれば終了です。<br>
+      他端末へ移すなら、JSON書き出しを使ってください。
+    </p>
+
+    <div class="grid two">
+      <div class="card" style="box-shadow:none">
+        <h2>ここからできること</h2>
+        <div class="btnrow" style="margin-top:10px">
+          <button id="btnCloseTab" class="primary">タブを閉じる（可能なら）</button>
+          <button id="btnGoHome" class="ghost">最初へ戻る</button>
+          <button id="btnExportBottom" class="ghost">JSON書き出し</button>
+        </div>
+        <div class="note warn" style="margin-top:12px">
+          ブラウザの仕様で、ボタンからタブを閉じられない場合があります。その場合は通常どおりタブ/ウィンドウを閉じてください。
+        </div>
+      </div>
+
+      <div class="card" style="box-shadow:none">
+        <h2>データを完全に消す</h2>
+        <p class="muted">この端末の保存データ（回答・選択・分類・行動）をすべて消去します。</p>
+        <button id="btnResetBottom" class="danger">すべて一括消去（初期化）</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer navigation -->
+<div class="footerBar" id="footerBar">
+  <div class="wrap">
+    <div class="tiny">自動保存：この端末のブラウザ内（通信なし）</div>
+    <div class="right">
+      <button id="btnBack" class="ghost">◀ 戻る</button>
+      <button id="btnNext" class="primary">次へ ▶</button>
+    </div>
   </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-  // 60項目に相当するリスト（Russ Harris 2010 を基に、日英+短い説明で整理）
-  const DEFAULT_VALUES = [
-    {id:"acceptance",en:"Acceptance",ja:"受容",desc:"自分・他者・人生に対して、開かれた姿勢で受けとめる"},
-    {id:"adventure",en:"Adventure",ja:"冒険",desc:"新しい/刺激的な経験を求め、探究する"},
-    {id:"assertiveness",en:"Assertiveness",ja:"適切な自己主張",desc:"相手を尊重しつつ、権利を守り望みを伝える"},
-    {id:"authenticity",en:"Authenticity",ja:"真正さ（自分らしさ）",desc:"本音に忠実に、偽りなく生きる"},
-    {id:"beauty",en:"Beauty",ja:"美",desc:"美しさを味わい、育み、創る"},
-    {id:"caring",en:"Caring",ja:"ケア/配慮",desc:"自分・他者・環境を大切にし、いたわる"},
-    {id:"challenge",en:"Challenge",ja:"挑戦",desc:"成長のために挑み、学び、改善する"},
-    {id:"compassion",en:"Compassion",ja:"コンパッション",desc:"苦しむ人（自分を含む）にやさしさで関わる"},
-    {id:"connection",en:"Connection",ja:"つながり/関与",desc:"今していること・相手に十分に関わり、存在する"},
-    {id:"contribution",en:"Contribution",ja:"貢献",desc:"役に立ち、良い影響を残す"},
-    {id:"conformity",en:"Conformity",ja:"規範順守",desc:"ルールや義務を尊重し、守る"},
-    {id:"cooperation",en:"Cooperation",ja:"協働",desc:"協力し、共同で進める"},
-    {id:"courage",en:"Courage",ja:"勇気",desc:"怖さがあっても、大事な方向へ進む"},
-    {id:"creativity",en:"Creativity",ja:"創造性",desc:"工夫し、新しいものを生み出す"},
-    {id:"curiosity",en:"Curiosity",ja:"好奇心",desc:"開かれた姿勢で探究し、学ぶ"},
-    {id:"encouragement",en:"Encouragement",ja:"励まし",desc:"望ましい行動を支え、称え、促進する"},
-    {id:"equality",en:"Equality",ja:"平等",desc:"自分と同じように相手を対等に扱う"},
-    {id:"excitement",en:"Excitement",ja:"刺激/ワクワク",desc:"活気や高揚感のある活動を作り、関わる"},
-    {id:"fairness",en:"Fairness",ja:"公正",desc:"自分にも他者にも公平に接する"},
-    {id:"fitness",en:"Fitness",ja:"健康・体力",desc:"心身の健康とウェルビーイングを整える"},
-    {id:"flexibility",en:"Flexibility",ja:"柔軟性",desc:"状況の変化に適応し、しなやかに対応する"},
-    {id:"freedom",en:"Freedom",ja:"自由",desc:"自分で選んで生き、他者の自由も尊重する"},
-    {id:"friendliness",en:"Friendliness",ja:"親しみやすさ",desc:"友好的で、感じよく関わる"},
-    {id:"forgiveness",en:"Forgiveness",ja:"許し",desc:"自分や他者を許し、やり直しの余地を持つ"},
-    {id:"fun",en:"Fun",ja:"楽しさ",desc:"遊び心を持ち、楽しい活動に関わる"},
-    {id:"generosity",en:"Generosity",ja:"寛大さ",desc:"分かち合い、与える"},
-    {id:"gratitude",en:"Gratitude",ja:"感謝",desc:"良い側面に気づき、ありがたく思う"},
-    {id:"honesty",en:"Honesty",ja:"正直",desc:"真実で誠実にふるまう"},
-    {id:"humour",en:"Humour",ja:"ユーモア",desc:"人生の面白さを見出し、味わう"},
-    {id:"humility",en:"Humility",ja:"謙虚",desc:"控えめで、成果を誇示しない"},
-    {id:"industry",en:"Industry",ja:"勤勉",desc:"真面目に努力し、やり抜く"},
-    {id:"independence",en:"Independence",ja:"自立",desc:"自分で支え、自分のやり方を選ぶ"},
-    {id:"intimacy",en:"Intimacy",ja:"親密さ",desc:"親しい関係で、感情や身体を開き共有する"},
-    {id:"justice",en:"Justice",ja:"正義",desc:"正しさや公平を守る"},
-    {id:"kindness",en:"Kindness",ja:"優しさ",desc:"思いやり深く、あたたかく接する"},
-    {id:"love",en:"Love",ja:"愛",desc:"愛情深く、慈しみをもって関わる"},
-    {id:"mindfulness",en:"Mindfulness",ja:"マインドフルネス",desc:"今この瞬間の体験に気づき、開いている"},
-    {id:"order",en:"Order",ja:"秩序/整理",desc:"整え、計画し、筋道を立てる"},
-    {id:"open_mindedness",en:"Open-mindedness",ja:"開放性（オープンマインド）",desc:"多様な視点を検討し、根拠を公平に扱う"},
-    {id:"patience",en:"Patience",ja:"忍耐",desc:"落ち着いて待ち、急がない"},
-    {id:"persistence",en:"Persistence",ja:"粘り強さ",desc:"困難があっても続ける"},
-    {id:"pleasure",en:"Pleasure",ja:"喜び",desc:"喜びを作り、与え、受け取る"},
-    {id:"power",en:"Power",ja:"影響力",desc:"方向づけ、先導し、物事を動かす"},
-    {id:"reciprocity",en:"Reciprocity",ja:"相互性",desc:"与える/受け取るのバランスある関係を作る"},
-    {id:"respect",en:"Respect",ja:"尊重",desc:"礼儀と敬意をもって接する"},
-    {id:"responsibility",en:"Responsibility",ja:"責任",desc:"自分の行動に責任を持ち、説明できる"},
-    {id:"romance",en:"Romance",ja:"ロマンス",desc:"恋愛的な愛情を表現する"},
-    {id:"safety",en:"Safety",ja:"安全",desc:"自分や他者の安全を確保し守る"},
-    {id:"self_awareness",en:"Self-awareness",ja:"自己理解",desc:"自分の思考・感情・行動に気づく"},
-    {id:"self_care",en:"Self-care",ja:"セルフケア",desc:"ニーズを満たし、心身を整える"},
-    {id:"self_development",en:"Self-development",ja:"自己成長",desc:"知識・技能・人格・経験を伸ばす"},
-    {id:"self_control",en:"Self-control",ja:"自己統制",desc:"衝動ではなく、理想に沿って行動する"},
-    {id:"sensuality",en:"Sensuality",ja:"五感を味わう",desc:"五感を刺激する体験を探索し味わう"},
-    {id:"sexuality",en:"Sexuality",ja:"セクシュアリティ",desc:"性を探索/表現する（自分に合う形で）"},
-    {id:"spirituality",en:"Spirituality",ja:"スピリチュアリティ",desc:"自分を超えたもの（自然/宗教/共同体など）とつながる"},
-    {id:"skilfulness",en:"Skilfulness",ja:"熟達（技能）",desc:"技能を磨き、使う時は十分に没頭する"},
-    {id:"supportiveness",en:"Supportiveness",ja:"支援",desc:"支え、助け、励まし、利用可能でいる"},
-    {id:"trust",en:"Trust",ja:"信頼",desc:"誠実で頼りになり、忠実である"},
-  ];
+/* ============================================================
+   Core Value Radar App v5
+   - Step3: (internal) +1 point each (not shown)
+   - Step5: show recommended axis, preselect recommended
+   - Scoring:
+        base 2 + step3 1 + rankExtra [4,3,3,2,1] to the selected axis
+     => total per rank: [7,6,6,5,4]
+   - Radar labels: smaller & auto-fit; axis names: 勝利/信念/調和/自己決定
+   - Remove point % labels on radar
+   - resultNumbers: split into 3 lines
+============================================================ */
 
-  // Top3の「行動例」テンプレ（臨床にも転用しやすい）
-  const ACTION_EXAMPLES = {
-    respect: [
-      "患者/家族の言葉を遮らず、要点を復唱して『理解の一致』を作る",
-      "選択肢提示の前に『何を大事にしたいか』を1つ質問してから提案する",
-      "価値観が違っても評価せず『そう感じる理由』を好奇心で聞く"
-    ],
-    compassion: [
-      "苦痛のサインに気づいたら、まず『つらさ』を言語化して受け止める（例：それはしんどいですね）",
-      "自分にも同じ優しさを向ける：当直明けは10分だけ回復行動を確保する",
-      "失敗や葛藤を責めず、次の一手を小さく決める（何が1%良くなる？）"
-    ],
-    honesty: [
-      "不確実性は不確実性として伝える（分かっている点/分からない点を分ける）",
-      "都合の悪い情報でも、タイミングと配慮を選んで誠実に共有する",
-      "記録は『事実・解釈・方針』を分けて書き、誤解を減らす"
-    ],
-    safety: [
-      "リスクが高い場面では、先に安全確認（転倒/誤嚥/せん妄）をチェックしてから介入する",
-      "重要決定は“1人で抱えない”：ダブルチェック/相談先を必ず確保する",
-      "薬剤・手技は『目的→副作用→観察点』をセットで共有する"
-    ],
-    mindfulness: [
-      "次の患者に入る前に、10秒だけ呼吸に注意を向けてリセットする",
-      "感情が強い時は『いま怒り/不安が来ている』とラベリングして行動を選ぶ",
-      "会話中は“次の返答”よりも『相手の言葉の最後まで』に注意を置く"
-    ],
-    responsibility: [
-      "約束したことは『いつ/どこで/誰が』まで具体化して実行する",
-      "問題が起きたら、言い訳より先に『次の対策』を1つ提示する",
-      "チームに影響する判断は、根拠と限界を添えて共有する"
-    ],
-    kindness: [
-      "忙しい時ほど、最初の一言を丁寧に（名前を呼ぶ/挨拶/短い共感）",
-      "相手の努力に具体的フィードバックを返す（何が良かったか）",
-      "自分への優しさ：睡眠・食事・休憩の最低ラインを守る"
-    ],
-    courage: [
-      "言いにくいことほど、目的（患者利益/チーム安全）を言葉にしてから伝える",
-      "対立が起きたら“勝つ”より“合意可能点”を探す質問を置く",
-      "避けている課題を10分だけ着手する（小さく始める）"
-    ],
-  };
+const STORAGE_KEY_V5 = "coreValueRadarApp_v5";
+const STORAGE_KEY_V4 = "coreValueRadarApp_v4";
+const STORAGE_KEY_V3 = "coreValueRadarApp_v3";
+const STORAGE_KEY_V2 = "coreValueRadarApp_v2";
+const STORAGE_KEY_V1 = "coreValueRadarApp_v1";
 
-  function examplesFor(valueId, jaLabel){
-    if (ACTION_EXAMPLES[valueId]) return ACTION_EXAMPLES[valueId];
-    return [
-      `『${jaLabel}』を意識して、今週1回“いつもより丁寧にやる行動”を1つ決める`,
-      `『${jaLabel}』を邪魔している要因を1つ特定し、対策を小さく1つ試す`,
-      `『${jaLabel}』を体現している人を観察し、真似できる行動を1つ取り入れる`,
-    ];
+const STEPS = 9;          // 0..8
+const TOP_N = 5;
+const RANK_N = TOP_N;
+
+const AXES = [
+  {key:"v", label:"勝利", color:getCSS("--v")},
+  {key:"b", label:"信念", color:getCSS("--b")},   // 信念（短縮）
+  {key:"h", label:"調和", color:getCSS("--h")},
+  {key:"a", label:"自己決定", color:getCSS("--a")},
+];
+
+// 推奨（もとの分類）マップ
+const RECOMMEND_AXIS = {
+  // 勝利
+  achieve:"v", challenge:"v", results:"v", excellence:"v", growth:"v", competition:"v", influence:"v",
+  // 調和
+  harmony:"h", kindness:"h", cooperation:"h", gratitude:"h", family:"h", friendship:"h", contribution:"h", balance:"h",
+  // 自己決定
+  freedom:"a", authenticity:"a", independence:"a", selfcare:"a", boundaries:"a", inquiry:"a",
+  // 信念
+  belief:"b", truth:"b", ideal:"b", mission:"b", consistency:"b", patience:"b", courage:"b",
+};
+function recommendedAxis(id){ return RECOMMEND_AXIS[id] || null; }
+
+const BASE_VALUES = [
+  {id:"achieve", name:"達成", hint:"やり遂げる"},
+  {id:"challenge", name:"挑戦", hint:"難題に踏み込む"},
+  {id:"results", name:"良い結果", hint:"成果を積む"},
+  {id:"excellence", name:"卓越", hint:"腕を磨く"},
+  {id:"growth", name:"成長", hint:"伸び続ける"},
+  {id:"competition", name:"競争", hint:"勝負する"},
+  {id:"influence", name:"影響力", hint:"周囲を動かす"},
+  {id:"harmony", name:"調和", hint:"関係の安定"},
+  {id:"kindness", name:"思いやり", hint:"相手に優しく"},
+  {id:"cooperation", name:"協力", hint:"一緒に進める"},
+  {id:"gratitude", name:"感謝", hint:"ありがたさ"},
+  {id:"family", name:"家族", hint:"大切なつながり"},
+  {id:"friendship", name:"友情", hint:"仲間を大事に"},
+  {id:"contribution", name:"貢献", hint:"役に立つ"},
+  {id:"freedom", name:"自由", hint:"裁量と余白"},
+  {id:"authenticity", name:"誠実さ", hint:"自分にも他者にも"},
+  {id:"independence", name:"独立", hint:"依存を減らす"},
+  {id:"selfcare", name:"セルフケア", hint:"整える"},
+  {id:"boundaries", name:"境界線", hint:"無理を減らす"},
+  {id:"inquiry", name:"探究", hint:"理解を深める"},
+  {id:"belief", name:"信念", hint:"筋を通す"},
+  {id:"truth", name:"真実の追求", hint:"本質へ向かう"},
+  {id:"ideal", name:"理想", hint:"あるべき姿"},
+  {id:"mission", name:"使命", hint:"意味の中心"},
+  {id:"consistency", name:"一貫性", hint:"ブレない"},
+  {id:"patience", name:"忍耐", hint:"続ける力"},
+  {id:"courage", name:"勇気", hint:"怖くても進む"},
+  {id:"balance", name:"バランス", hint:"偏りを減らす"},
+];
+
+const QUIZ = [
+  {q:"うまくいったと感じる瞬間は？", opts:[
+    {t:"結果が出た／勝てた", axis:"v"},
+    {t:"関係が穏やかで、皆が安心している", axis:"h"},
+    {t:"自分で決めて動けた", axis:"a"},
+    {t:"筋を通してやり切れた", axis:"b"},
+  ]},
+  {q:"衝突が起きたとき、最優先で守りたいのは？", opts:[
+    {t:"成果や勝ち筋", axis:"v"},
+    {t:"関係性・空気の安定", axis:"h"},
+    {t:"自分の裁量・選択権", axis:"a"},
+    {t:"原理原則・ブレない軸", axis:"b"},
+  ]},
+  {q:"疲れているときに回復するのは？", opts:[
+    {t:"前進できる見通しが立つ", axis:"v"},
+    {t:"誰かと分かち合えて安心できる", axis:"h"},
+    {t:"一人の時間で整えられる", axis:"a"},
+    {t:"意味や理想を再確認できる", axis:"b"},
+  ]},
+  {q:"どんな評価がいちばん嬉しい？", opts:[
+    {t:"結果を出す人", axis:"v"},
+    {t:"一緒にいると安心できる人", axis:"h"},
+    {t:"自分の考えで判断できる人", axis:"a"},
+    {t:"筋が通っていてブレない人", axis:"b"},
+  ]},
+  {q:"仕事で燃えるのは？", opts:[
+    {t:"難題を攻略する", axis:"v"},
+    {t:"チームが良い雰囲気で回る", axis:"h"},
+    {t:"裁量があり自律的に動ける", axis:"a"},
+    {t:"使命や理想に近づく", axis:"b"},
+  ]},
+  {q:"後悔しやすいのは？", opts:[
+    {t:"成果を落とした／負けた", axis:"v"},
+    {t:"関係を壊した／空気を悪くした", axis:"h"},
+    {t:"他人に決められて動いた", axis:"a"},
+    {t:"筋を曲げた／裏切った感覚", axis:"b"},
+  ]},
+  {q:"（幸福に近いのは？）", opts:[
+    {t:"成功・良い結果", axis:"v"},
+    {t:"仲の良さ・平和な関係", axis:"h"},
+    {t:"自由（裁量・余白）", axis:"a"},
+    {t:"真実の追求・一貫性", axis:"b"},
+  ]},
+  {q:"（満足に近いのは？）", opts:[
+    {t:"目標を達成できる", axis:"v"},
+    {t:"受け入れられる／関係が良い", axis:"h"},
+    {t:"自分で決めて進められる", axis:"a"},
+    {t:"筋が通り、続けられる", axis:"b"},
+  ]},
+  {q:"難しい選択のとき、あなたの決め手は？", opts:[
+    {t:"最も成果が出る", axis:"v"},
+    {t:"関係が壊れにくい", axis:"h"},
+    {t:"自分が納得して選べる", axis:"a"},
+    {t:"原理原則に沿っている", axis:"b"},
+  ]},
+  {q:"理想と現実のギャップに直面したら？", opts:[
+    {t:"現実的に勝てる設計に調整する", axis:"v"},
+    {t:"周りを巻き込める形に調整する", axis:"h"},
+    {t:"自分の範囲でできることに絞る", axis:"a"},
+    {t:"理想を守りつつ“続け方”を調整する", axis:"b"},
+  ]},
+  {q:"周りに提供したい価値は？", opts:[
+    {t:"成果・結果", axis:"v"},
+    {t:"安心・雰囲気", axis:"h"},
+    {t:"独立した判断・自由", axis:"a"},
+    {t:"一貫した軸・意味", axis:"b"},
+  ]},
+  {q:"自分が詰みやすい罠に近いのは？", opts:[
+    {t:"目標が高すぎて苦しくなる", axis:"v"},
+    {t:"協調しすぎて疲れる", axis:"h"},
+    {t:"自由を守るため距離を取りすぎる", axis:"a"},
+    {t:"理想が現実から離れすぎる", axis:"b"},
+  ]},
+];
+
+// helpers
+const clamp = (n,min,max)=> Math.max(min, Math.min(max,n));
+function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
+function getCSS(varName){ return getComputedStyle(document.documentElement).getPropertyValue(varName).trim(); }
+function escapeHtml(str){
+  return String(str ?? "").replace(/[&<>"']/g, s=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[s]);
+}
+function toast(msg){
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=> el.classList.remove("show"), 2200);
+}
+function fisherYates(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+  return arr;
+}
 
-  function nowIso(){return new Date().toISOString();}
-  function safeId(prefix="id"){return (crypto?.randomUUID?prefix+"_"+crypto.randomUUID():prefix+"_"+Math.random().toString(16).slice(2)+"_"+Date.now());}
+// scoring config
+const BASE_POINTS = 2;             // Step5 基礎点
+const STEP3_BONUS = 1;             // Step3 1点（表示なし）
+const RANK_EXTRA = [4,3,3,2,1];     // Top1..Top5
 
-  const STORAGE_KEY = "actValuesApp.v2.current";
+function pointsForPos(pos){
+  return BASE_POINTS + STEP3_BONUS + (RANK_EXTRA[pos] ?? 0); // => [7,6,6,5,4]
+}
 
-  const State = {
+function defaultState(){
+  return {
     step: 0,
-    createdAt: nowIso(),
-    domain: "",
-    domainOther: "",
-    values: JSON.parse(JSON.stringify(DEFAULT_VALUES)),
-    customValues: [],
+    values: deepCopy(BASE_VALUES),
+    valueOrder: [],
     starred: {},
-    top10: {},
-    ranking: [],
-    rankAssign: {},
-    notes: {},
+    top: {},
+    ranking: Array(RANK_N).fill(null),
+    valueAxis: {},
+    actions: {},
+    quizAnswers: Array(QUIZ.length).fill(null), // store axis key "v/h/a/b"
+    quizOptionOrder: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
+}
 
-  function loadState(){
+let state = defaultState();
+
+// init with migration
+(function init(){
+  const savedV5 = localStorage.getItem(STORAGE_KEY_V5);
+  const savedV4 = localStorage.getItem(STORAGE_KEY_V4);
+  const savedV3 = localStorage.getItem(STORAGE_KEY_V3);
+  const savedV2 = localStorage.getItem(STORAGE_KEY_V2);
+  const savedV1 = localStorage.getItem(STORAGE_KEY_V1);
+
+  if(savedV5){
+    try{ state = migrate(JSON.parse(savedV5)); }
+    catch(e){ console.warn(e); localStorage.removeItem(STORAGE_KEY_V5); state = defaultState(); }
+  } else if(savedV4 || savedV3 || savedV2 || savedV1){
     try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return;
-      const obj = JSON.parse(raw);
-      if(!obj || typeof obj!=="object") return;
-      Object.assign(State,obj);
-      if(typeof State.step !== "number") State.step = 0;
-      if(!Array.isArray(State.values) || State.values.length < 40) State.values = JSON.parse(JSON.stringify(DEFAULT_VALUES));
-      if(!Array.isArray(State.customValues)) State.customValues = [];
-      if(!State.starred) State.starred = {};
-      if(!State.top10) State.top10 = {};
-      if(!Array.isArray(State.ranking)) State.ranking = [];
-      if(!State.rankAssign || typeof State.rankAssign !== "object") State.rankAssign = {};
-      if(!State.notes || typeof State.notes !== "object") State.notes = {};
-    }catch(e){console.warn(e);}
+      const parsed = JSON.parse(savedV4 || savedV3 || savedV2 || savedV1);
+      state = migrate(parsed);
+      localStorage.setItem(STORAGE_KEY_V5, JSON.stringify(state));
+    }catch(e){
+      console.warn(e);
+      state = defaultState();
+    }
   }
 
-  function persistState(){
-    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(State)); }catch(e){ console.warn(e); }
+  bindUI();
+  renderAll();
+})();
+
+function migrate(parsed){
+  const s = {...defaultState(), ...parsed};
+
+  // values: keep base + custom, cap 30
+  const baseById = Object.fromEntries(BASE_VALUES.map(v=>[v.id,v]));
+  const cur = Array.isArray(s.values) ? s.values : deepCopy(BASE_VALUES);
+  const customs = cur.filter(v=>!baseById[v.id]);
+  s.values = [...deepCopy(BASE_VALUES), ...customs].slice(0,30);
+
+  // quizAnswers length
+  if(!Array.isArray(s.quizAnswers)) s.quizAnswers = Array(QUIZ.length).fill(null);
+  if(s.quizAnswers.length !== QUIZ.length){
+    const a = Array(QUIZ.length).fill(null);
+    for(let i=0;i<Math.min(QUIZ.length, s.quizAnswers.length);i++) a[i]=s.quizAnswers[i];
+    s.quizAnswers = a;
   }
 
-  function allValues(){ return [...State.values, ...State.customValues]; }
-  function isStarred(id){ return !!State.starred[id]; }
-  function isTop(id){ return !!State.top10[id]; }
-  function starCount(){ return Object.keys(State.starred).filter(k=>State.starred[k]).length; }
-  function topCount(){ return Object.keys(State.top10).filter(k=>State.top10[k]).length; }
-
-  function topIds(){
-    return allValues().filter(v=>isTop(v.id)).map(v=>v.id);
+  // top migrate
+  if(!s.top || typeof s.top !== "object"){
+    if(s.top10 && typeof s.top10 === "object") s.top = s.top10;
+    else s.top = {};
   }
 
-  function normalizeRankAssign(){
-    const ids = topIds();
-    Object.keys(State.rankAssign).forEach(id=>{ if(!ids.includes(id)) delete State.rankAssign[id]; });
+  // ranking size
+  if(Array.isArray(s.ranking)){
+    if(s.ranking.length > RANK_N) s.ranking = s.ranking.slice(0, RANK_N);
+    while(s.ranking.length < RANK_N) s.ranking.push(null);
+  } else {
+    s.ranking = Array(RANK_N).fill(null);
+  }
 
-    const used = new Map();
-    const free = [];
-    for(let r=1;r<=10;r++) free.push(r);
+  // ensure top <=5
+  const ids = Object.keys(s.top || {});
+  if(ids.length > TOP_N){
+    // keep ranking ones first
+    const keep = [];
+    for(const id of s.ranking){
+      if(id && ids.includes(id) && !keep.includes(id)) keep.push(id);
+    }
+    for(const id of ids){
+      if(keep.length>=TOP_N) break;
+      if(!keep.includes(id)) keep.push(id);
+    }
+    s.top = {};
+    keep.forEach(id=> s.top[id]=true);
+  }
 
-    ids.forEach(id=>{
-      const r = Number(State.rankAssign[id]);
-      if(!r || r<1 || r>10) return;
-      if(used.has(r)){
-        delete State.rankAssign[id];
-      } else {
-        used.set(r,id);
-        const idx = free.indexOf(r);
-        if(idx>=0) free.splice(idx,1);
+  // valueAxis safety
+  if(!s.valueAxis || typeof s.valueAxis !== "object") s.valueAxis = {};
+  // actions safety
+  if(!s.actions || typeof s.actions !== "object") s.actions = {};
+
+  // valueOrder sync
+  if(!Array.isArray(s.valueOrder)) s.valueOrder = [];
+  syncValueOrder(s);
+
+  // quiz option order sync (fixed shuffle)
+  if(!Array.isArray(s.quizOptionOrder)) s.quizOptionOrder = [];
+  syncQuizOptionOrder(s);
+
+  s.step = clamp(Number(s.step ?? 0), 0, STEPS-1);
+  return s;
+}
+
+function syncValueOrder(s){
+  const ids = s.values.map(v=>v.id);
+  const set = new Set(ids);
+  s.valueOrder = (s.valueOrder || []).filter(id=>set.has(id));
+  for(const id of ids){
+    if(!s.valueOrder.includes(id)){
+      const idx = Math.floor(Math.random()*(s.valueOrder.length+1));
+      s.valueOrder.splice(idx, 0, id);
+    }
+  }
+  if(s.valueOrder.length === 0){
+    s.valueOrder = fisherYates(ids.slice());
+  }
+}
+function syncQuizOptionOrder(s){
+  for(let i=0;i<QUIZ.length;i++){
+    const L = QUIZ[i].opts.length;
+    const ok = Array.isArray(s.quizOptionOrder[i]) && s.quizOptionOrder[i].length === L
+               && new Set(s.quizOptionOrder[i]).size === L;
+    if(!ok){
+      s.quizOptionOrder[i] = fisherYates([...Array(L)].map((_,k)=>k));
+    }
+  }
+  s.quizOptionOrder = s.quizOptionOrder.slice(0, QUIZ.length);
+}
+
+function save(){
+  state.updatedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY_V5, JSON.stringify(state));
+  const lbl = document.getElementById("autosaveLabel");
+  lbl.textContent = "保存済み";
+  lbl.style.borderColor = "rgba(22,163,74,.35)";
+  lbl.style.color = "rgba(22,163,74,.95)";
+  clearTimeout(save._t);
+  save._t = setTimeout(()=>{
+    lbl.textContent = "自動保存";
+    lbl.style.borderColor = "";
+    lbl.style.color = "";
+  }, 1200);
+}
+
+/* ---------------- Navigation & Validation ---------------- */
+function validateStep(current){
+  if(current === 1){
+    const done = state.quizAnswers.filter(x=>x!==null && x!==undefined).length;
+    if(done < QUIZ.length){
+      toast("質問が未回答です（全問回答で次へ）");
+      return false;
+    }
+  }
+  if(current === 2){
+    const n = Object.keys(state.starred).length;
+    if(n < 10){
+      toast("⭐を10個以上つけてから次へ進みましょう");
+      return false;
+    }
+  }
+  if(current === 3){
+    const n = Object.keys(state.top).length;
+    if(n !== TOP_N){
+      toast("Top5はちょうど5個選んでください");
+      return false;
+    }
+  }
+  if(current === 4){
+    const filled = state.ranking.filter(Boolean);
+    const uniq = new Set(filled);
+    if(filled.length !== RANK_N){
+      toast("順位が未選択の箇所があります");
+      return false;
+    }
+    if(uniq.size !== RANK_N){
+      toast("順位に重複があります（同じ価値語が複数順位に選択されています）");
+      return false;
+    }
+    if(!filled.every(id=>state.top[id])){
+      toast("Top5以外が順位に混ざっています。選び直してください。");
+      return false;
+    }
+  }
+  if(current === 5){
+    const ids = state.ranking.filter(Boolean);
+    const done = ids.filter(id=>["v","h","a","b"].includes(state.valueAxis[id])).length;
+    if(done !== RANK_N){
+      toast("Top5の分類が未完了です（5個すべて選択してください）");
+      return false;
+    }
+  }
+  if(current === 7){
+    const top3 = state.ranking.slice(0,3);
+    if(top3.length !== 3 || top3.some(x=>!x)){
+      toast("TOP3が確定していません（順位を確認してください）");
+      return false;
+    }
+    for(let i=0;i<3;i++){
+      const id = top3[i];
+      const t = (state.actions?.[id] || "").trim();
+      if(!t){
+        toast("TOP3それぞれに「すぐにできる一歩」を書いてください");
+        return false;
       }
-    });
-
-    ids.forEach(id=>{
-      if(State.rankAssign[id]) return;
-      const r = free.shift();
-      if(r) State.rankAssign[id] = r;
-    });
-
-    State.ranking = ids
-      .map(id=>({id, r:Number(State.rankAssign[id])}))
-      .sort((a,b)=>a.r-b.r)
-      .map(x=>x.id);
-  }
-
-  function setRank(id, newRank){
-    const ids = topIds();
-    if(!ids.includes(id)) return;
-    const r = Number(newRank);
-    if(!r || r<1 || r>10) return;
-
-    const otherId = Object.keys(State.rankAssign).find(k => k!==id && Number(State.rankAssign[k])===r);
-    const prev = Number(State.rankAssign[id]);
-    if(otherId){
-      State.rankAssign[otherId] = prev;
     }
-    State.rankAssign[id] = r;
-    normalizeRankAssign();
-    persistState();
-    renderStep3();
+  }
+  return true;
+}
+
+function goTo(nextStep){
+  nextStep = clamp(nextStep, 0, STEPS-1);
+  if(nextStep > state.step){
+    if(!validateStep(state.step)) return;
+  }
+  state.step = nextStep;
+  save();
+  renderAll();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ---------------- Reset / Export / Import ---------------- */
+function resetAll(){
+  if(!confirm("保存データ（回答・選択・分類・行動）をすべて消去して初期化します。よろしいですか？")) return;
+  localStorage.removeItem(STORAGE_KEY_V5);
+  state = defaultState();
+  syncValueOrder(state);
+  syncQuizOptionOrder(state);
+  save();
+  toast("初期化しました");
+  renderAll();
+}
+function exportJSON(){
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "core_value_radar_backup.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  toast("JSONを書き出しました");
+}
+let _importInput = null;
+function importJSON(){ _importInput.click(); }
+
+/* ---------------- UI Bindings ---------------- */
+function bindUI(){
+  document.getElementById("btnStart").addEventListener("click", ()=> goTo(1));
+  document.getElementById("btnBack").addEventListener("click", ()=> goTo(state.step-1));
+  document.getElementById("btnNext").addEventListener("click", ()=> goTo(state.step+1));
+
+  document.getElementById("btnResetTop").addEventListener("click", resetAll);
+  document.getElementById("btnExportTop").addEventListener("click", exportJSON);
+  document.getElementById("btnImportTop").addEventListener("click", importJSON);
+
+  document.getElementById("btnResetBottom").addEventListener("click", resetAll);
+  document.getElementById("btnExportBottom").addEventListener("click", exportJSON);
+  document.getElementById("btnGoHome").addEventListener("click", ()=> goTo(0));
+  document.getElementById("btnCloseTab").addEventListener("click", ()=>{
+    window.close();
+    toast("閉じられない場合は通常どおりタブを閉じてください");
+  });
+
+  document.getElementById("valueSearch").addEventListener("input", renderValues);
+  document.getElementById("btnAddCustom").addEventListener("click", addCustomValue);
+
+  document.getElementById("btnFillMissing").addEventListener("click", fillMissingRanks);
+
+  document.getElementById("btnCopySummary").addEventListener("click", copySummary);
+  document.getElementById("btnPrint").addEventListener("click", ()=> window.print());
+  document.getElementById("btnCopySummary2").addEventListener("click", copySummary);
+  document.getElementById("btnPrint2").addEventListener("click", ()=> window.print());
+
+  // import
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json";
+  input.style.display = "none";
+  document.body.appendChild(input);
+  _importInput = input;
+  input.addEventListener("change", async ()=>{
+    if(!input.files || !input.files[0]) return;
+    const text = await input.files[0].text();
+    try{
+      const parsed = JSON.parse(text);
+      state = migrate(parsed);
+      save();
+      toast("読み込みました");
+      renderAll();
+    }catch(e){
+      console.warn(e);
+      toast("JSONの形式が不正です");
+    }finally{
+      input.value = "";
+    }
+  });
+
+  window.addEventListener("resize", ()=>{
+    if(state.step === 6) renderResults();
+  }, {passive:true});
+}
+
+/* ---------------- Render ---------------- */
+function renderAll(){
+  document.querySelectorAll(".step").forEach(sec=>{
+    sec.classList.toggle("active", Number(sec.dataset.step) === state.step);
+  });
+
+  document.getElementById("stepLabel").textContent = `Step ${state.step+1}/${STEPS}`;
+  document.getElementById("progressBar").style.width = `${(state.step)/(STEPS-1)*100}%`;
+
+  const footer = document.getElementById("footerBar");
+  footer.style.display = (state.step === 8) ? "none" : "block";
+
+  document.getElementById("btnBack").disabled = (state.step === 0);
+
+  const nextBtn = document.getElementById("btnNext");
+  if(state.step === 6) nextBtn.textContent = "TOP3の一歩へ ▶";
+  else if(state.step === 7) nextBtn.textContent = "終了へ ▶";
+  else nextBtn.textContent = "次へ ▶";
+  nextBtn.disabled = (state.step === 8);
+
+  if(state.step === 1) renderQuiz();
+  if(state.step === 2) renderValues();
+  if(state.step === 3) renderTop5();
+  if(state.step === 4) renderRanking();
+  if(state.step === 5) renderAxisPick();
+  if(state.step === 6) renderResults();
+  if(state.step === 7) renderActions();
+
+  updateCounts();
+}
+
+function updateCounts(){
+  const sc = document.getElementById("starCount");
+  if(sc) sc.textContent = Object.keys(state.starred).length;
+
+  const tc = document.getElementById("topCount");
+  if(tc) tc.textContent = Object.keys(state.top).length;
+
+  const done = state.quizAnswers.filter(x=>x!==null && x!==undefined).length;
+  const qd = document.getElementById("quizDone");
+  const qt = document.getElementById("quizTotal");
+  if(qd) qd.textContent = done;
+  if(qt) qt.textContent = QUIZ.length;
+
+  const axisDoneEl = document.getElementById("axisDone");
+  if(axisDoneEl){
+    const ids = state.ranking.filter(Boolean);
+    const d = ids.filter(id=>["v","h","a","b"].includes(state.valueAxis[id])).length;
+    axisDoneEl.textContent = d;
   }
 
-  function escapeHtml(s){
-    return String(s)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
+  const miss = document.getElementById("rankMissing");
+  if(miss){
+    const missing = countRankMissing();
+    miss.textContent = missing;
   }
 
-  function updateHeaderCounters(){
-    document.getElementById("stepLabel").textContent = String(State.step);
-    document.getElementById("starCount").textContent = String(starCount());
-    document.getElementById("topCount").textContent = String(topCount());
-
-    const s0 = document.getElementById("s0");
-    const s1 = document.getElementById("s1");
-    const s2 = document.getElementById("s2");
-    const s3 = document.getElementById("s3");
-    const s4 = document.getElementById("s4");
-    [s0,s1,s2,s3,s4].forEach(el=>el.classList.remove("on"));
-    if(State.step===0) s0.classList.add("on");
-    if(State.step===1) s1.classList.add("on");
-    if(State.step===2) s2.classList.add("on");
-    if(State.step===3) s3.classList.add("on");
-    if(State.step===4) s4.classList.add("on");
+  const actionDoneEl = document.getElementById("actionDone");
+  if(actionDoneEl){
+    const top3 = state.ranking.slice(0,3).filter(Boolean);
+    let count = 0;
+    for(const id of top3){
+      if((state.actions?.[id] || "").trim()) count++;
+    }
+    actionDoneEl.textContent = count;
   }
+}
 
-  function setStep(step){
-    State.step = step;
-    persistState();
-    render();
-  }
+/* ---------------- Step1 Quiz (fixed shuffle) ---------------- */
+function renderQuiz(){
+  syncQuizOptionOrder(state);
+  const container = document.getElementById("quizContainer");
+  container.innerHTML = "";
 
-  function cardTemplate(v, mode){
-    const starred = isStarred(v.id);
-    const topped = isTop(v.id);
+  QUIZ.forEach((qq, i)=>{
+    const box = document.createElement("div");
+    box.className = "quizBox";
+    box.innerHTML = `
+      <div class="qTitle">Q${i+1}. ${escapeHtml(qq.q)}</div>
+      <div class="options" id="opts_${i}"></div>
+    `;
+    const opts = box.querySelector(`#opts_${i}`);
+    const order = state.quizOptionOrder[i] || [...Array(qq.opts.length)].map((_,k)=>k);
 
-    const el = document.createElement("div");
-    el.className = "card";
+    order.forEach((k)=>{
+      const op = qq.opts[k];
+      const sel = state.quizAnswers[i] === op.axis;
 
-    const top = document.createElement("div");
-    top.className = "top";
-
-    const title = document.createElement("div");
-    const h3 = document.createElement("h3");
-    h3.textContent = v.ja + (v.en ? " / "+v.en : "");
-    const p = document.createElement("p");
-    p.textContent = v.desc || "";
-    title.appendChild(h3);
-    title.appendChild(p);
-
-    const tag = document.createElement("span");
-    tag.className = "tag";
-    tag.textContent = v.custom ? "カスタム" : "Russ Harris";
-
-    top.appendChild(title);
-    top.appendChild(tag);
-
-    const actions = document.createElement("div");
-    actions.className = "actions";
-
-    const starBtn = document.createElement("button");
-    starBtn.type = "button";
-    starBtn.className = "btn mini " + (starred ? "primary" : "");
-    starBtn.textContent = starred ? "⭐ 済み" : "⭐ 付ける";
-    starBtn.addEventListener("click", ()=>{
-      State.starred[v.id] = !isStarred(v.id);
-      if(!State.starred[v.id]){
-        State.top10[v.id] = false;
-        delete State.rankAssign[v.id];
-      }
-      persistState();
-      render();
-    });
-    actions.appendChild(starBtn);
-
-    if(mode === "step2"){
-      const topBtn = document.createElement("button");
-      topBtn.type = "button";
-      topBtn.className = "btn mini " + (topped ? "primary" : "");
-      topBtn.textContent = topped ? "◯ TOP10" : "◯ 選ぶ";
-      topBtn.addEventListener("click", ()=>{
-        if(isTop(v.id)){
-          State.top10[v.id] = false;
-          delete State.rankAssign[v.id];
-        } else {
-          if(topCount() >= 10){
-            alert("◯は10個までです。別の項目の◯を外してから選んでください。");
-            return;
-          }
-          State.top10[v.id] = true;
-        }
-        persistState();
-        render();
+      const opt = document.createElement("div");
+      opt.className = "opt" + (sel ? " sel" : "");
+      opt.innerHTML = `
+        <div class="dot" aria-hidden="true"></div>
+        <div class="txt">${escapeHtml(op.t)}</div>
+      `;
+      opt.addEventListener("click", ()=>{
+        state.quizAnswers[i] = op.axis;
+        save();
+        renderQuiz();
+        updateCounts();
       });
-      actions.appendChild(topBtn);
-    }
+      opts.appendChild(opt);
+    });
 
-    if(v.custom){
-      const del = document.createElement("button");
-      del.type = "button";
-      del.className = "btn mini danger";
-      del.textContent = "削除";
-      del.addEventListener("click", ()=>{
-        if(!confirm("このカスタム価値観を削除しますか？")) return;
-        State.customValues = State.customValues.filter(x=>x.id!==v.id);
-        delete State.starred[v.id];
-        delete State.top10[v.id];
-        delete State.rankAssign[v.id];
-        persistState();
-        render();
-      });
-      actions.appendChild(del);
-    }
+    container.appendChild(box);
+  });
+}
 
-    el.appendChild(top);
-    el.appendChild(actions);
-    return el;
+/* ---------------- Step2 Values (Star) ---------------- */
+function renderValues(){
+  syncValueOrder(state);
+  const grid = document.getElementById("valueGrid");
+  grid.innerHTML = "";
+  const q = (document.getElementById("valueSearch").value || "").trim().toLowerCase();
+
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+  const ordered = state.valueOrder.map(id=>valuesById[id]).filter(Boolean);
+
+  const values = ordered.filter(v=>{
+    if(!q) return true;
+    const s = (v.name + " " + (v.hint||"")).toLowerCase();
+    return s.includes(q);
+  });
+
+  values.forEach(v=>{
+    const starred = !!state.starred[v.id];
+    const card = document.createElement("div");
+    card.className = "valueCard";
+    card.innerHTML = `
+      <div>
+        <div class="valueName">${escapeHtml(v.name)}</div>
+        <div class="valueSub">${escapeHtml(v.hint||"")}</div>
+      </div>
+      <div class="mark"><span class="${starred ? "star" : "mutemark"}">${starred ? "⭐" : "☆"}</span></div>
+    `;
+    card.addEventListener("click", ()=> toggleStar(v.id));
+    grid.appendChild(card);
+  });
+}
+
+function toggleStar(id){
+  if(state.starred[id]){
+    delete state.starred[id];
+    if(state.top[id]) delete state.top[id];
+    state.ranking = state.ranking.map(x => x === id ? null : x);
+    delete state.valueAxis[id];
+    delete state.actions[id];
+  } else {
+    state.starred[id] = true;
+  }
+  save();
+  renderValues();
+  renderTop5();
+  updateCounts();
+}
+
+function addCustomValue(){
+  const input = document.getElementById("customValueInput");
+  const name = (input.value || "").trim();
+  if(!name){ toast("追加する価値語を入力してください"); return; }
+
+  if(state.values.length >= 30){
+    toast("項目は最大30までです（これ以上追加できません）");
+    return;
   }
 
-  function renderStep1(){
-    const total = allValues().length;
-    document.getElementById("totalCount").textContent = String(total);
-
-    const cards = document.getElementById("cards1");
-    cards.innerHTML = "";
-    allValues().forEach(v=>cards.appendChild(cardTemplate(v, "step1")));
-
-    const sc = starCount();
-    document.getElementById("warnStar").classList.toggle("hide", sc>=10);
-    document.getElementById("btnToStep2").disabled = sc<10;
+  const baseById = Object.fromEntries(BASE_VALUES.map(v=>[v.id,v]));
+  const customs = state.values.filter(v=>!baseById[v.id]);
+  if(customs.length >= 2){
+    toast("追加は最大2つまでです");
+    return;
   }
 
-  function renderStep2(){
-    const starredValues = allValues().filter(v=>isStarred(v.id));
-    document.getElementById("starredCount2").textContent = String(starredValues.length);
-    document.getElementById("topCount2").textContent = String(topCount());
+  const exists = state.values.some(v=>v.name === name);
+  if(exists){ toast("同じ名前がすでにあります"); input.value=""; return; }
 
-    const cards = document.getElementById("cards2");
-    cards.innerHTML = "";
-    if(starredValues.length===0){
-      const div = document.createElement("div");
-      div.className = "notice danger";
-      div.innerHTML = "<strong>⭐が1つもありません</strong><br/><small>ステップ1に進んで、まずは候補に⭐を付けてください。</small>";
-      cards.appendChild(div);
-    } else {
-      starredValues.forEach(v=>cards.appendChild(cardTemplate(v, "step2")));
-    }
+  const id = "custom_" + Math.random().toString(16).slice(2) + "_" + Date.now();
+  const v = {id, name, hint:"（追加）"};
+  state.values.push(v);
+  state.starred[id] = true;
 
-    const tc = topCount();
-    document.getElementById("warnTop").classList.toggle("hide", tc===10);
-    document.getElementById("btnToStep3").disabled = tc!==10;
+  syncValueOrder(state);
+  const idx = Math.floor(Math.random()*(state.valueOrder.length+1));
+  state.valueOrder.splice(idx, 0, id);
+
+  input.value = "";
+  save();
+  renderValues();
+  toast("追加しました（⭐も付けました）");
+}
+
+/* ---------------- Step3 Top5 selection ---------------- */
+function renderTop5(){
+  const grid = document.getElementById("topGrid");
+  if(!grid) return;
+  grid.innerHTML = "";
+
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+  syncValueOrder(state);
+
+  const starredOrdered = state.valueOrder
+    .filter(id=>state.starred[id])
+    .map(id=>valuesById[id])
+    .filter(Boolean);
+
+  if(starredOrdered.length === 0){
+    grid.innerHTML = `<div class="note danger"><b>⭐がありません。</b>前のステップで⭐を付けてください。</div>`;
+    return;
   }
 
-  function renderStep3(){
-    const ids = topIds();
-    normalizeRankAssign();
-    document.getElementById("topCount3").textContent = String(State.ranking.length);
+  starredOrdered.forEach(v=>{
+    const chosen = !!state.top[v.id];
 
-    const list = document.getElementById("rankList");
-    list.innerHTML = "";
+    const card = document.createElement("div");
+    card.className = "valueCard" + (chosen ? " topSel" : "");
+    card.innerHTML = `
+      <div>
+        <div class="valueName">${escapeHtml(v.name)}</div>
+        <div class="valueSub">${escapeHtml(v.hint||"")}</div>
+      </div>
+      <div class="mark">
+        <span class="star">⭐</span>
+        ${chosen ? `<span class="topTag">Top5</span>` : ``}
+      </div>
+    `;
+    card.addEventListener("click", ()=> toggleTop(v.id));
+    grid.appendChild(card);
+  });
 
-    if(ids.length !== 10){
-      const div = document.createElement("div");
-      div.className = "notice danger";
-      div.innerHTML = "<strong>TOP10が揃っていません</strong><br/><small>ステップ2で◯をちょうど10個にしてください。</small>";
-      list.appendChild(div);
-      document.getElementById("btnToStep4").disabled = true;
+  updateCounts();
+}
+
+function toggleTop(id){
+  if(!state.starred[id]){
+    toast("まず⭐を付けてください");
+    return;
+  }
+  if(state.top[id]){
+    delete state.top[id];
+    state.ranking = state.ranking.map(x=> x===id ? null : x);
+    delete state.valueAxis[id];
+    delete state.actions[id];
+  } else {
+    const n = Object.keys(state.top).length;
+    if(n >= TOP_N){
+      toast("Top5は最大5個です。いったん外してから選んでください。");
       return;
     }
-
-    const ranksUsed = new Set(ids.map(id=>Number(State.rankAssign[id])));
-    const ok = ranksUsed.size === 10 && Math.min(...ranksUsed)===1 && Math.max(...ranksUsed)===10;
-    document.getElementById("btnToStep4").disabled = !ok;
-
-    const map = new Map(allValues().map(v=>[v.id,v]));
-    const items = ids
-      .map(id=>({id, r:Number(State.rankAssign[id])||999}))
-      .sort((a,b)=>a.r-b.r);
-
-    items.forEach(({id, r})=>{
-      const v = map.get(id);
-      const item = document.createElement("div");
-      item.className = "rankitem";
-
-      const left = document.createElement("div");
-      left.className = "rankleft";
-
-      const badge = document.createElement("div");
-      badge.className = "rankbadge";
-      badge.textContent = (r>=1 && r<=10) ? `${r}位` : "—";
-
-      const selWrap = document.createElement("div");
-      selWrap.className = "rankselect";
-      const sel = document.createElement("select");
-      for(let i=1;i<=10;i++){
-        const opt = document.createElement("option");
-        opt.value = String(i);
-        opt.textContent = `${i}位`;
-        sel.appendChild(opt);
-      }
-      sel.value = String(r);
-      sel.addEventListener("change", ()=>setRank(id, sel.value));
-      selWrap.appendChild(sel);
-
-      left.appendChild(badge);
-      left.appendChild(selWrap);
-
-      const title = document.createElement("div");
-      title.className = "ranktitle";
-      const strong = document.createElement("strong");
-      strong.textContent = (v?.ja||id) + (v?.en ? " / "+v.en : "");
-      const span = document.createElement("span");
-      span.textContent = v?.desc || "";
-      title.appendChild(strong);
-      title.appendChild(span);
-
-      item.appendChild(left);
-      item.appendChild(title);
-      list.appendChild(item);
-    });
+    state.top[id] = true;
   }
 
-  function renderStep4(){
-    normalizeRankAssign();
-    document.getElementById("createdAt").textContent = new Date(State.createdAt).toLocaleString();
-    document.getElementById("domainLabel").textContent = (State.domain === "その他（自由記述）" ? (State.domainOther?.trim()||"その他") : (State.domain||"（指定なし）"));
+  // if exactly 5 and ranking empty -> seed by name
+  const ids = Object.keys(state.top);
+  if(ids.length === TOP_N && state.ranking.filter(Boolean).length === 0){
+    const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+    const sorted = ids.slice().sort((a,b)=>(valuesById[a]?.name||"").localeCompare(valuesById[b]?.name||""));
+    state.ranking = sorted.slice(0, RANK_N);
+  }
 
-    const map = new Map(allValues().map(v=>[v.id,v]));
-    const top = State.ranking.map((id, idx)=>{
-      const v = map.get(id);
-      return {rank: idx+1, ja: v?.ja||id, en: v?.en||"", desc: v?.desc||"", id};
-    });
+  save();
+  renderTop5();
+  updateCounts();
+}
 
-    const summary = document.getElementById("summary");
-    summary.innerHTML = `
-      <div class="panel" style="background:rgba(255,255,255,.85);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow2);">
-        <strong>TOP10（順位付き）</strong>
-        <div class="subtitle">このリストは「現時点（${new Date(State.createdAt).toLocaleDateString()}）」の優先順位です。定期的に見直す前提でOKです。</div>
-        <div class="hr"></div>
-        <div style="display:grid;gap:10px;">
-          ${top.map(t=>{
-            const examples = (t.rank<=3) ? examplesFor(t.id, t.ja) : null;
-            const exHtml = examples ? `
-              <div class="examples">
-                <strong>Top${t.rank}：優先する行動の例（そのまま使える/編集OK）</strong>
-                <ul>
-                  <li>${escapeHtml(examples[0])}</li>
-                  <li>${escapeHtml(examples[1])}</li>
-                  <li>${escapeHtml(examples[2])}</li>
-                </ul>
-              </div>
-            ` : "";
+/* ---------------- Step4 Ranking ---------------- */
+function renderRanking(){
+  const container = document.getElementById("rankContainer");
+  container.innerHTML = "";
 
-            const placeholder = (t.rank<=3)
-              ? `例：${t.ja} → ${examplesFor(t.id, t.ja)[0]}`
-              : `例：${t.ja} → 今週1回、価値に沿った行動を具体化する`;
+  const ids = Object.keys(state.top);
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
 
-            return `
-              <div class="rankitem" style="grid-template-columns:110px 1fr;">
-                <div class="rankleft">
-                  <div class="rankbadge">${t.rank}位</div>
-                </div>
-                <div class="ranktitle">
-                  <strong>${escapeHtml(t.ja)}${t.en?" / "+escapeHtml(t.en):""}</strong>
-                  <span>${escapeHtml(t.desc)}</span>
-                  ${exHtml}
-                  <div style="margin-top:10px;">
-                    <label class="label">今週の「10分行動」案（任意）</label>
-                    <textarea data-actionfor="${t.id}" placeholder="${escapeHtml(placeholder)}"></textarea>
-                  </div>
-                </div>
-              </div>
-            `;
+  if(ids.length !== TOP_N){
+    container.innerHTML = `<div class="note danger"><b>Top5が5個選ばれていません。</b>前のステップで5個に絞ってください。</div>`;
+    return;
+  }
+
+  if(!Array.isArray(state.ranking) || state.ranking.length !== RANK_N){
+    state.ranking = Array(RANK_N).fill(null);
+  }
+
+  const optIds = ids.slice().sort((a,b)=>(valuesById[a]?.name||"").localeCompare(valuesById[b]?.name||""));
+
+  for(let pos=0; pos<RANK_N; pos++){
+    const row = document.createElement("div");
+    row.className = "rankRow";
+    const current = state.ranking[pos] || "";
+
+    row.innerHTML = `
+      <div class="rankBadge">${pos+1}位</div>
+      <div>
+        <select data-pos="${pos}">
+          <option value="">-- 選択 --</option>
+          ${optIds.map(id=>{
+            const name = valuesById[id]?.name || id;
+            return `<option value="${escapeHtml(id)}"${id===current ? " selected":""}>${escapeHtml(name)}</option>`;
           }).join("")}
+        </select>
+        <div class="tiny" style="margin-top:6px; color: var(--muted)">
+          ${current ? escapeHtml(valuesById[current]?.hint || "") : "未選択"}
         </div>
       </div>
     `;
 
-    setTimeout(()=>{
-      document.querySelectorAll('textarea[data-actionfor]').forEach(t=>{
-        const id = t.dataset.actionfor;
-        t.value = State.notes?.[id] || "";
-        t.addEventListener('input', ()=>{
-          State.notes = State.notes || {};
-          State.notes[id] = t.value;
-          persistState();
-        });
+    const sel = row.querySelector("select");
+    sel.addEventListener("change", ()=>{
+      const p = Number(sel.dataset.pos);
+      const val = sel.value || null;
+      setRank(p, val);
+    });
+
+    container.appendChild(row);
+  }
+
+  updateCounts();
+}
+
+function setRank(pos, idOrNull){
+  if(!Array.isArray(state.ranking) || state.ranking.length !== RANK_N){
+    state.ranking = Array(RANK_N).fill(null);
+  }
+
+  if(idOrNull && !state.top[idOrNull]){
+    toast("Top5以外は選べません");
+    return;
+  }
+
+  if(idOrNull){
+    const otherPos = state.ranking.findIndex((x,i)=> i!==pos && x===idOrNull);
+    if(otherPos !== -1){
+      state.ranking[otherPos] = null;
+      toast("同じ価値語が重複したため、片方を未選択にしました");
+    }
+  }
+
+  state.ranking[pos] = idOrNull;
+  save();
+  renderRanking();
+}
+
+function countRankMissing(){
+  const filled = (state.ranking || []).filter(Boolean);
+  const uniq = new Set(filled);
+  return RANK_N - uniq.size;
+}
+
+function fillMissingRanks(){
+  const ids = Object.keys(state.top);
+  if(ids.length !== TOP_N){
+    toast("まずTop5を確定してください");
+    return;
+  }
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+  const used = new Set((state.ranking||[]).filter(Boolean));
+  const unused = ids.filter(id=>!used.has(id))
+                    .sort((a,b)=>(valuesById[a]?.name||"").localeCompare(valuesById[b]?.name||""));
+
+  for(let pos=0; pos<RANK_N; pos++){
+    if(!state.ranking[pos] && unused.length>0){
+      state.ranking[pos] = unused.shift();
+    }
+  }
+  save();
+  renderRanking();
+  toast("未選択を埋めました");
+}
+
+/* ---------------- Step5 Axis Pick (with recommendation) ---------------- */
+function prefillRecommendedAxes(){
+  // When axis not set, set recommendation if exists
+  for(let pos=0; pos<RANK_N; pos++){
+    const id = state.ranking[pos];
+    if(!id) continue;
+    if(!state.valueAxis[id]){
+      const rec = recommendedAxis(id);
+      if(rec) state.valueAxis[id] = rec;
+    }
+  }
+}
+
+function renderAxisPick(){
+  prefillRecommendedAxes(); // make it easier
+
+  const container = document.getElementById("axisPickContainer");
+  container.innerHTML = "";
+
+  const ids = Object.keys(state.top);
+  if(ids.length !== TOP_N){
+    container.innerHTML = `<div class="note danger"><b>Top5が未確定です。</b>前のステップに戻ってください。</div>`;
+    return;
+  }
+
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+  const rankingFilled = (state.ranking||[]).filter(Boolean);
+
+  if(rankingFilled.length !== RANK_N){
+    container.innerHTML = `<div class="note danger"><b>順位が未完成です。</b>前のステップで1位〜5位を埋めてください。</div>`;
+    return;
+  }
+
+  for(let pos=0; pos<RANK_N; pos++){
+    const id = state.ranking[pos];
+    const v = valuesById[id];
+    const picked = state.valueAxis[id] || null;
+    const rec = recommendedAxis(id);
+    const pts = pointsForPos(pos);
+
+    const recLabel = rec ? (AXES.find(x=>x.key===rec)?.label || "") : "なし";
+    const pickedLabel = picked ? (AXES.find(x=>x.key===picked)?.label || "") : "未選択";
+
+    const card = document.createElement("div");
+    card.className = "axisCard";
+    card.innerHTML = `
+      <div class="axisHead">
+        <div>
+          <div class="name">#${pos+1}（加点合計 ${pts}） ${escapeHtml(v?.name || id)}</div>
+          <div class="sub">${escapeHtml(v?.hint || "")}</div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end">
+          <div class="pill">推奨：<strong>${escapeHtml(recLabel)}</strong></div>
+          <div class="pill">選択：<strong>${escapeHtml(pickedLabel)}</strong></div>
+        </div>
+      </div>
+
+      <div class="axisBtns">
+        ${axisButtonHTML(id, "v", picked, rec)}
+        ${axisButtonHTML(id, "b", picked, rec)}
+        ${axisButtonHTML(id, "h", picked, rec)}
+        ${axisButtonHTML(id, "a", picked, rec)}
+      </div>
+    `;
+
+    card.querySelectorAll("button[data-axis]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const axis = btn.dataset.axis;
+        state.valueAxis[id] = axis;
+        save();
+        renderAxisPick();
+        updateCounts();
       });
-    }, 0);
+    });
+
+    container.appendChild(card);
   }
 
-  function render(){
-    updateHeaderCounters();
+  save(); // because we may have auto-filled recommendations
+  updateCounts();
+}
 
-    document.getElementById("step0").classList.toggle("hide", State.step!==0);
-    document.getElementById("step1").classList.toggle("hide", State.step!==1);
-    document.getElementById("step2").classList.toggle("hide", State.step!==2);
-    document.getElementById("step3").classList.toggle("hide", State.step!==3);
-    document.getElementById("step4").classList.toggle("hide", State.step!==4);
+function axisButtonHTML(id, axisKey, picked, rec){
+  const label = AXES.find(x=>x.key===axisKey)?.label || axisKey;
+  const sel = (picked === axisKey) ? "sel" : "";
+  const reco = (rec === axisKey) ? "reco" : "";
+  return `
+    <button class="axisBtn ${sel} ${reco}" type="button" data-id="${escapeHtml(id)}" data-axis="${axisKey}">
+      <span class="dot2 ${axisKey}"></span>
+      ${escapeHtml(label)}
+      ${sel ? "✓" : ""}
+    </button>
+  `;
+}
 
-    if(State.step===0){
-      document.getElementById("mainTitle").textContent = "はじめに：全体像";
-      document.getElementById("mainSub").textContent = "このワークは『いま大事にしたい価値観』を明確にする4ステップです。";
-    }
-    if(State.step===1){
-      document.getElementById("mainTitle").textContent = "ステップ1：⭐ 候補を広げる";
-      document.getElementById("mainSub").textContent = "心に響くものに⭐を付けます。まずは『広く集める』のが目的です（最低10、推奨20）。";
-      renderStep1();
-    }
-    if(State.step===2){
-      document.getElementById("mainTitle").textContent = "ステップ2：◯ TOP10に絞る";
-      document.getElementById("mainSub").textContent = "⭐を付けた候補から、今のあなたにとって特に重要な10個だけに◯を付けます。";
-      renderStep2();
-    }
-    if(State.step===3){
-      document.getElementById("mainTitle").textContent = "ステップ3：1〜10位に順位付け";
-      document.getElementById("mainSub").textContent = "◯を付けた10個に、プルダウンで1〜10位を割り当てます（重複は自動で入れ替え）。";
-      renderStep3();
-    }
-    if(State.step===4){
-      document.getElementById("mainTitle").textContent = "ステップ4：まとめ";
-      document.getElementById("mainSub").textContent = "Top3の行動例を参考に、今週の10分行動を言語化します。";
-      renderStep4();
-    }
+/* ---------------- Step6 Results ---------------- */
+function computeQuizScores(){
+  // percent from quiz answers
+  const counts = {v:0, b:0, h:0, a:0};
+  for(const a of state.quizAnswers){
+    if(a && counts[a] !== undefined) counts[a] += 1;
+  }
+  const total = QUIZ.length || 1;
+  return AXES.map(ax => Math.round((counts[ax.key]/total*100)*10)/10);
+}
+
+function computeTopScores(){
+  // percent from Top5 scoring (base2 + step3+1 + rankExtra)
+  const sums = {v:0, b:0, h:0, a:0};
+  let total = 0;
+  for(let pos=0; pos<RANK_N; pos++){
+    const id = state.ranking[pos];
+    if(!id) continue;
+    const ax = state.valueAxis[id];
+    if(!ax || sums[ax] === undefined) continue;
+    const pts = pointsForPos(pos);
+    sums[ax] += pts;
+    total += pts;
+  }
+  if(total === 0) return AXES.map(()=>0);
+  return AXES.map(ax => Math.round((sums[ax.key]/total*100)*10)/10);
+}
+
+function renderResults(){
+  const q = computeQuizScores();
+  const t = computeTopScores();
+  const merged = q.map((x,i)=> Math.round(((x + t[i]) / 2)*10)/10);
+
+  // table
+  const tb = document.getElementById("scoreTableBody");
+  tb.innerHTML = "";
+  for(let i=0;i<AXES.length;i++){
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><b>${escapeHtml(AXES[i].label)}</b></td>
+      <td>${merged[i]}%</td>
+      <td>${q[i]}%</td>
+      <td>${t[i]}%</td>
+    `;
+    tb.appendChild(tr);
   }
 
-  function runTests(){
-    const failures = [];
-    const assert = (cond, msg)=>{ if(!cond) failures.push(msg); };
+  // headline
+  const sorted = merged.map((v,i)=>({v,i,label:AXES[i].label})).sort((x,y)=>y.v-x.v);
+  const top = sorted[0];
+  const gap = top.v - sorted[1].v;
 
-    assert(Array.isArray(DEFAULT_VALUES), "DEFAULT_VALUES should be an array");
-    assert(DEFAULT_VALUES.length >= 50, "DEFAULT_VALUES should have enough items");
-    const ids = DEFAULT_VALUES.map(v=>v.id);
-    assert(new Set(ids).size === ids.length, "DEFAULT_VALUES ids should be unique");
-    assert(typeof State.step === "number" && State.step >= 0 && State.step <= 4, "State.step must be 0..4");
+  const headline = document.getElementById("resultHeadline");
+  const text = document.getElementById("resultText");
+  const tips = document.getElementById("resultTips");
+  tips.innerHTML = "";
 
-    const dot = document.getElementById("testDot");
-    const text = document.getElementById("testText");
-
-    if(failures.length === 0){
-      dot.classList.add("ok");
-      text.textContent = "tests: ok";
-      return true;
-    }
-    dot.classList.add("bad");
-    text.textContent = "tests: failed";
-    console.error("Tests failed:", failures);
-    return false;
+  if(gap < 8){
+    headline.textContent = "バランス型（複数の軸が同時に大事）";
+    text.innerHTML = `
+      4軸の差が小さめです。状況に応じて<b>主役の軸を切り替える</b>設計が向きそうです。<br>
+      迷った場面では「今ここで、どの軸を主役にすると後悔が少ないか？」を一度言語化すると安定します。
+    `;
+  } else {
+    headline.textContent = `いまは「${top.label}」が主役になりやすい`;
+    const msg = {
+      "勝利": `成果・克服・前進がエネルギーになりやすい傾向です。目標を“勝てるサイズ”に分割すると詰みにくくなります。`,
+      "調和": `安心感・関係の安定がエネルギーになりやすい傾向です。境界線（断る基準）を1つ持つと疲れにくいです。`,
+      "自己決定": `自由・裁量・納得して選ぶことがエネルギーになりやすい傾向です。孤立しすぎない仕組みを入れると安定します。`,
+      "信念": `意味・筋・一貫性がエネルギーになりやすい傾向です。理想を“続けられる形”に翻訳すると強みが活きます。`,
+    };
+    text.innerHTML = msg[top.label] || "";
   }
 
-  window.addEventListener("DOMContentLoaded", ()=>{
-    loadState();
+  // resultNumbers: 3 lines
+  document.getElementById("resultNumbers").innerHTML =
+    `統合：勝利${merged[0]}% / 信念${merged[1]}% / 調和${merged[2]}% / 自己決定${merged[3]}%<br>` +
+    `質問：勝利${q[0]}% / 信念${q[1]}% / 調和${q[2]}% / 自己決定${q[3]}%<br>` +
+    `Top5：勝利${t[0]}% / 信念${t[1]}% / 調和${t[2]}% / 自己決定${t[3]}%`;
 
-    const domainSelect = document.getElementById("domainSelect");
-    const domainOtherWrap = document.getElementById("domainOtherWrap");
-    const domainOther = document.getElementById("domainOther");
+  drawRadarResponsive("radar", merged, q, t);
+}
 
-    domainSelect.value = State.domain || "";
-    domainOther.value = State.domainOther || "";
-    domainOtherWrap.classList.toggle('hide', domainSelect.value !== 'その他（自由記述）');
+/* Radar drawing
+   - labels auto-fit (smaller)
+   - remove point % text
+*/
+function drawRadarResponsive(canvasId, merged, quiz, top){
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext("2d");
 
-    domainSelect.addEventListener('change', ()=>{
-      State.domain = domainSelect.value;
-      domainOtherWrap.classList.toggle('hide', State.domain !== 'その他（自由記述）');
-      persistState();
-      render();
-    });
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
 
-    domainOther.addEventListener('input', ()=>{
-      State.domainOther = domainOther.value;
-      persistState();
-    });
+  canvas.width = Math.max(1, Math.round(rect.width * dpr));
+  canvas.height = Math.max(1, Math.round(rect.height * dpr));
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 
-    document.getElementById("btnAddCustom").addEventListener('click', ()=>{
-      const ja = document.getElementById("customJa").value.trim();
-      if(!ja){ alert('価値観名（日本語）を入力してください。'); return; }
-      const en = document.getElementById("customEn").value.trim();
-      const desc = document.getElementById("customDesc").value.trim();
-      const id = safeId('custom');
-      State.customValues.push({id, ja, en, desc, custom:true});
-      document.getElementById("customJa").value = "";
-      document.getElementById("customEn").value = "";
-      document.getElementById("customDesc").value = "";
-      persistState();
-      render();
-    });
+  const w = rect.width;
+  const h = rect.height;
+  ctx.clearRect(0,0,w,h);
 
-    document.getElementById("btnSave").addEventListener('click', ()=>{
-      persistState();
-      alert('保存しました（このPCのブラウザに記憶されています）。');
-    });
+  const minDim = Math.min(w,h);
+  const titleSize = Math.max(16, Math.round(minDim * 0.050));
+  const labelSize = Math.max(12, Math.round(minDim * 0.042)); // smaller than before
+  const tickSize  = Math.max(11, Math.round(minDim * 0.034));
 
-    document.getElementById("btnReset").addEventListener('click', ()=>{
-      if(!confirm('すべての選択をリセットしますか？（このPCの保存内容も上書きされます）')) return;
-      State.step = 0;
-      State.createdAt = nowIso();
-      State.starred = {};
-      State.top10 = {};
-      State.ranking = [];
-      State.rankAssign = {};
-      State.notes = {};
-      persistState();
-      render();
-    });
+  const topMargin = Math.max(24, titleSize + 10);
+  const margin = 10;
 
-    document.getElementById("btnStart").addEventListener('click', ()=>setStep(1));
-    document.getElementById("btnJump1").addEventListener('click', ()=>setStep(1));
+  const cx = w * 0.50;
+  const cy = h * 0.58;
+  const R  = Math.min(w, h) * 0.28; // slightly smaller to keep labels inside
+  const labelOffset = 26;
 
-    document.getElementById("btnToStep2").addEventListener('click', ()=>setStep(2));
-    document.getElementById("btnBack1").addEventListener('click', ()=>setStep(1));
-    document.getElementById("btnToStep3").addEventListener('click', ()=>setStep(3));
-    document.getElementById("btnBack2").addEventListener('click', ()=>setStep(2));
-    document.getElementById("btnToStep4").addEventListener('click', ()=>setStep(4));
-    document.getElementById("btnBack3").addEventListener('click', ()=>setStep(3));
-    document.getElementById("btnPrint").addEventListener('click', ()=>window.print());
+  // title
+  ctx.fillStyle = "rgba(15,23,42,.88)";
+  ctx.font = `900 ${titleSize}px ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+  ctx.fillText("Core Value Radar", cx, 8);
 
-    runTests();
-    render();
+  // grid levels
+  const levels = [20,40,60,80,100];
+  ctx.strokeStyle = "rgba(15,23,42,.12)";
+  ctx.lineWidth = 1;
+
+  levels.forEach(p=>{
+    const r = R * (p/100);
+    ctx.beginPath();
+    for(let i=0;i<4;i++){
+      const ang = (-Math.PI/2) + i*(2*Math.PI/4);
+      const x = cx + r*Math.cos(ang);
+      const y = cy + r*Math.sin(ang);
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(71,85,105,.85)";
+    ctx.font = `${tickSize}px ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif`;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillText(p+"%", cx + 6, cy - r);
   });
+
+  // axes + labels (auto-fit)
+  for(let i=0;i<4;i++){
+    const ang = (-Math.PI/2) + i*(2*Math.PI/4);
+    const x = cx + R*Math.cos(ang);
+    const y = cy + R*Math.sin(ang);
+
+    // axis line
+    ctx.strokeStyle = "rgba(15,23,42,.18)";
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(x,y);
+    ctx.stroke();
+
+    // label placement
+    const text = AXES[i].label;
+    ctx.font = `900 ${labelSize}px ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif`;
+    const width = ctx.measureText(text).width;
+    const height = labelSize;
+
+    let lx = cx + (R+labelOffset)*Math.cos(ang);
+    let ly = cy + (R+labelOffset)*Math.sin(ang);
+
+    let align = "center";
+    let baseline = "middle";
+    const cos = Math.cos(ang);
+    const sin = Math.sin(ang);
+    if(cos > 0.2) align = "left";
+    else if(cos < -0.2) align = "right";
+    if(sin > 0.2) baseline = "top";
+    else if(sin < -0.2) baseline = "bottom";
+
+    // compute bbox
+    let x0, x1, y0, y1;
+    if(align==="left"){ x0 = lx; x1 = lx + width; }
+    else if(align==="right"){ x0 = lx - width; x1 = lx; }
+    else { x0 = lx - width/2; x1 = lx + width/2; }
+
+    if(baseline==="top"){ y0 = ly; y1 = ly + height; }
+    else if(baseline==="bottom"){ y0 = ly - height; y1 = ly; }
+    else { y0 = ly - height/2; y1 = ly + height/2; }
+
+    // adjust within canvas
+    const minY = topMargin;
+    if(x0 < margin) lx += (margin - x0);
+    if(x1 > w - margin) lx -= (x1 - (w - margin));
+    if(y0 < minY) ly += (minY - y0);
+    if(y1 > h - margin) ly -= (y1 - (h - margin));
+
+    ctx.fillStyle = "rgba(15,23,42,.90)";
+    ctx.textAlign = align;
+    ctx.textBaseline = baseline;
+    ctx.fillText(text, lx, ly);
+  }
+
+  function rgba(color, a){
+    if(color.startsWith("rgba(")){
+      return color.replace(/rgba\(([^)]+)\)/, (m, inside)=>{
+        const parts = inside.split(",").map(s=>s.trim());
+        return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${a})`;
+      });
+    }
+    if(color.startsWith("rgb(")){
+      return color.replace(/rgb\(([^)]+)\)/, (m, inside)=>{
+        const parts = inside.split(",").map(s=>s.trim());
+        return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${a})`;
+      });
+    }
+    return color;
+  }
+
+  function points(vals){
+    const pts = [];
+    for(let i=0;i<4;i++){
+      const ang = (-Math.PI/2) + i*(2*Math.PI/4);
+      const r = R * (clamp(vals[i],0,100)/100);
+      pts.push([cx + r*Math.cos(ang), cy + r*Math.sin(ang)]);
+    }
+    return pts;
+  }
+
+  function drawPoly(vals, fill, stroke, alphaFill, alphaStroke, lineW, pointColor){
+    const pts = points(vals);
+    ctx.beginPath();
+    pts.forEach((p, i)=>{ if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]); });
+    ctx.closePath();
+
+    ctx.fillStyle = rgba(fill, alphaFill);
+    ctx.fill();
+
+    ctx.strokeStyle = rgba(stroke, alphaStroke);
+    ctx.lineWidth = lineW || 2;
+    ctx.stroke();
+
+    // dots only (no % labels)
+    pts.forEach((p)=>{
+      ctx.beginPath();
+      ctx.fillStyle = rgba(pointColor, 0.95);
+      ctx.arc(p[0], p[1], 4.0, 0, Math.PI*2);
+      ctx.fill();
+    });
+  }
+
+  // Keep 3 layers (merged / quiz / top) but no % text
+  drawPoly(quiz,  "rgba(2,132,199,1)", "rgba(2,132,199,1)", 0.06, 0.30, 2, "rgba(2,132,199,1)");
+  drawPoly(top,   "rgba(245,158,11,1)", "rgba(245,158,11,1)", 0.05, 0.26, 2, "rgba(245,158,11,1)");
+  drawPoly(merged,"rgba(37,99,235,1)", "rgba(37,99,235,1)", 0.14, 0.85, 2.6, "rgba(37,99,235,1)");
+
+  // legend
+  const legendX = 14;
+  const legendY = h - 60;
+  legendItem(legendX, legendY,     "統合", "rgba(37,99,235,1)");
+  legendItem(legendX, legendY+18,  "質問", "rgba(2,132,199,1)");
+  legendItem(legendX, legendY+36,  "Top5", "rgba(245,158,11,1)");
+
+  function legendItem(x,y,text,color){
+    ctx.fillStyle = rgba(color, 0.85);
+    ctx.fillRect(x, y-7, 12, 12);
+    ctx.fillStyle = "rgba(15,23,42,.78)";
+    ctx.font = `${Math.max(11, Math.round(minDim*0.032))}px ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif`;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, x+18, y);
+  }
+}
+
+/* ---------------- Step7 Actions ---------------- */
+function renderActions(){
+  const container = document.getElementById("actionContainer");
+  container.innerHTML = "";
+
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+  const top3 = state.ranking.slice(0,3);
+
+  if(top3.some(x=>!x)){
+    container.innerHTML = `<div class="note danger"><b>TOP3が確定していません。</b>順位付けを確認してください。</div>`;
+    return;
+  }
+
+  top3.forEach((id, idx)=>{
+    const v = valuesById[id];
+    const axisKey = state.valueAxis[id];
+    const axisLabel = AXES.find(x=>x.key===axisKey)?.label || "未分類";
+    const actionText = state.actions?.[id] || "";
+
+    const card = document.createElement("div");
+    card.className = "actionCard";
+    card.innerHTML = `
+      <div class="actionHead">
+        <div>
+          <div class="name">#${idx+1} ${escapeHtml(v?.name || id)}</div>
+          <div class="hintSmall">${escapeHtml(v?.hint || "")}</div>
+        </div>
+        <div class="axisMiniPill">
+          <span class="dot2 ${axisKey || "v"}"></span>
+          分類：<b>${escapeHtml(axisLabel)}</b>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>すぐにできる一歩（5〜15分で終わるサイズ）</label>
+        <textarea data-id="${escapeHtml(id)}"
+          placeholder="例：今日、◯◯を5分だけ調べる。／1通だけ連絡する。／10分だけ整理する。">${escapeHtml(actionText)}</textarea>
+      </div>
+    `;
+
+    const ta = card.querySelector("textarea");
+    ta.addEventListener("input", ()=>{
+      const vid = ta.dataset.id;
+      state.actions[vid] = ta.value;
+      save();
+      updateCounts();
+    });
+
+    container.appendChild(card);
+  });
+
+  updateCounts();
+}
+
+/* ---------------- Summary copy ---------------- */
+function copySummary(){
+  const q = computeQuizScores();
+  const t = computeTopScores();
+  const merged = q.map((x,i)=> Math.round(((x + t[i]) / 2)*10)/10);
+
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+  const top5 = state.ranking.map((id, idx)=> `${idx+1}. ${valuesById[id]?.name || id}`).join("\n");
+
+  const axisLines = state.ranking.map((id, idx)=>{
+    const v = valuesById[id];
+    const ax = state.valueAxis[id];
+    const label = AXES.find(x=>x.key===ax)?.label || "";
+    const pts = pointsForPos(idx);
+    const rec = recommendedAxis(id);
+    const recLabel = rec ? (AXES.find(x=>x.key===rec)?.label || "") : "なし";
+    return `#${idx+1}（${pts}点） ${v?.name || id}: ${label}（推奨:${recLabel}）`;
+  }).join("\n");
+
+  const top3 = state.ranking.slice(0,3).filter(Boolean);
+  const actionLines = top3.map((id, idx)=>{
+    const name = valuesById[id]?.name || id;
+    const act = (state.actions?.[id] || "").trim();
+    return `${idx+1}. ${name}: ${act || "（未記入）"}`;
+  }).join("\n");
+
+  const text = [
+    "【Core Value レーダー まとめ】",
+    `統合: 勝利${merged[0]}% / 信念${merged[1]}% / 調和${merged[2]}% / 自己決定${merged[3]}%`,
+    `質問: 勝利${q[0]}% / 信念${q[1]}% / 調和${q[2]}% / 自己決定${q[3]}%`,
+    `Top5: 勝利${t[0]}% / 信念${t[1]}% / 調和${t[2]}% / 自己決定${t[3]}%`,
+    "",
+    "Top5（順位）:",
+    top5,
+    "",
+    "Top5の分類（点数つき）:",
+    axisLines,
+    "",
+    "TOP3の一歩（すぐできる行動）:",
+    actionLines,
+    "",
+    `更新: ${new Date(state.updatedAt).toLocaleString()}`
+  ].join("\n");
+
+  navigator.clipboard.writeText(text).then(()=>{
+    toast("コピーしました");
+  }).catch(()=>{
+    toast("コピーに失敗しました（ブラウザ権限をご確認ください）");
+  });
+}
 </script>
 </body>
 </html>
