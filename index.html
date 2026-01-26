@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Core Value レーダー｜勝利・調和・自己決定・信念</title>
+  <title>Core Value レーダー｜統合のみ＋Step8/9 行動例＆自分の行動欄</title>
   <style>
     :root{
       --bg:#f6f8ff;
@@ -24,9 +24,9 @@
 
       /* axis colors */
       --v:#f59e0b; /* 勝利 */
+      --b:#0ea5e9; /* 信念 */
       --h:#84cc16; /* 調和 */
       --a:#10b981; /* 自己決定 */
-      --b:#0ea5e9; /* 信念 */
     }
 
     *{box-sizing:border-box}
@@ -252,6 +252,19 @@
       color: rgba(37,99,235,.95);
       white-space: nowrap;
     }
+    .badge{
+      font-size: 11px;
+      font-weight: 950;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.88);
+      color: rgba(15,23,42,.72);
+      white-space: nowrap;
+    }
+    .badge.top{border-color: rgba(37,99,235,.28); color: rgba(37,99,235,.95); background: rgba(37,99,235,.10);}
+    .badge.star{border-color: rgba(245,158,11,.28); color: rgba(217,119,6,.95); background: rgba(245,158,11,.10);}
+    .badge.top3{border-color: rgba(14,165,233,.28); color: rgba(14,165,233,.95); background: rgba(14,165,233,.10);}
 
     /* Ranking (dropdown) */
     .rankWrap{
@@ -336,9 +349,9 @@
     }
     .dot2{width:10px;height:10px;border-radius:999px;display:inline-block}
     .dot2.v{background: var(--v)}
+    .dot2.b{background: var(--b)}
     .dot2.h{background: var(--h)}
     .dot2.a{background: var(--a)}
-    .dot2.b{background: var(--b)}
 
     /* Action step */
     .actionList{display:flex; flex-direction:column; gap:12px}
@@ -371,6 +384,28 @@
       white-space:nowrap;
     }
 
+    /* Example line */
+    .exLine{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:flex-start;
+    }
+    .exText{font-size:14px}
+    .exCopyBtn{white-space:nowrap}
+    @media (min-width:720px){
+      .exLine{flex-direction:row; justify-content:space-between; align-items:flex-start; gap:12px}
+      .exText{flex:1}
+    }
+    .miniExBox{
+      border: 1px solid rgba(226,232,240,.95);
+      border-radius: 14px;
+      background: rgba(2,6,23,.02);
+      padding: 10px 10px;
+    }
+    .miniExBox ul{margin:6px 0 0 18px; padding:0}
+    .miniExBox li{margin:10px 0}
+
     /* Radar */
     .canvasWrap{
       border:1px solid var(--border);
@@ -384,7 +419,7 @@
       canvas{height:460px;}
     }
 
-    /* Responsive table */
+    /* Table */
     .tableWrap{
       border:1px solid var(--border);
       border-radius: 14px;
@@ -394,7 +429,7 @@
     }
     table{
       width:100%;
-      min-width: 520px;
+      min-width: 420px;
       border-collapse: separate;
       border-spacing: 0;
     }
@@ -407,6 +442,45 @@
     }
     th{background: rgba(2,6,23,.03); font-weight:950}
     tr:last-child td{border-bottom:none}
+
+    /* Step9 examples */
+    .exTopBar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      justify-content:space-between;
+      margin: 8px 0 12px;
+    }
+    .exList{display:flex; flex-direction:column; gap:10px}
+    details.exItem{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.95);
+      overflow:hidden;
+      box-shadow: 0 10px 18px rgba(2,6,23,.04);
+    }
+    details.exItem summary{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+    }
+    details.exItem summary::-webkit-details-marker{display:none}
+    .exSummaryLeft{display:flex; flex-direction:column; gap:2px}
+    .exTitle{font-weight:950; font-size:15px}
+    .exHint{font-size:12px; color:var(--muted)}
+    .exBadges{display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end}
+    .exBody{
+      border-top:1px solid rgba(226,232,240,.95);
+      padding:12px 12px;
+    }
+    .exBody ul{margin:6px 0 0 18px; padding:0}
+    .exBody li{margin:10px 0}
+    .exSmall{font-size:12px; color:var(--muted); margin-top:8px}
 
     /* Footer nav */
     .footerBar{
@@ -442,6 +516,75 @@
     }
     .toast.show{display:block; animation: pop .2s ease}
     @keyframes pop{ from{ transform: translateY(8px); opacity: 0 } to{ transform: translateY(0px); opacity: 1 } }
+
+    /* ===== Print (A4) ===== */
+    .print-only{display:none}
+    @media print{
+      @page{ size: A4; margin: 12mm; }
+      header, main, .footerBar, .toast{ display:none !important; }
+      body{ background:#fff !important; }
+      .print-only{ display:block !important; }
+    }
+    .printPage{
+      width:100%;
+      color:#000;
+      font-size: 12pt;
+      line-height: 1.35;
+    }
+    .printTitle{
+      font-size: 18pt;
+      font-weight: 900;
+      margin: 0 0 6mm;
+    }
+    .printMeta{
+      font-size: 10.5pt;
+      color:#111;
+      margin-bottom: 5mm;
+    }
+    .printSection{
+      margin: 0 0 6mm;
+      padding: 4mm 4mm;
+      border: 1px solid #ddd;
+      border-radius: 4mm;
+    }
+    .printSection h2{
+      font-size: 12.5pt;
+      margin: 0 0 3mm;
+    }
+    .printGrid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+    }
+    .printList{
+      margin: 0;
+      padding-left: 5mm;
+    }
+    .printSmall{
+      font-size: 10.5pt;
+      color:#111;
+    }
+    .checkRow{
+      display:flex;
+      gap: 3mm;
+      align-items:flex-start;
+      margin: 0 0 3mm;
+    }
+    .box{
+      width: 5mm;
+      height: 5mm;
+      border: 1.2pt solid #000;
+      margin-top: 0.6mm;
+      flex: 0 0 auto;
+    }
+    .lineBox{
+      border: 1px solid #bbb;
+      border-radius: 3mm;
+      padding: 2.5mm 3mm;
+      margin-top: 2mm;
+      min-height: 10mm;
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 
@@ -451,11 +594,11 @@
     <div class="topbar">
       <div class="brand">
         <div class="title">Core Value レーダー</div>
-        <div class="subtitle">勝利・調和・自己決定・信念｜質問＋Top5で可視化</div>
+        <div class="subtitle">統合のみ＋Step8/9 行動例＆自分の行動欄（コピー可）</div>
       </div>
       <div class="progress">
         <div class="meta">
-          <span id="stepLabel">Step 1/9</span>
+          <span id="stepLabel">Step 1/10</span>
           <span class="kbd" id="autosaveLabel">自動保存</span>
         </div>
         <div class="bar"><div id="progressBar"></div></div>
@@ -469,13 +612,13 @@
   <section class="step card active" data-step="0">
     <h1>このアプリでやること</h1>
     <p class="muted">
-      あなたの価値観を、4つの物差し（<b>勝利 / 調和 / 自己決定 / 信念</b>）でレーダー表示します。<br>
-      目標は「どれが優先か」を<b>自分で理解できる</b>ことです。
+      あなたの価値観を、4つの物差し（<b>勝利 / 信念 / 調和 / 自己決定</b>）でレーダー表示します。<br>
+      Step8（TOP3）とStep9（全価値観）で、<b>行動例</b>を見ながら<b>自分の行動</b>を書けて、例を<b>ワンタップで転記</b>できます。
     </p>
 
     <div class="note">
       <b>流れ：</b>
-      質問 → ⭐ → Top5 → 順位 → 分類（推奨あり） → レーダー → TOP3の一歩 → 終了
+      質問 → ⭐ → Top5 → 順位 → 分類（推奨あり） → レーダー（統合のみ） → Step8 TOP3の一歩（例あり） → Step9 行動例＋自分の行動欄 → 終了/印刷
     </div>
 
     <div class="grid two">
@@ -483,13 +626,10 @@
         <h2>4つの軸</h2>
         <ul style="margin:8px 0 0 18px">
           <li><b>勝利</b>：成功を達成し、挑戦して克服すること</li>
+          <li><b>信念</b>：困難があっても、筋を通し続けること</li>
           <li><b>調和</b>：バランスを保ち、平和な関係を維持すること</li>
           <li><b>自己決定</b>：自律を行使し、自由に独立した選択をすること</li>
-          <li><b>信念</b>：困難があっても、筋を通し続けること</li>
         </ul>
-        <div class="note warn" style="margin-top:12px">
-          <b>ポイント：</b>質問の選択肢は「固定シャッフル」なので、いつも同じ位置を押して偏るのを避けます。
-        </div>
       </div>
 
       <div class="card" style="box-shadow:none">
@@ -515,10 +655,8 @@
   <section class="step card" data-step="1">
     <h1>質問に答える（今の傾向）</h1>
     <p class="muted">各質問に、今の自分に近い選択肢を1つ選んでください（全問回答で次へ）。</p>
-
     <div class="pill">回答済み：<strong id="quizDone">0</strong>/<span id="quizTotal">0</span></div>
     <div style="height:10px"></div>
-
     <div id="quizContainer" class="grid"></div>
   </section>
 
@@ -543,75 +681,51 @@
 
     <div style="height:10px"></div>
     <div class="pill">⭐ 選択数：<strong id="starCount">0</strong></div>
-
     <div style="height:10px"></div>
     <div id="valueGrid" class="valueGrid"></div>
-
-    <div class="note warn">
-      <b>迷ったら：</b>「この価値がゼロの人生なら、私は何を失う？」で⭐を付ける。
-    </div>
   </section>
 
   <!-- STEP 3 -->
   <section class="step card" data-step="3">
     <h1>Top5に絞る</h1>
     <p class="muted">⭐を付けた中から、<b>譲れない5個</b>を選びます（ちょうど5個）。</p>
-
     <div class="pill">Top5 選択数：<strong id="topCount">0</strong>/5</div>
-
     <div id="topGrid" class="valueGrid" style="margin-top:10px"></div>
-
-    <div class="note warn">
-      <b>質問：</b>「これを捨てるとしたら、どれだけ後悔する？」 “非常に後悔する”が強いものほどコア。
-    </div>
   </section>
 
   <!-- STEP 4 -->
   <section class="step card" data-step="4">
     <h1>順位付け（1位〜5位）</h1>
     <p class="muted">Top5の5つに、順位を割り当てます（重複不可）。</p>
-
     <div class="actions" style="margin-top:0">
       <div class="btnrow">
         <button id="btnFillMissing" class="small">未選択を自動で埋める</button>
         <span class="pill">未割り当て：<strong id="rankMissing">0</strong></span>
       </div>
     </div>
-
     <div style="height:10px"></div>
     <div id="rankContainer" class="rankWrap"></div>
-
-    <div class="note warn">
-      次へ進むには <b>5個すべての順位が埋まり</b>、<b>重複がない</b>状態が必要です。
-    </div>
   </section>
 
   <!-- STEP 5 -->
   <section class="step card" data-step="5">
     <h1>Top5を4軸へ分類（推奨あり）</h1>
     <p class="muted">各価値語が「最も満たされる軸」を1つ選びます（5個すべて選択で次へ）。</p>
-
     <div class="pill">分類済み：<strong id="axisDone">0</strong>/5</div>
     <div style="height:10px"></div>
-
     <div id="axisPickContainer" class="axisList"></div>
-
-    <div class="note ok">
-      <b>考え方：</b>「その価値が満たされたとき、何が一番うれしい？」→ その軸を選ぶ。<br>
-      ※「推奨」はあくまで出発点。違うと思えば遠慮なく変更OKです。
-    </div>
   </section>
 
   <!-- STEP 6 -->
   <section class="step card" data-step="6">
     <div style="display:flex; gap:12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap">
       <div>
-        <h1>まとめ：あなたの価値観レーダー</h1>
+        <h1>まとめ：あなたの価値観レーダー（統合のみ）</h1>
         <p class="muted">質問（今の傾向）＋ Top5（順位＋分類）を統合して可視化します。</p>
       </div>
       <div class="btnrow">
         <button id="btnCopySummary" class="primary">📋 まとめをコピー</button>
-        <button id="btnPrint" class="ghost">🖨️ 印刷</button>
+        <button id="btnPrintA4_1" class="ghost">🖨️ A4で印刷（やること表）</button>
       </div>
     </div>
 
@@ -625,7 +739,6 @@
         <div class="card" style="box-shadow:none">
           <h2 id="resultHeadline">あなたへの読み取り</h2>
           <p id="resultText" class="muted"></p>
-          <div id="resultTips"></div>
         </div>
 
         <div style="height:12px"></div>
@@ -635,9 +748,7 @@
             <thead>
               <tr>
                 <th>軸</th>
-                <th>統合</th>
-                <th>質問</th>
-                <th>Top5</th>
+                <th>統合（%）</th>
               </tr>
             </thead>
             <tbody id="scoreTableBody"></tbody>
@@ -645,55 +756,73 @@
         </div>
       </div>
     </div>
-
-    <div class="note warn">
-      <b>注意：</b>これは「今の入力」からの推定です。状況が変われば結果が変わってOK。<br>
-      重要なのは、<b>意思決定のとき“どの軸を主役にするか”を言語化できる</b>ことです。
-    </div>
   </section>
 
-  <!-- STEP 7 -->
+  <!-- STEP 7 (UIでは Step8/10) -->
   <section class="step card" data-step="7">
     <div style="display:flex; gap:12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap">
       <div>
-        <h1>TOP3：すぐにできる一歩</h1>
+        <h1>TOP3：すぐにできる一歩（行動例つき）</h1>
         <p class="muted">
-          上位3つの価値観に沿って、<b>今日〜今週でできる小さな行動（5〜15分）</b>を1つずつ書きます。
+          上位3つの価値観に沿って、<b>今日〜今週でできる小さな行動（5〜15分）</b>を1つずつ書きます。<br>
+          下に<b>行動例（3つ）</b>があり、ボタンで<b>入力欄へ転記</b>できます。
         </p>
       </div>
       <div class="btnrow">
-        <button id="btnCopySummary2" class="primary">📋 まとめをコピー</button>
-        <button id="btnPrint2" class="ghost">🖨️ 印刷</button>
+        <button id="btnPrintA4_2" class="ghost">🖨️ A4で印刷（やること表）</button>
       </div>
     </div>
 
     <div class="pill">入力済み：<strong id="actionDone">0</strong>/3</div>
     <div style="height:10px"></div>
-
     <div id="actionContainer" class="actionList"></div>
+  </section>
+
+  <!-- STEP 8 (UIでは Step9/10) -->
+  <section class="step card" data-step="8">
+    <h1>行動例（全価値観）＋ 自分の行動を書く</h1>
+    <p class="muted">
+      価値観ごとに<b>行動例（3つ）</b>を表示し、<b>自分の行動</b>も書けます。<br>
+      ボタンで<b>例→自分の行動欄へコピー</b>できます。<br>
+      ※TOP3の価値観は、ここで書いた内容がStep8（TOP3の一歩）にも反映されます（同じ入力データです）。
+    </p>
 
     <div class="note ok">
-      <b>コツ：</b>「完璧な行動」ではなく、<b>“今すぐできる小ささ”</b>にします。
+      <b>おすすめ：</b>まずTOP3だけ開いて「例→コピー→少し自分用に修正」すると最速です。
     </div>
 
+    <div class="exTopBar">
+      <div class="field" style="flex:1; min-width: 220px">
+        <label>検索（価値観名）</label>
+        <input id="exSearch" type="text" placeholder="例：自由、家族、勇気…" />
+      </div>
+      <div class="btnrow">
+        <button id="btnExpandAll" class="small">すべて開く</button>
+        <button id="btnCollapseAll" class="small">すべて閉じる</button>
+      </div>
+    </div>
+
+    <div id="examplesList" class="exList"></div>
+
     <div class="note warn">
-      次へ進むには、<b>TOP3それぞれに行動が1つずつ</b>書かれている必要があります。
+      ※「その他（追加）」の価値観は、言葉の意味が人によって違うため、汎用テンプレ例を出します（必要なら自分用に言い換え）。
     </div>
   </section>
 
-  <!-- STEP 8 -->
-  <section class="step card" data-step="8">
+  <!-- STEP 9 (UIでは Step10/10) -->
+  <section class="step card" data-step="9">
     <h1>終了</h1>
     <p class="muted">
       保存は完了しています（この端末のブラウザ内）。タブを閉じれば終了です。<br>
-      他端末へ移すなら、JSON書き出しを使ってください。
+      A4で印刷したい場合は下のボタンを使ってください。
     </p>
 
     <div class="grid two">
       <div class="card" style="box-shadow:none">
         <h2>ここからできること</h2>
         <div class="btnrow" style="margin-top:10px">
-          <button id="btnCloseTab" class="primary">タブを閉じる（可能なら）</button>
+          <button id="btnPrintA4_3" class="primary">🖨️ やること表をA4で印刷</button>
+          <button id="btnCloseTab" class="ghost">タブを閉じる（可能なら）</button>
           <button id="btnGoHome" class="ghost">最初へ戻る</button>
           <button id="btnExportBottom" class="ghost">JSON書き出し</button>
         </div>
@@ -724,45 +853,75 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- ===== Print Area (A4) ===== -->
+<section id="printArea" class="print-only">
+  <div class="printPage">
+    <div class="printTitle">価値観：やること表（A4）</div>
+    <div class="printMeta" id="printMeta"></div>
+
+    <div class="printSection">
+      <h2>統合スコア（%）</h2>
+      <div id="printScores" class="printSmall"></div>
+    </div>
+
+    <div class="printGrid2">
+      <div class="printSection">
+        <h2>Top5（順位）</h2>
+        <ol id="printTop5" class="printList"></ol>
+      </div>
+      <div class="printSection">
+        <h2>TOP3：すぐにできる一歩</h2>
+        <div id="printActions"></div>
+      </div>
+    </div>
+
+    <div class="printSection">
+      <h2>振り返り（任意）</h2>
+      <div class="printSmall">今日/今週、どの軸を主役にする？（一言）</div>
+      <div class="lineBox" style="min-height:14mm"></div>
+      <div class="printSmall" style="margin-top:3mm">つまずきそうな場面と、先回りの工夫（1つ）</div>
+      <div class="lineBox" style="min-height:14mm"></div>
+    </div>
+  </div>
+</section>
+
 <script>
 /* ============================================================
-   Core Value Radar App v5
-   - Step3: (internal) +1 point each (not shown)
-   - Step5: show recommended axis, preselect recommended
-   - Scoring:
-        base 2 + step3 1 + rankExtra [4,3,3,2,1] to the selected axis
-     => total per rank: [7,6,6,5,4]
-   - Radar labels: smaller & auto-fit; axis names: 勝利/信念/調和/自己決定
-   - Remove point % labels on radar
-   - resultNumbers: split into 3 lines
+   Core Value Radar App v9
+   - Step8(TOP3) shows examples + copy into the TOP3 textarea
+   - Step9(All values) shows examples + user action textarea per value
+   - Copy buttons: example -> user action textarea
+   - Point allocation NOT shown (internal only)
 ============================================================ */
 
-const STORAGE_KEY_V5 = "coreValueRadarApp_v5";
-const STORAGE_KEY_V4 = "coreValueRadarApp_v4";
-const STORAGE_KEY_V3 = "coreValueRadarApp_v3";
-const STORAGE_KEY_V2 = "coreValueRadarApp_v2";
-const STORAGE_KEY_V1 = "coreValueRadarApp_v1";
+const STORAGE_KEY_V9 = "coreValueRadarApp_v9";
+const STORAGE_KEYS_OLD = [
+  "coreValueRadarApp_v8",
+  "coreValueRadarApp_v7",
+  "coreValueRadarApp_v6",
+  "coreValueRadarApp_v5",
+  "coreValueRadarApp_v4",
+  "coreValueRadarApp_v3",
+  "coreValueRadarApp_v2",
+  "coreValueRadarApp_v1",
+];
 
-const STEPS = 9;          // 0..8
+const STEPS = 10;         // 0..9
 const TOP_N = 5;
 const RANK_N = TOP_N;
 
 const AXES = [
   {key:"v", label:"勝利", color:getCSS("--v")},
-  {key:"b", label:"信念", color:getCSS("--b")},   // 信念（短縮）
+  {key:"b", label:"信念", color:getCSS("--b")},
   {key:"h", label:"調和", color:getCSS("--h")},
   {key:"a", label:"自己決定", color:getCSS("--a")},
 ];
 
 // 推奨（もとの分類）マップ
 const RECOMMEND_AXIS = {
-  // 勝利
   achieve:"v", challenge:"v", results:"v", excellence:"v", growth:"v", competition:"v", influence:"v",
-  // 調和
   harmony:"h", kindness:"h", cooperation:"h", gratitude:"h", family:"h", friendship:"h", contribution:"h", balance:"h",
-  // 自己決定
   freedom:"a", authenticity:"a", independence:"a", selfcare:"a", boundaries:"a", inquiry:"a",
-  // 信念
   belief:"b", truth:"b", ideal:"b", mission:"b", consistency:"b", patience:"b", courage:"b",
 };
 function recommendedAxis(id){ return RECOMMEND_AXIS[id] || null; }
@@ -873,6 +1032,150 @@ const QUIZ = [
   ]},
 ];
 
+// 行動例（各価値観：3例）
+const ACTION_EXAMPLES = {
+  achieve: [
+    "今日やることを1つだけ選び「10分で終わる形」に分割して着手する",
+    "今週のミニ目標を1つ決め、期限と“次の一手”を1行で書く",
+    "終わったタスクをチェックして「達成したこと」を1行メモする"
+  ],
+  challenge: [
+    "避けていた小さな一歩を1つ選び、5分だけ試す",
+    "新しいやり方を1つだけ採用して“実験”としてやってみる",
+    "今週中に“1回だけ挑戦する予定”をカレンダーに入れる"
+  ],
+  results: [
+    "今日の成功指標（何ができたらOKか）を1つ決める",
+    "結果に効きそうな改善を1つ、10分で実行する",
+    "終わりに「何が効いたか」を1つだけ振り返って残す"
+  ],
+  excellence: [
+    "得意分野を“10分だけ”意図的に練習する（例：要約、説明、手技）",
+    "上手い人のやり方を1つ観察し、真似できる点を1つメモする",
+    "自分の良かった点を1つ言語化して“再現手順”として残す"
+  ],
+  growth: [
+    "今日の学びを1つメモ（新発見／改善点）する",
+    "いつもより“1段だけ難しい”行動を選んで5分試す",
+    "今週の終わりに「成長した点」を1つ振り返る予定を入れる"
+  ],
+  competition: [
+    "自分の過去ベストに対して“タイムアタック10分”をやってみる",
+    "勝負する指標を1つ決めて（例：時間、件数）今週の目標を置く",
+    "小さなスコア表を作り、1回だけ記録してみる"
+  ],
+  influence: [
+    "役立つ気づきを1つ、誰かに短文で共有する",
+    "改善提案を1つ“実行できるサイズ”で出す（1文＋次の一手）",
+    "誰かの意思決定を助ける質問を1つ投げる（例：何を優先？）"
+  ],
+  harmony: [
+    "関係者に短いチェックインを1回入れて“ズレ”を減らす",
+    "ありがとう／ねぎらいを1通送って関係の温度を上げる",
+    "不安要素を1つ言語化して、確認の一言を入れる"
+  ],
+  kindness: [
+    "相手の負担を1つ減らす行動をする（例：先回りの準備）",
+    "5分だけ相手の話を遮らずに聴く（相槌＋要約）",
+    "ねぎらい／労いを具体的に言葉にして伝える"
+  ],
+  cooperation: [
+    "15分だけ“すり合わせ”をして、目的と役割を明確にする",
+    "共同作業のための共有メモ（1ページ）を作る",
+    "相手が助かることを1つ聞いて、できる範囲で引き受ける"
+  ],
+  gratitude: [
+    "感謝している相手に1通メッセージを送る（短くでOK）",
+    "今日の感謝を3つ箇条書きする（30秒でもOK）",
+    "受け取った支援を1つ思い出し“どう返すか”を1行書く"
+  ],
+  family: [
+    "家族に短い連絡を1回入れる（近況・気遣い）",
+    "今週のどこかで“家族の時間”を15分だけ確保する",
+    "家族が楽になる用事を1つ片づける（5〜10分で可）"
+  ],
+  friendship: [
+    "友人に近況確認のメッセージを1通送る",
+    "今週中の“軽い約束”を1つ入れる（10分通話でもOK）",
+    "相手の良かった点を1つ具体的に伝える"
+  ],
+  contribution: [
+    "誰かの役に立つ小さな手伝いを1つ申し出る",
+    "役立ちそうな情報を1つ共有する（リンク＋一言）",
+    "困っていそうな人に“何が必要？”と1回声をかける"
+  ],
+  freedom: [
+    "今日の予定から“やらないこと”を1つ決めて手放す",
+    "15分の自由時間を確保して、好きなことを1つする",
+    "選択肢を2つ書いて、最終決定を自分で下す"
+  ],
+  authenticity: [
+    "できないことは“できない”と短く誠実に伝える",
+    "迷っている点を正直に共有し、必要な情報を1つ聞く",
+    "自分の言葉と行動が一致しているか1回チェックする"
+  ],
+  independence: [
+    "自分の責任で決める意思決定を1つやり切る",
+    "必要な手順を調べて、次の一手を自分で設計する",
+    "“一人でできる形”に仕事を小さく分解して実行する"
+  ],
+  selfcare: [
+    "10分散歩／ストレッチ／呼吸など“体を整える”行動を1つ",
+    "水分・食事・睡眠のうち1つだけ改善（今夜の就寝時刻など）",
+    "今日の疲労サインを1つ言語化して、対策を1つ入れる"
+  ],
+  boundaries: [
+    "断り方テンプレを1つ作る（例：今週は難しい→代案）",
+    "通知を1つ減らす（アプリ1個オフ・時間帯設定）",
+    "“境界の時間”を予定に入れる（例：20分だけ集中）"
+  ],
+  inquiry: [
+    "知りたいテーマを1つ決めて10分だけ読む／調べる",
+    "疑問を3つ書き出し、答えが必要な順に並べる",
+    "小さな仮説を1つ立て、試せる実験を1つやってみる"
+  ],
+  belief: [
+    "いま大事にしたい原則を1行で書く（例：誠実・尊重）",
+    "その原則を守る“小さな選択”を1つ実行する",
+    "譲れない線引きを1つ決め、次の場面で使う言葉を用意する"
+  ],
+  truth: [
+    "事実と解釈を分けてメモする（何が事実？何が推測？）",
+    "一次情報（原文／データ）を1つだけ確認する",
+    "反証（違う可能性）を1つ挙げて、確認方法を1つ決める"
+  ],
+  ideal: [
+    "理想の状態を1文で書く（短く）",
+    "理想に近づく“最小の一歩”を1つ決めて5分やる",
+    "今週末に理想との距離を1回だけ振り返る予定を入れる"
+  ],
+  mission: [
+    "使命につながるタスクを1つ選び、10分だけ着手する",
+    "使命を思い出す合言葉／文章を見える場所に置く",
+    "今週“誰に何を届けるか”を1行で書いておく"
+  ],
+  consistency: [
+    "毎日続けたい行動を“2分版”にして今日やる",
+    "同じ時間帯に小さなルーチンを固定する（例：朝3分）",
+    "記録を1回だけつけて“続け方”を見える化する"
+  ],
+  patience: [
+    "10分だけ続ける（終わらなくてOK）を実行する",
+    "焦りが出たら“次の一手だけ”に戻るルールを作る",
+    "完成より継続：今週の最低ライン（ミニマム）を決める"
+  ],
+  courage: [
+    "気まずいが必要な連絡を“短文”で1通送る",
+    "会議/対話で意見を1回だけ言う（1文でOK）",
+    "避けていたことを“5分だけ”やって撤退OKにする"
+  ],
+  balance: [
+    "仕事（前進）と休息（回復）を1つずつ予定に入れる",
+    "今日のタスクを3つに絞り、余白を意図的に作る",
+    "今週のどこかに“何もしない時間”を15分置く"
+  ],
+};
+
 // helpers
 const clamp = (n,min,max)=> Math.max(min, Math.min(max,n));
 function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
@@ -884,6 +1187,7 @@ function escapeHtml(str){
 }
 function toast(msg){
   const el = document.getElementById("toast");
+  if(!el) return;
   el.textContent = msg;
   el.classList.add("show");
   clearTimeout(toast._t);
@@ -897,13 +1201,12 @@ function fisherYates(arr){
   return arr;
 }
 
-// scoring config
-const BASE_POINTS = 2;             // Step5 基礎点
-const STEP3_BONUS = 1;             // Step3 1点（表示なし）
-const RANK_EXTRA = [4,3,3,2,1];     // Top1..Top5
-
+/* ========= scoring（点数は内部のみ／表示しない） ========= */
+const BASE_POINTS = 2;
+const STEP3_BONUS = 1;
+const RANK_WEIGHT_HIGH = [10,8,6,4,2];
 function pointsForPos(pos){
-  return BASE_POINTS + STEP3_BONUS + (RANK_EXTRA[pos] ?? 0); // => [7,6,6,5,4]
+  return BASE_POINTS + STEP3_BONUS + (RANK_WEIGHT_HIGH[pos] ?? 0);
 }
 
 function defaultState(){
@@ -915,36 +1218,30 @@ function defaultState(){
     top: {},
     ranking: Array(RANK_N).fill(null),
     valueAxis: {},
-    actions: {},
-    quizAnswers: Array(QUIZ.length).fill(null), // store axis key "v/h/a/b"
+    actions: {},                // ← 全価値観ぶん保存してOK
+    quizAnswers: Array(QUIZ.length).fill(null),
     quizOptionOrder: [],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
 }
-
 let state = defaultState();
 
-// init with migration
 (function init(){
-  const savedV5 = localStorage.getItem(STORAGE_KEY_V5);
-  const savedV4 = localStorage.getItem(STORAGE_KEY_V4);
-  const savedV3 = localStorage.getItem(STORAGE_KEY_V3);
-  const savedV2 = localStorage.getItem(STORAGE_KEY_V2);
-  const savedV1 = localStorage.getItem(STORAGE_KEY_V1);
-
-  if(savedV5){
-    try{ state = migrate(JSON.parse(savedV5)); }
-    catch(e){ console.warn(e); localStorage.removeItem(STORAGE_KEY_V5); state = defaultState(); }
-  } else if(savedV4 || savedV3 || savedV2 || savedV1){
-    try{
-      const parsed = JSON.parse(savedV4 || savedV3 || savedV2 || savedV1);
-      state = migrate(parsed);
-      localStorage.setItem(STORAGE_KEY_V5, JSON.stringify(state));
-    }catch(e){
-      console.warn(e);
-      state = defaultState();
+  let saved = localStorage.getItem(STORAGE_KEY_V9);
+  if(!saved){
+    for(const k of STORAGE_KEYS_OLD){
+      const s = localStorage.getItem(k);
+      if(s){ saved = s; break; }
     }
+  }
+
+  if(saved){
+    try{ state = migrate(JSON.parse(saved)); }
+    catch(e){ console.warn(e); state = defaultState(); }
+  } else {
+    syncValueOrder(state);
+    syncQuizOptionOrder(state);
   }
 
   bindUI();
@@ -954,13 +1251,11 @@ let state = defaultState();
 function migrate(parsed){
   const s = {...defaultState(), ...parsed};
 
-  // values: keep base + custom, cap 30
   const baseById = Object.fromEntries(BASE_VALUES.map(v=>[v.id,v]));
   const cur = Array.isArray(s.values) ? s.values : deepCopy(BASE_VALUES);
   const customs = cur.filter(v=>!baseById[v.id]);
   s.values = [...deepCopy(BASE_VALUES), ...customs].slice(0,30);
 
-  // quizAnswers length
   if(!Array.isArray(s.quizAnswers)) s.quizAnswers = Array(QUIZ.length).fill(null);
   if(s.quizAnswers.length !== QUIZ.length){
     const a = Array(QUIZ.length).fill(null);
@@ -968,46 +1263,19 @@ function migrate(parsed){
     s.quizAnswers = a;
   }
 
-  // top migrate
-  if(!s.top || typeof s.top !== "object"){
-    if(s.top10 && typeof s.top10 === "object") s.top = s.top10;
-    else s.top = {};
-  }
-
-  // ranking size
+  if(!s.top || typeof s.top !== "object") s.top = {};
   if(Array.isArray(s.ranking)){
     if(s.ranking.length > RANK_N) s.ranking = s.ranking.slice(0, RANK_N);
     while(s.ranking.length < RANK_N) s.ranking.push(null);
   } else {
     s.ranking = Array(RANK_N).fill(null);
   }
-
-  // ensure top <=5
-  const ids = Object.keys(s.top || {});
-  if(ids.length > TOP_N){
-    // keep ranking ones first
-    const keep = [];
-    for(const id of s.ranking){
-      if(id && ids.includes(id) && !keep.includes(id)) keep.push(id);
-    }
-    for(const id of ids){
-      if(keep.length>=TOP_N) break;
-      if(!keep.includes(id)) keep.push(id);
-    }
-    s.top = {};
-    keep.forEach(id=> s.top[id]=true);
-  }
-
-  // valueAxis safety
   if(!s.valueAxis || typeof s.valueAxis !== "object") s.valueAxis = {};
-  // actions safety
   if(!s.actions || typeof s.actions !== "object") s.actions = {};
 
-  // valueOrder sync
   if(!Array.isArray(s.valueOrder)) s.valueOrder = [];
   syncValueOrder(s);
 
-  // quiz option order sync (fixed shuffle)
   if(!Array.isArray(s.quizOptionOrder)) s.quizOptionOrder = [];
   syncQuizOptionOrder(s);
 
@@ -1043,79 +1311,52 @@ function syncQuizOptionOrder(s){
 
 function save(){
   state.updatedAt = new Date().toISOString();
-  localStorage.setItem(STORAGE_KEY_V5, JSON.stringify(state));
+  localStorage.setItem(STORAGE_KEY_V9, JSON.stringify(state));
   const lbl = document.getElementById("autosaveLabel");
-  lbl.textContent = "保存済み";
-  lbl.style.borderColor = "rgba(22,163,74,.35)";
-  lbl.style.color = "rgba(22,163,74,.95)";
-  clearTimeout(save._t);
-  save._t = setTimeout(()=>{
-    lbl.textContent = "自動保存";
-    lbl.style.borderColor = "";
-    lbl.style.color = "";
-  }, 1200);
+  if(lbl){
+    lbl.textContent = "保存済み";
+    lbl.style.borderColor = "rgba(22,163,74,.35)";
+    lbl.style.color = "rgba(22,163,74,.95)";
+    clearTimeout(save._t);
+    save._t = setTimeout(()=>{
+      lbl.textContent = "自動保存";
+      lbl.style.borderColor = "";
+      lbl.style.color = "";
+    }, 1200);
+  }
 }
 
-/* ---------------- Navigation & Validation ---------------- */
+/* -------- Navigation & Validation -------- */
 function validateStep(current){
   if(current === 1){
     const done = state.quizAnswers.filter(x=>x!==null && x!==undefined).length;
-    if(done < QUIZ.length){
-      toast("質問が未回答です（全問回答で次へ）");
-      return false;
-    }
+    if(done < QUIZ.length){ toast("質問が未回答です（全問回答で次へ）"); return false; }
   }
   if(current === 2){
     const n = Object.keys(state.starred).length;
-    if(n < 10){
-      toast("⭐を10個以上つけてから次へ進みましょう");
-      return false;
-    }
+    if(n < 10){ toast("⭐を10個以上つけてから次へ進みましょう"); return false; }
   }
   if(current === 3){
     const n = Object.keys(state.top).length;
-    if(n !== TOP_N){
-      toast("Top5はちょうど5個選んでください");
-      return false;
-    }
+    if(n !== TOP_N){ toast("Top5はちょうど5個選んでください"); return false; }
   }
   if(current === 4){
     const filled = state.ranking.filter(Boolean);
     const uniq = new Set(filled);
-    if(filled.length !== RANK_N){
-      toast("順位が未選択の箇所があります");
-      return false;
-    }
-    if(uniq.size !== RANK_N){
-      toast("順位に重複があります（同じ価値語が複数順位に選択されています）");
-      return false;
-    }
-    if(!filled.every(id=>state.top[id])){
-      toast("Top5以外が順位に混ざっています。選び直してください。");
-      return false;
-    }
+    if(filled.length !== RANK_N){ toast("順位が未選択の箇所があります"); return false; }
+    if(uniq.size !== RANK_N){ toast("順位に重複があります"); return false; }
+    if(!filled.every(id=>state.top[id])){ toast("Top5以外が順位に混ざっています"); return false; }
   }
   if(current === 5){
     const ids = state.ranking.filter(Boolean);
     const done = ids.filter(id=>["v","h","a","b"].includes(state.valueAxis[id])).length;
-    if(done !== RANK_N){
-      toast("Top5の分類が未完了です（5個すべて選択してください）");
-      return false;
-    }
+    if(done !== RANK_N){ toast("Top5の分類が未完了です（5個すべて選択してください）"); return false; }
   }
   if(current === 7){
     const top3 = state.ranking.slice(0,3);
-    if(top3.length !== 3 || top3.some(x=>!x)){
-      toast("TOP3が確定していません（順位を確認してください）");
-      return false;
-    }
-    for(let i=0;i<3;i++){
-      const id = top3[i];
-      const t = (state.actions?.[id] || "").trim();
-      if(!t){
-        toast("TOP3それぞれに「すぐにできる一歩」を書いてください");
-        return false;
-      }
+    if(top3.length !== 3 || top3.some(x=>!x)){ toast("TOP3が確定していません"); return false; }
+    for(const id of top3){
+      if(!(state.actions?.[id] || "").trim()){ toast("TOP3それぞれに行動を書いてください"); return false; }
     }
   }
   return true;
@@ -1132,10 +1373,10 @@ function goTo(nextStep){
   window.scrollTo({top:0, behavior:"smooth"});
 }
 
-/* ---------------- Reset / Export / Import ---------------- */
+/* -------- Reset / Export / Import -------- */
 function resetAll(){
   if(!confirm("保存データ（回答・選択・分類・行動）をすべて消去して初期化します。よろしいですか？")) return;
-  localStorage.removeItem(STORAGE_KEY_V5);
+  localStorage.removeItem(STORAGE_KEY_V9);
   state = defaultState();
   syncValueOrder(state);
   syncQuizOptionOrder(state);
@@ -1159,7 +1400,7 @@ function exportJSON(){
 let _importInput = null;
 function importJSON(){ _importInput.click(); }
 
-/* ---------------- UI Bindings ---------------- */
+/* -------- UI Bindings -------- */
 function bindUI(){
   document.getElementById("btnStart").addEventListener("click", ()=> goTo(1));
   document.getElementById("btnBack").addEventListener("click", ()=> goTo(state.step-1));
@@ -1183,9 +1424,19 @@ function bindUI(){
   document.getElementById("btnFillMissing").addEventListener("click", fillMissingRanks);
 
   document.getElementById("btnCopySummary").addEventListener("click", copySummary);
-  document.getElementById("btnPrint").addEventListener("click", ()=> window.print());
-  document.getElementById("btnCopySummary2").addEventListener("click", copySummary);
-  document.getElementById("btnPrint2").addEventListener("click", ()=> window.print());
+
+  document.getElementById("btnPrintA4_1").addEventListener("click", printA4);
+  document.getElementById("btnPrintA4_2").addEventListener("click", printA4);
+  document.getElementById("btnPrintA4_3").addEventListener("click", printA4);
+
+  // Step9 controls
+  document.getElementById("exSearch").addEventListener("input", renderExamples);
+  document.getElementById("btnExpandAll").addEventListener("click", ()=>{
+    document.querySelectorAll("details.exItem").forEach(d=> d.open = true);
+  });
+  document.getElementById("btnCollapseAll").addEventListener("click", ()=>{
+    document.querySelectorAll("details.exItem").forEach(d=> d.open = false);
+  });
 
   // import
   const input = document.createElement("input");
@@ -1216,7 +1467,7 @@ function bindUI(){
   }, {passive:true});
 }
 
-/* ---------------- Render ---------------- */
+/* -------- Render -------- */
 function renderAll(){
   document.querySelectorAll(".step").forEach(sec=>{
     sec.classList.toggle("active", Number(sec.dataset.step) === state.step);
@@ -1226,15 +1477,16 @@ function renderAll(){
   document.getElementById("progressBar").style.width = `${(state.step)/(STEPS-1)*100}%`;
 
   const footer = document.getElementById("footerBar");
-  footer.style.display = (state.step === 8) ? "none" : "block";
+  footer.style.display = (state.step === 9) ? "none" : "block";
 
   document.getElementById("btnBack").disabled = (state.step === 0);
 
   const nextBtn = document.getElementById("btnNext");
-  if(state.step === 6) nextBtn.textContent = "TOP3の一歩へ ▶";
-  else if(state.step === 7) nextBtn.textContent = "終了へ ▶";
+  if(state.step === 6) nextBtn.textContent = "Step8へ ▶";
+  else if(state.step === 7) nextBtn.textContent = "Step9へ ▶";
+  else if(state.step === 8) nextBtn.textContent = "終了へ ▶";
   else nextBtn.textContent = "次へ ▶";
-  nextBtn.disabled = (state.step === 8);
+  nextBtn.disabled = (state.step === 9);
 
   if(state.step === 1) renderQuiz();
   if(state.step === 2) renderValues();
@@ -1242,7 +1494,8 @@ function renderAll(){
   if(state.step === 4) renderRanking();
   if(state.step === 5) renderAxisPick();
   if(state.step === 6) renderResults();
-  if(state.step === 7) renderActions();
+  if(state.step === 7) renderActions();     // Step8(TOP3) ここで例も出す
+  if(state.step === 8) renderExamples();    // Step9(全価値観) ここで自分の行動欄
 
   updateCounts();
 }
@@ -1284,7 +1537,7 @@ function updateCounts(){
   }
 }
 
-/* ---------------- Step1 Quiz (fixed shuffle) ---------------- */
+/* -------- Step1 Quiz -------- */
 function renderQuiz(){
   syncQuizOptionOrder(state);
   const container = document.getElementById("quizContainer");
@@ -1323,7 +1576,7 @@ function renderQuiz(){
   });
 }
 
-/* ---------------- Step2 Values (Star) ---------------- */
+/* -------- Step2 Values (Star) -------- */
 function renderValues(){
   syncValueOrder(state);
   const grid = document.getElementById("valueGrid");
@@ -1361,6 +1614,7 @@ function toggleStar(id){
     if(state.top[id]) delete state.top[id];
     state.ranking = state.ranking.map(x => x === id ? null : x);
     delete state.valueAxis[id];
+    // actionsは残しても良いが、混乱防止で消す
     delete state.actions[id];
   } else {
     state.starred[id] = true;
@@ -1406,7 +1660,7 @@ function addCustomValue(){
   toast("追加しました（⭐も付けました）");
 }
 
-/* ---------------- Step3 Top5 selection ---------------- */
+/* -------- Step3 Top5 -------- */
 function renderTop5(){
   const grid = document.getElementById("topGrid");
   if(!grid) return;
@@ -1456,7 +1710,6 @@ function toggleTop(id){
     delete state.top[id];
     state.ranking = state.ranking.map(x=> x===id ? null : x);
     delete state.valueAxis[id];
-    delete state.actions[id];
   } else {
     const n = Object.keys(state.top).length;
     if(n >= TOP_N){
@@ -1466,7 +1719,6 @@ function toggleTop(id){
     state.top[id] = true;
   }
 
-  // if exactly 5 and ranking empty -> seed by name
   const ids = Object.keys(state.top);
   if(ids.length === TOP_N && state.ranking.filter(Boolean).length === 0){
     const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
@@ -1479,7 +1731,7 @@ function toggleTop(id){
   updateCounts();
 }
 
-/* ---------------- Step4 Ranking ---------------- */
+/* -------- Step4 Ranking -------- */
 function renderRanking(){
   const container = document.getElementById("rankContainer");
   container.innerHTML = "";
@@ -1490,10 +1742,6 @@ function renderRanking(){
   if(ids.length !== TOP_N){
     container.innerHTML = `<div class="note danger"><b>Top5が5個選ばれていません。</b>前のステップで5個に絞ってください。</div>`;
     return;
-  }
-
-  if(!Array.isArray(state.ranking) || state.ranking.length !== RANK_N){
-    state.ranking = Array(RANK_N).fill(null);
   }
 
   const optIds = ids.slice().sort((a,b)=>(valuesById[a]?.name||"").localeCompare(valuesById[b]?.name||""));
@@ -1533,10 +1781,6 @@ function renderRanking(){
 }
 
 function setRank(pos, idOrNull){
-  if(!Array.isArray(state.ranking) || state.ranking.length !== RANK_N){
-    state.ranking = Array(RANK_N).fill(null);
-  }
-
   if(idOrNull && !state.top[idOrNull]){
     toast("Top5以外は選べません");
     return;
@@ -1582,9 +1826,8 @@ function fillMissingRanks(){
   toast("未選択を埋めました");
 }
 
-/* ---------------- Step5 Axis Pick (with recommendation) ---------------- */
+/* -------- Step5 Axis Pick（点数表示なし） -------- */
 function prefillRecommendedAxes(){
-  // When axis not set, set recommendation if exists
   for(let pos=0; pos<RANK_N; pos++){
     const id = state.ranking[pos];
     if(!id) continue;
@@ -1594,9 +1837,8 @@ function prefillRecommendedAxes(){
     }
   }
 }
-
 function renderAxisPick(){
-  prefillRecommendedAxes(); // make it easier
+  prefillRecommendedAxes();
 
   const container = document.getElementById("axisPickContainer");
   container.innerHTML = "";
@@ -1609,7 +1851,6 @@ function renderAxisPick(){
 
   const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
   const rankingFilled = (state.ranking||[]).filter(Boolean);
-
   if(rankingFilled.length !== RANK_N){
     container.innerHTML = `<div class="note danger"><b>順位が未完成です。</b>前のステップで1位〜5位を埋めてください。</div>`;
     return;
@@ -1620,7 +1861,6 @@ function renderAxisPick(){
     const v = valuesById[id];
     const picked = state.valueAxis[id] || null;
     const rec = recommendedAxis(id);
-    const pts = pointsForPos(pos);
 
     const recLabel = rec ? (AXES.find(x=>x.key===rec)?.label || "") : "なし";
     const pickedLabel = picked ? (AXES.find(x=>x.key===picked)?.label || "") : "未選択";
@@ -1630,7 +1870,7 @@ function renderAxisPick(){
     card.innerHTML = `
       <div class="axisHead">
         <div>
-          <div class="name">#${pos+1}（加点合計 ${pts}） ${escapeHtml(v?.name || id)}</div>
+          <div class="name">#${pos+1} ${escapeHtml(v?.name || id)}</div>
           <div class="sub">${escapeHtml(v?.hint || "")}</div>
         </div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end">
@@ -1660,10 +1900,9 @@ function renderAxisPick(){
     container.appendChild(card);
   }
 
-  save(); // because we may have auto-filled recommendations
+  save();
   updateCounts();
 }
-
 function axisButtonHTML(id, axisKey, picked, rec){
   const label = AXES.find(x=>x.key===axisKey)?.label || axisKey;
   const sel = (picked === axisKey) ? "sel" : "";
@@ -1677,9 +1916,8 @@ function axisButtonHTML(id, axisKey, picked, rec){
   `;
 }
 
-/* ---------------- Step6 Results ---------------- */
+/* -------- Scoring（内部のみ） -------- */
 function computeQuizScores(){
-  // percent from quiz answers
   const counts = {v:0, b:0, h:0, a:0};
   for(const a of state.quizAnswers){
     if(a && counts[a] !== undefined) counts[a] += 1;
@@ -1687,9 +1925,7 @@ function computeQuizScores(){
   const total = QUIZ.length || 1;
   return AXES.map(ax => Math.round((counts[ax.key]/total*100)*10)/10);
 }
-
 function computeTopScores(){
-  // percent from Top5 scoring (base2 + step3+1 + rankExtra)
   const sums = {v:0, b:0, h:0, a:0};
   let total = 0;
   for(let pos=0; pos<RANK_N; pos++){
@@ -1697,20 +1933,23 @@ function computeTopScores(){
     if(!id) continue;
     const ax = state.valueAxis[id];
     if(!ax || sums[ax] === undefined) continue;
-    const pts = pointsForPos(pos);
+    const pts = pointsForPos(pos);  // 内部計算のみ
     sums[ax] += pts;
     total += pts;
   }
   if(total === 0) return AXES.map(()=>0);
   return AXES.map(ax => Math.round((sums[ax.key]/total*100)*10)/10);
 }
-
-function renderResults(){
+function computeMergedScores(){
   const q = computeQuizScores();
   const t = computeTopScores();
-  const merged = q.map((x,i)=> Math.round(((x + t[i]) / 2)*10)/10);
+  return q.map((x,i)=> Math.round(((x + t[i]) / 2)*10)/10);
+}
 
-  // table
+/* -------- Step6 Results -------- */
+function renderResults(){
+  const merged = computeMergedScores();
+
   const tb = document.getElementById("scoreTableBody");
   tb.innerHTML = "";
   for(let i=0;i<AXES.length;i++){
@@ -1718,53 +1957,41 @@ function renderResults(){
     tr.innerHTML = `
       <td><b>${escapeHtml(AXES[i].label)}</b></td>
       <td>${merged[i]}%</td>
-      <td>${q[i]}%</td>
-      <td>${t[i]}%</td>
     `;
     tb.appendChild(tr);
   }
 
-  // headline
   const sorted = merged.map((v,i)=>({v,i,label:AXES[i].label})).sort((x,y)=>y.v-x.v);
   const top = sorted[0];
   const gap = top.v - sorted[1].v;
 
   const headline = document.getElementById("resultHeadline");
   const text = document.getElementById("resultText");
-  const tips = document.getElementById("resultTips");
-  tips.innerHTML = "";
 
   if(gap < 8){
     headline.textContent = "バランス型（複数の軸が同時に大事）";
     text.innerHTML = `
-      4軸の差が小さめです。状況に応じて<b>主役の軸を切り替える</b>設計が向きそうです。<br>
+      4軸の差が小さめです。状況に応じて<b>主役の軸を切り替える</b>設計が向きます。<br>
       迷った場面では「今ここで、どの軸を主役にすると後悔が少ないか？」を一度言語化すると安定します。
     `;
   } else {
     headline.textContent = `いまは「${top.label}」が主役になりやすい`;
     const msg = {
       "勝利": `成果・克服・前進がエネルギーになりやすい傾向です。目標を“勝てるサイズ”に分割すると詰みにくくなります。`,
+      "信念": `意味・筋・一貫性がエネルギーになりやすい傾向です。理想を“続けられる形”に翻訳すると強みが活きます。`,
       "調和": `安心感・関係の安定がエネルギーになりやすい傾向です。境界線（断る基準）を1つ持つと疲れにくいです。`,
       "自己決定": `自由・裁量・納得して選ぶことがエネルギーになりやすい傾向です。孤立しすぎない仕組みを入れると安定します。`,
-      "信念": `意味・筋・一貫性がエネルギーになりやすい傾向です。理想を“続けられる形”に翻訳すると強みが活きます。`,
     };
     text.innerHTML = msg[top.label] || "";
   }
 
-  // resultNumbers: 3 lines
   document.getElementById("resultNumbers").innerHTML =
-    `統合：勝利${merged[0]}% / 信念${merged[1]}% / 調和${merged[2]}% / 自己決定${merged[3]}%<br>` +
-    `質問：勝利${q[0]}% / 信念${q[1]}% / 調和${q[2]}% / 自己決定${q[3]}%<br>` +
-    `Top5：勝利${t[0]}% / 信念${t[1]}% / 調和${t[2]}% / 自己決定${t[3]}%`;
+    `統合：勝利${merged[0]}% / 信念${merged[1]}% / 調和${merged[2]}% / 自己決定${merged[3]}%`;
 
-  drawRadarResponsive("radar", merged, q, t);
+  drawRadarIntegratedOnly("radar", merged);
 }
 
-/* Radar drawing
-   - labels auto-fit (smaller)
-   - remove point % text
-*/
-function drawRadarResponsive(canvasId, merged, quiz, top){
+function drawRadarIntegratedOnly(canvasId, merged){
   const canvas = document.getElementById(canvasId);
   const ctx = canvas.getContext("2d");
 
@@ -1781,7 +2008,7 @@ function drawRadarResponsive(canvasId, merged, quiz, top){
 
   const minDim = Math.min(w,h);
   const titleSize = Math.max(16, Math.round(minDim * 0.050));
-  const labelSize = Math.max(12, Math.round(minDim * 0.042)); // smaller than before
+  const labelSize = Math.max(12, Math.round(minDim * 0.042));
   const tickSize  = Math.max(11, Math.round(minDim * 0.034));
 
   const topMargin = Math.max(24, titleSize + 10);
@@ -1789,17 +2016,15 @@ function drawRadarResponsive(canvasId, merged, quiz, top){
 
   const cx = w * 0.50;
   const cy = h * 0.58;
-  const R  = Math.min(w, h) * 0.28; // slightly smaller to keep labels inside
+  const R  = Math.min(w, h) * 0.28;
   const labelOffset = 26;
 
-  // title
   ctx.fillStyle = "rgba(15,23,42,.88)";
   ctx.font = `900 ${titleSize}px ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "top";
-  ctx.fillText("Core Value Radar", cx, 8);
+  ctx.fillText("Core Value Radar（統合）", cx, 8);
 
-  // grid levels
   const levels = [20,40,60,80,100];
   ctx.strokeStyle = "rgba(15,23,42,.12)";
   ctx.lineWidth = 1;
@@ -1823,20 +2048,17 @@ function drawRadarResponsive(canvasId, merged, quiz, top){
     ctx.fillText(p+"%", cx + 6, cy - r);
   });
 
-  // axes + labels (auto-fit)
   for(let i=0;i<4;i++){
     const ang = (-Math.PI/2) + i*(2*Math.PI/4);
     const x = cx + R*Math.cos(ang);
     const y = cy + R*Math.sin(ang);
 
-    // axis line
     ctx.strokeStyle = "rgba(15,23,42,.18)";
     ctx.beginPath();
     ctx.moveTo(cx,cy);
     ctx.lineTo(x,y);
     ctx.stroke();
 
-    // label placement
     const text = AXES[i].label;
     ctx.font = `900 ${labelSize}px ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif`;
     const width = ctx.measureText(text).width;
@@ -1854,7 +2076,6 @@ function drawRadarResponsive(canvasId, merged, quiz, top){
     if(sin > 0.2) baseline = "top";
     else if(sin < -0.2) baseline = "bottom";
 
-    // compute bbox
     let x0, x1, y0, y1;
     if(align==="left"){ x0 = lx; x1 = lx + width; }
     else if(align==="right"){ x0 = lx - width; x1 = lx; }
@@ -1864,7 +2085,6 @@ function drawRadarResponsive(canvasId, merged, quiz, top){
     else if(baseline==="bottom"){ y0 = ly - height; y1 = ly; }
     else { y0 = ly - height/2; y1 = ly + height/2; }
 
-    // adjust within canvas
     const minY = topMargin;
     if(x0 < margin) lx += (margin - x0);
     if(x1 > w - margin) lx -= (x1 - (w - margin));
@@ -1877,22 +2097,6 @@ function drawRadarResponsive(canvasId, merged, quiz, top){
     ctx.fillText(text, lx, ly);
   }
 
-  function rgba(color, a){
-    if(color.startsWith("rgba(")){
-      return color.replace(/rgba\(([^)]+)\)/, (m, inside)=>{
-        const parts = inside.split(",").map(s=>s.trim());
-        return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${a})`;
-      });
-    }
-    if(color.startsWith("rgb(")){
-      return color.replace(/rgb\(([^)]+)\)/, (m, inside)=>{
-        const parts = inside.split(",").map(s=>s.trim());
-        return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${a})`;
-      });
-    }
-    return color;
-  }
-
   function points(vals){
     const pts = [];
     for(let i=0;i<4;i++){
@@ -1903,52 +2107,45 @@ function drawRadarResponsive(canvasId, merged, quiz, top){
     return pts;
   }
 
-  function drawPoly(vals, fill, stroke, alphaFill, alphaStroke, lineW, pointColor){
-    const pts = points(vals);
+  const pts = points(merged);
+  ctx.beginPath();
+  pts.forEach((p, i)=>{ if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]); });
+  ctx.closePath();
+
+  ctx.fillStyle = "rgba(37,99,235,0.16)";
+  ctx.fill();
+
+  ctx.strokeStyle = "rgba(37,99,235,0.95)";
+  ctx.lineWidth = 2.6;
+  ctx.stroke();
+
+  pts.forEach((p)=>{
     ctx.beginPath();
-    pts.forEach((p, i)=>{ if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]); });
-    ctx.closePath();
-
-    ctx.fillStyle = rgba(fill, alphaFill);
+    ctx.fillStyle = "rgba(37,99,235,0.95)";
+    ctx.arc(p[0], p[1], 4.0, 0, Math.PI*2);
     ctx.fill();
-
-    ctx.strokeStyle = rgba(stroke, alphaStroke);
-    ctx.lineWidth = lineW || 2;
-    ctx.stroke();
-
-    // dots only (no % labels)
-    pts.forEach((p)=>{
-      ctx.beginPath();
-      ctx.fillStyle = rgba(pointColor, 0.95);
-      ctx.arc(p[0], p[1], 4.0, 0, Math.PI*2);
-      ctx.fill();
-    });
-  }
-
-  // Keep 3 layers (merged / quiz / top) but no % text
-  drawPoly(quiz,  "rgba(2,132,199,1)", "rgba(2,132,199,1)", 0.06, 0.30, 2, "rgba(2,132,199,1)");
-  drawPoly(top,   "rgba(245,158,11,1)", "rgba(245,158,11,1)", 0.05, 0.26, 2, "rgba(245,158,11,1)");
-  drawPoly(merged,"rgba(37,99,235,1)", "rgba(37,99,235,1)", 0.14, 0.85, 2.6, "rgba(37,99,235,1)");
-
-  // legend
-  const legendX = 14;
-  const legendY = h - 60;
-  legendItem(legendX, legendY,     "統合", "rgba(37,99,235,1)");
-  legendItem(legendX, legendY+18,  "質問", "rgba(2,132,199,1)");
-  legendItem(legendX, legendY+36,  "Top5", "rgba(245,158,11,1)");
-
-  function legendItem(x,y,text,color){
-    ctx.fillStyle = rgba(color, 0.85);
-    ctx.fillRect(x, y-7, 12, 12);
-    ctx.fillStyle = "rgba(15,23,42,.78)";
-    ctx.font = `${Math.max(11, Math.round(minDim*0.032))}px ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif`;
-    ctx.textAlign = "left";
-    ctx.textBaseline = "middle";
-    ctx.fillText(text, x+18, y);
-  }
+  });
 }
 
-/* ---------------- Step7 Actions ---------------- */
+/* -------- 行動例：取得 -------- */
+function getExamplesForValue(v){
+  if(ACTION_EXAMPLES[v.id]) return ACTION_EXAMPLES[v.id];
+
+  const name = v.name || "この価値観";
+  return [
+    `「${name}」が満たされた状態を1文で書き、今週できる最小の一歩を1つ決める`,
+    `5〜10分でできる形に小さくして、今日“1回だけ”実行してみる`,
+    `終わったら「どんな感覚だったか」を1行メモして次に活かす`,
+  ];
+}
+
+/* -------- Step8 (TOP3) : 自分の行動欄 + 例 + コピー -------- */
+function setActionText(valueId, text){
+  state.actions[valueId] = text;
+  save();
+  updateCounts();
+}
+
 function renderActions(){
   const container = document.getElementById("actionContainer");
   container.innerHTML = "";
@@ -1966,6 +2163,7 @@ function renderActions(){
     const axisKey = state.valueAxis[id];
     const axisLabel = AXES.find(x=>x.key===axisKey)?.label || "未分類";
     const actionText = state.actions?.[id] || "";
+    const ex = getExamplesForValue(v);
 
     const card = document.createElement("div");
     card.className = "actionCard";
@@ -1982,18 +2180,47 @@ function renderActions(){
       </div>
 
       <div class="field">
-        <label>すぐにできる一歩（5〜15分で終わるサイズ）</label>
+        <label>自分の行動（5〜15分で終わるサイズ）</label>
         <textarea data-id="${escapeHtml(id)}"
           placeholder="例：今日、◯◯を5分だけ調べる。／1通だけ連絡する。／10分だけ整理する。">${escapeHtml(actionText)}</textarea>
+      </div>
+
+      <div class="miniExBox">
+        <div class="muted" style="font-size:13px"><b>行動例（ワンタップで上の入力欄へ）</b></div>
+        <ul>
+          ${ex.map((t, j)=>`
+            <li>
+              <div class="exLine">
+                <div class="exText">${escapeHtml(t)}</div>
+                <button type="button" class="small primary exCopyBtn" data-copy-to="${escapeHtml(id)}" data-copy-idx="${j}">
+                  この例を入力欄へコピー
+                </button>
+              </div>
+            </li>
+          `).join("")}
+        </ul>
+        <div class="exSmall">※ボタンは上書きです（必要なら先にメモしてから押してください）。</div>
       </div>
     `;
 
     const ta = card.querySelector("textarea");
     ta.addEventListener("input", ()=>{
       const vid = ta.dataset.id;
-      state.actions[vid] = ta.value;
-      save();
-      updateCounts();
+      setActionText(vid, ta.value);
+    });
+
+    // copy buttons
+    card.querySelectorAll("button.exCopyBtn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const vid = btn.dataset.copyTo;
+        const j = Number(btn.dataset.copyIdx);
+        const text = ex[j];
+        const prev = (state.actions?.[vid] || "").trim();
+        setActionText(vid, text);
+        ta.value = text;
+        ta.focus();
+        toast(prev && prev !== text ? "入力欄へコピーしました（上書き）" : "入力欄へコピーしました");
+      });
     });
 
     container.appendChild(card);
@@ -2002,24 +2229,115 @@ function renderActions(){
   updateCounts();
 }
 
-/* ---------------- Summary copy ---------------- */
-function copySummary(){
-  const q = computeQuizScores();
-  const t = computeTopScores();
-  const merged = q.map((x,i)=> Math.round(((x + t[i]) / 2)*10)/10);
+/* -------- Step9 (全価値観) : 例 + 自分の行動欄 + コピー -------- */
+function renderExamples(){
+  const list = document.getElementById("examplesList");
+  list.innerHTML = "";
+
+  const q = (document.getElementById("exSearch").value || "").trim().toLowerCase();
 
   const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
-  const top5 = state.ranking.map((id, idx)=> `${idx+1}. ${valuesById[id]?.name || id}`).join("\n");
+  const ordered = state.valueOrder.map(id=>valuesById[id]).filter(Boolean);
 
-  const axisLines = state.ranking.map((id, idx)=>{
-    const v = valuesById[id];
-    const ax = state.valueAxis[id];
-    const label = AXES.find(x=>x.key===ax)?.label || "";
-    const pts = pointsForPos(idx);
-    const rec = recommendedAxis(id);
-    const recLabel = rec ? (AXES.find(x=>x.key===rec)?.label || "") : "なし";
-    return `#${idx+1}（${pts}点） ${v?.name || id}: ${label}（推奨:${recLabel}）`;
-  }).join("\n");
+  const top3Set = new Set(state.ranking.slice(0,3).filter(Boolean));
+  const top5Set = new Set(state.ranking.filter(Boolean));
+  const starredSet = new Set(Object.keys(state.starred || {}));
+
+  const filtered = ordered.filter(v=>{
+    if(!q) return true;
+    const s = (v.name + " " + (v.hint||"")).toLowerCase();
+    return s.includes(q);
+  });
+
+  if(filtered.length === 0){
+    list.innerHTML = `<div class="note warn"><b>該当なし</b>：検索語を変えてください。</div>`;
+    return;
+  }
+
+  filtered.forEach(v=>{
+    const ex = getExamplesForValue(v);
+    const isTop3 = top3Set.has(v.id);
+
+    const badges = [];
+    if(isTop3) badges.push(`<span class="badge top3">TOP3</span>`);
+    else if(top5Set.has(v.id)) badges.push(`<span class="badge top">TOP5</span>`);
+    if(starredSet.has(v.id)) badges.push(`<span class="badge star">⭐</span>`);
+
+    const current = (state.actions?.[v.id] || "");
+
+    const details = document.createElement("details");
+    details.className = "exItem";
+    if(isTop3) details.open = true;
+
+    details.innerHTML = `
+      <summary>
+        <div class="exSummaryLeft">
+          <div class="exTitle">${escapeHtml(v.name)}</div>
+          <div class="exHint">${escapeHtml(v.hint||"")}</div>
+        </div>
+        <div class="exBadges">${badges.join("")}</div>
+      </summary>
+
+      <div class="exBody">
+        <div class="muted" style="font-size:13px"><b>行動例（3つ）</b></div>
+        <ul>
+          ${ex.map((t, idx)=>`
+            <li>
+              <div class="exLine">
+                <div class="exText">${escapeHtml(t)}</div>
+                <button type="button"
+                  class="small primary exCopyBtn"
+                  data-copy-id="${escapeHtml(v.id)}"
+                  data-copy-idx="${idx}">
+                  ${isTop3 ? "これをTOP3にコピー" : "入力欄へコピー"}
+                </button>
+              </div>
+            </li>
+          `).join("")}
+        </ul>
+
+        <div style="height:10px"></div>
+
+        <div class="field">
+          <label>自分の行動（メモ／今週の一歩）</label>
+          <textarea data-action-id="${escapeHtml(v.id)}"
+            placeholder="例をコピーして、あなた用に少し言い換えるのがおすすめです。">${escapeHtml(current)}</textarea>
+        </div>
+
+        ${isTop3 ? `<div class="exSmall">※この価値観はTOP3です。ここでの入力はStep8（TOP3の一歩）にも反映されます。</div>` : ``}
+      </div>
+    `;
+
+    // textarea input -> save (re-renderしない)
+    const ta = details.querySelector("textarea[data-action-id]");
+    ta.addEventListener("input", ()=>{
+      const id = ta.dataset.actionId;
+      setActionText(id, ta.value);
+    });
+
+    // copy buttons: example -> textarea
+    details.querySelectorAll("button.exCopyBtn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const id = btn.dataset.copyId;
+        const idx = Number(btn.dataset.copyIdx);
+        const t = ex[idx];
+        const prev = (state.actions?.[id] || "").trim();
+        setActionText(id, t);
+        ta.value = t;
+        ta.focus();
+        toast(prev && prev !== t ? "入力欄へコピーしました（上書き）" : "入力欄へコピーしました");
+      });
+    });
+
+    list.appendChild(details);
+  });
+}
+
+/* -------- Summary copy -------- */
+function copySummary(){
+  const merged = computeMergedScores();
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+  const top5 = state.ranking.map((id, idx)=> `${idx+1}. ${valuesById[id]?.name || id}`).join("\n");
 
   const top3 = state.ranking.slice(0,3).filter(Boolean);
   const actionLines = top3.map((id, idx)=>{
@@ -2029,18 +2347,13 @@ function copySummary(){
   }).join("\n");
 
   const text = [
-    "【Core Value レーダー まとめ】",
+    "【Core Value レーダー（統合のみ）まとめ】",
     `統合: 勝利${merged[0]}% / 信念${merged[1]}% / 調和${merged[2]}% / 自己決定${merged[3]}%`,
-    `質問: 勝利${q[0]}% / 信念${q[1]}% / 調和${q[2]}% / 自己決定${q[3]}%`,
-    `Top5: 勝利${t[0]}% / 信念${t[1]}% / 調和${t[2]}% / 自己決定${t[3]}%`,
     "",
     "Top5（順位）:",
     top5,
     "",
-    "Top5の分類（点数つき）:",
-    axisLines,
-    "",
-    "TOP3の一歩（すぐできる行動）:",
+    "TOP3の一歩:",
     actionLines,
     "",
     `更新: ${new Date(state.updatedAt).toLocaleString()}`
@@ -2051,6 +2364,50 @@ function copySummary(){
   }).catch(()=>{
     toast("コピーに失敗しました（ブラウザ権限をご確認ください）");
   });
+}
+
+/* -------- Print (A4) -------- */
+function buildPrintSheet(){
+  const merged = computeMergedScores();
+  const valuesById = Object.fromEntries(state.values.map(v=>[v.id,v]));
+
+  document.getElementById("printMeta").textContent =
+    `作成日時：${new Date(state.updatedAt).toLocaleString()} ／ 端末内保存（通信なし）`;
+
+  document.getElementById("printScores").textContent =
+    `勝利 ${merged[0]}%　｜　信念 ${merged[1]}%　｜　調和 ${merged[2]}%　｜　自己決定 ${merged[3]}%`;
+
+  const top5El = document.getElementById("printTop5");
+  top5El.innerHTML = "";
+  for(let i=0;i<5;i++){
+    const id = state.ranking[i];
+    const name = valuesById[id]?.name || "（未設定）";
+    const li = document.createElement("li");
+    li.textContent = name;
+    top5El.appendChild(li);
+  }
+
+  const actionsEl = document.getElementById("printActions");
+  actionsEl.innerHTML = "";
+  const top3 = state.ranking.slice(0,3);
+  top3.forEach((id, idx)=>{
+    const name = valuesById[id]?.name || `TOP${idx+1}`;
+    const act = (state.actions?.[id] || "").trim();
+    const row = document.createElement("div");
+    row.className = "checkRow";
+    row.innerHTML = `
+      <div class="box"></div>
+      <div>
+        <div><b>${idx+1}. ${escapeHtml(name)}</b></div>
+        <div class="lineBox">${escapeHtml(act || "（未記入）")}</div>
+      </div>
+    `;
+    actionsEl.appendChild(row);
+  });
+}
+function printA4(){
+  buildPrintSheet();
+  window.print();
 }
 </script>
 </body>
